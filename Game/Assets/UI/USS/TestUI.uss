@@ -1,0 +1,22 @@
+.emptyContainer {
+    flex-grow: 2;
+    flex-shrink: 0;
+}
+
+.infoContainer {
+    flex-grow: 1;
+    background-color: rgb(69, 75, 74);
+}
+
+.nameLabel {
+    font-size: 30px;
+    -unity-font-style: bold;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
