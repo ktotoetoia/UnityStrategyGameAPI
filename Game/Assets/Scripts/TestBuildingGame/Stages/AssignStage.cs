@@ -12,7 +12,7 @@ namespace BuildingsTestGame
     public class AssignStage : ITurnUser, IUpdatable, ISystemUser
     {
         private UnitCreation _unitCreation;
-        private UnitAssigner _unitAssigner;
+        private Assigner _assigner;
         private TerrainSelector _terrainSelector;
         private TaskCompletionSource<bool> _tcs;
         private int _cap = 3;
@@ -28,8 +28,6 @@ namespace BuildingsTestGame
 
         public void Update()
         {
-            Debug.Log("Update Stage");
-
             if (Input.GetMouseButtonDown(0))
             {
                 _terrainSelector.SelectAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -37,7 +35,7 @@ namespace BuildingsTestGame
 
             if (Input.GetKeyDown(KeyCode.C )&& _created < _cap && _terrainSelector.IsSelected)
             {
-                _unitAssigner.Assign(_terrainSelector.Selected, _unitCreation.Create());
+                _assigner.Assign(_terrainSelector.Selected, _unitCreation.Create());
                 
                 _created++;
             }
@@ -53,7 +51,7 @@ namespace BuildingsTestGame
             return new []
             {
                 typeof(UnitCreation),
-                typeof(UnitAssigner),
+                typeof(Assigner),
                 typeof(TerrainSelector),
             };
         }
@@ -62,7 +60,7 @@ namespace BuildingsTestGame
         {
             _terrainSelector = systems.OfType<TerrainSelector>().FirstOrDefault();
             _unitCreation = systems.OfType<UnitCreation>().FirstOrDefault();
-            _unitAssigner = systems.OfType<UnitAssigner>().FirstOrDefault();
+            _assigner = systems.OfType<Assigner>().FirstOrDefault();
         }
     }
 }

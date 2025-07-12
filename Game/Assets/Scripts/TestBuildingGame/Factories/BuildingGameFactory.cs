@@ -30,7 +30,8 @@ namespace BuildingsTestGame
             
             systems.Systems.Add(new UnitCreation(world.EntityRegister));
             systems.Systems.Add(new TerrainSelector(world.Map));
-            systems.Systems.Add(new UnitAssigner());
+            systems.Systems.Add(new Assigner());
+            systems.Systems.Add(new BuildingCreation());
             
             users.Add(new AssignStage());
             users.Add(new BuildStage());

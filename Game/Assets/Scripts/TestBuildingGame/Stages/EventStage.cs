@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using TDS.TurnSystem;
+using UnityEngine;
 
 namespace BuildingsTestGame
 {
@@ -8,7 +9,7 @@ namespace BuildingsTestGame
     {
         public ValueTask ExecuteTurnAsync()
         {
-            throw new NotImplementedException();
+            return new ValueTask(Task.CompletedTask);
         }
     }
 }

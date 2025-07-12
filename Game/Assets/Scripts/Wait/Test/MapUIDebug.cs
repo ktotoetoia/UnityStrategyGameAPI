@@ -1,7 +1,6 @@
 ﻿using BuildingsTestGame;
 using TDS.Worlds;
 using UnityEngine;
-using Terrain = TDS.Worlds.Terrain;
 
 namespace TDS.Entities
 {
@@ -28,13 +27,19 @@ namespace TDS.Entities
             {
                 Gizmos.DrawCube(a.Bounds.center, a.Bounds.size - Vector3.one * _gapSize);
             }
-
+            
             if (point is BuildingTerrain t)
             {
                 if (t.Unit != null)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(point.Area.Position, _pointsSize);
+                    Gizmos.DrawSphere(point.Area.Position - _pointsSize * Vector3.right, _pointsSize);
+                }
+
+                if (t.Building != null)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(t.Area.Position + _pointsSize * Vector3.right, new Vector3(_pointsSize, _pointsSize * 2));
                 }
             }
         }
