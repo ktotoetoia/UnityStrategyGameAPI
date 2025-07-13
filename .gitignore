@@ -36,3 +36,5 @@ sysinfo.txt
 *.pdb.meta
 
 .vsconfig
+.vs/
+.plastic/
