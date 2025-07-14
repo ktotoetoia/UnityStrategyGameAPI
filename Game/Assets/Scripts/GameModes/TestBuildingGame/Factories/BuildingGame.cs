@@ -1,10 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TDS.Commands;
-using TDS.TurnSystem;
+﻿using TDS.TurnSystem;
 using TDS.Worlds;
-using UnityEngine;
 
 namespace BuildingsTestGame
 {
