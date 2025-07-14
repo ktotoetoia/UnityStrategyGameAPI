@@ -21,16 +21,6 @@ namespace TDS
         private void Update()
         {
             _game.Update();
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _game.CurrentStage.CommandListener.DoCommand(new EndTurnCommand());
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                _game.CurrentStage.CommandListener.DoCommand(new SelectCommand(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-            }
         }
     }
 }
