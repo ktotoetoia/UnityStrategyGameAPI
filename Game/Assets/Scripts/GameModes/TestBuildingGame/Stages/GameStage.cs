@@ -6,12 +6,12 @@ namespace BuildingsTestGame
 {
     public class GameStage : TurnUser, IGameStage
     {
-        public ICommandListener CommandListener { get; set; }
+        public ICommandHandler CommandHandler { get; set; }
         public IInputHandler InputHandler { get; set; }
-
-        public GameStage(ICommandListener commandListener, IInputHandler inputHandler)
+        
+        public GameStage(ICommandHandler commandHandler, IInputHandler inputHandler)
         {
-            CommandListener = commandListener;
+            CommandHandler = commandHandler;
             InputHandler = inputHandler;
         }
 
@@ -22,7 +22,7 @@ namespace BuildingsTestGame
 
         public void Update()
         {
-            InputHandler.HandleInput(CommandListener);
+            InputHandler.HandleInput(CommandHandler);
         }
     }
 }

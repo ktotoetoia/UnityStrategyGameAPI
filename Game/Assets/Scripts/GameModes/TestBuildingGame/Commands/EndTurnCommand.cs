@@ -1,9 +1,7 @@
 ﻿using TDS.Commands;
+using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommand : ICommand
-    {
-        
-    }
+    public record EndTurnCommand(ITurnUserManual TurnUser) : ICommand;
 }

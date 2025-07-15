@@ -5,7 +5,7 @@ namespace TDS.Worlds
 {
     public interface IMap
     {
-        ICollection<ITerrain> Terrains { get; }
+        IEnumerable<ITerrain> Terrains { get; }
 
         IEnumerable<ITerrain> GetTerrainsAt(Vector3 position);
     }

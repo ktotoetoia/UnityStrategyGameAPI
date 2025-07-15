@@ -2,11 +2,11 @@
 
 namespace TDS.Commands
 {
-    public class ActionCommandListener<TCommand> : ICommandListener where TCommand : ICommand
+    public class ActionCommandHandler<TCommand> : ICommandHandler where TCommand : ICommand
     {
         public Action<TCommand> CommandAction { get; set; }
 
-        public ActionCommandListener(Action<TCommand> commandAction)
+        public ActionCommandHandler(Action<TCommand> commandAction)
         {
             CommandAction = commandAction;
         }

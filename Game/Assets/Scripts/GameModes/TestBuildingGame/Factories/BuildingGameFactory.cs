@@ -9,7 +9,8 @@ namespace BuildingsTestGame
     public class BuildingGameFactory : IFactory<BuildingGame>
     {
         public Vector2Int Size { get; set; }
-
+        public Vector2Int StartingPosition { get; set; }
+        
         public BuildingGameFactory(Vector2Int size)
         {
             Size = size;
@@ -22,7 +23,16 @@ namespace BuildingsTestGame
 
         private World CreateWorld()
         {
-            return new World(new RectangleTileMap(Size,new BuildingTerrainFactory()));
+            RectangleTileMap  tileMap = new RectangleTileMap(Size,new BuildingTerrainFactory());
+            
+            SetBase(tileMap);
+            
+            return new World(tileMap);
+        }
+
+        private void SetBase(RectangleTileMap tileMap)
+        {
+            (tileMap.TerrainsMatrix[StartingPosition.x, StartingPosition.y] as BuildingTerrain).Building = new FirstBuilding();
         }
     }
 }

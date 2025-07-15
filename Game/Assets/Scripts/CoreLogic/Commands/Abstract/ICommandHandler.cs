@@ -2,7 +2,7 @@
 
 namespace TDS.Commands
 {
-    public interface ICommandListener
+    public interface ICommandHandler
     {
         bool CanDoCommand(ICommand command);
         void DoCommand(ICommand command);

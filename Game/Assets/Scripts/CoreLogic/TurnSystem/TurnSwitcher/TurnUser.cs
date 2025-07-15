@@ -2,7 +2,7 @@
 
 namespace TDS.TurnSystem
 {
-    public class TurnUser : ITurnUser
+    public class TurnUser : ITurnUserManual
     {
         private TaskCompletionSource<bool> _completion;
         

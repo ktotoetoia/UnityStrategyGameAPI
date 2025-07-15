@@ -3,15 +3,8 @@ using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommandListener : ICommandListener
+    public class EndTurnCommandHandler : ICommandHandler
     {
-        private TurnUser _user;
-
-        public EndTurnCommandListener(TurnUser user)
-        {
-            _user = user;
-        }
-
         public bool CanDoCommand(ICommand command)
         {
             return command is EndTurnCommand;
@@ -21,7 +14,7 @@ namespace BuildingsTestGame
         {
             if (CanDoCommand(command))
             {
-                _user.EndTurn();
+                (command as EndTurnCommand).TurnUser.EndTurn();
             }
         }
     }

@@ -6,7 +6,8 @@ namespace TDS.Worlds
 {
     public class Map : IMap
     {
-        public ICollection<ITerrain> Terrains { get; }
+        public ICollection<ITerrain> TerrainsCollection { get; }
+        public IEnumerable<ITerrain> Terrains => TerrainsCollection;
 
         public Map() : this(new List<ITerrain>())
         {
@@ -14,7 +15,7 @@ namespace TDS.Worlds
 
         public Map(ICollection<ITerrain> terrains)
         {
-            Terrains = terrains;    
+            TerrainsCollection = terrains;    
         }
         
         public IEnumerable<ITerrain> GetTerrainsAt(Vector3 position)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TDS.Entities;
 using TDS.Worlds;
@@ -6,15 +7,15 @@ using UnityEngine;
 
 namespace TDS.SelectionSystem
 {
-    public class AnyEntitySelector : ISelector
+    public class EntitySelector : ISelector
     {
-        public event System.Action OnSelected;
+        public event Action OnSelected;
         
         public float Range { get; set; } = 0.2f;
         public IWorld World { get; set; }
         public ISelection Selection { get; private set; }
 
-        public AnyEntitySelector(IWorld world)
+        public EntitySelector(IWorld world)
         {
             World = world;
             Selection = new Selection();

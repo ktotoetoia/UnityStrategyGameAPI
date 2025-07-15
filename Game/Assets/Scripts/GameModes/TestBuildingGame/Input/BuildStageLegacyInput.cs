@@ -5,11 +5,18 @@ namespace BuildingsTestGame
 {
     public class BuildStageLegacyInput : IInputHandler
     {
-        public void HandleInput(ICommandListener listener)
+        private IBuildingGameContext _context;
+        
+        public BuildStageLegacyInput(IBuildingGameContext context)
+        {
+            _context = context;
+        }
+        
+        public void HandleInput(ICommandHandler handler)
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                listener.DoCommand(new EndTurnCommand());
+                handler.DoCommand(new EndTurnCommand(_context.CurrentStage));
             }
         }
     }

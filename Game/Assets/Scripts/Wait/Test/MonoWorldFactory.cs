@@ -14,9 +14,9 @@ namespace TDS
 
         public World Create()
         {
-            IMap map = new Map();
+            Map map = new Map();
             
-            _terrain.ForEach(x => map.Terrains.Add(new Terrain("empty", new BoundsArea(x))));
+            _terrain.ForEach(x => map.TerrainsCollection.Add(new Terrain("empty", new BoundsArea(x))));
             
             return new World(map);
         }
