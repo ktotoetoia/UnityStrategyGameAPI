@@ -12,11 +12,12 @@ namespace TDS
     public class Test : MonoBehaviour
     {
         [SerializeField] private Vector2Int _size;
+        [SerializeField] private Vector2Int _firstBuildingPosition;
         private BuildingGame _game;
         
         private void Awake()
         {
-            _game = new BuildingGameFactory(_size).Create();
+            _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
             GetComponent<MapUIDebug>().Map = _game.World.Map;
         }
 

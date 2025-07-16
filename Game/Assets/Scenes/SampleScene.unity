@@ -294,6 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _size: {x: 10, y: 5}
+  _firstBuildingPosition: {x: 4, y: 2}
 --- !u!4 &1377791927
 Transform:
   m_ObjectHideFlags: 0

@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using TDS.Graphs;
+using UnityEngine;
 
 namespace TDS.Worlds
 {
     public class RectangleTileMap : Map
     {
         public ITerrain[,] TerrainsMatrix { get; }
+        public IGraph Graph { get; }
          
         public RectangleTileMap(Vector2Int size, IFactory<ITerrain,Bounds> terrainFactory)
         {
