@@ -2,9 +2,9 @@
 {
     public interface IGraph : IGraphReadOnly
     {
-        IEdge Connect(INodeReadOnly first, INodeReadOnly second);
-        INodeReadOnly CreateNode();
+        IEdge Connect(INode first, INode second);
+        INode CreateNode();
         void Disconnect(IEdge edge);
-        void RemoveNode(INodeReadOnly node);
+        void RemoveNode(INode node);
     }
 }

@@ -3,14 +3,21 @@ using System.Collections.Generic;
 
 namespace TDS.Graphs
 {
-    public class Node : Node<object>
-    {
-    }
 
-    public class Node<T> : INode, IValue<T>
+    public class Node : Node<object>, INode
+    {
+        
+    }
+    
+    public class Node<T> : INode<T>, ICollection<IEdge>
     {
         private readonly List<IEdge> _edges = new();
 
+        public T Value { get; set; }
+        public IEnumerable<IEdge> Edges => _edges;
+        public int Count => _edges.Count;
+        public bool IsReadOnly => false;
+        
         public Node() : this(default)
         {
         }
@@ -19,10 +26,6 @@ namespace TDS.Graphs
         {
             Value = value;
         }
-
-        public IEnumerable<IEdge> Edges => _edges;
-        public int Count => _edges.Count;
-        public bool IsReadOnly => false;
 
         public void Add(IEdge edge)
         {
@@ -58,7 +61,5 @@ namespace TDS.Graphs
         {
             return _edges.GetEnumerator();
         }
-
-        public T Value { get; set; }
     }
 }

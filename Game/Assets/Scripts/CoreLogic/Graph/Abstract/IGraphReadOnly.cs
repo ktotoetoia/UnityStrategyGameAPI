@@ -4,7 +4,7 @@ namespace TDS.Graphs
 {
     public interface IGraphReadOnly
     {
-        IReadOnlyList<INodeReadOnly> Nodes { get; }
+        IReadOnlyList<INode> Nodes { get; }
         IReadOnlyList<IEdge> Edges { get; }
     }
 }

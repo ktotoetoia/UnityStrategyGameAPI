@@ -7,28 +7,26 @@ namespace TDS.Pathfinding
 {
     public class DijkstraAlgorithm
     {
-        public List<INodeReadOnly> GetPath(List<INodeReadOnly> nodes, INodeReadOnly start, INodeReadOnly end, Dictionary<IEdge, double> distances)
+        public List<INode> GetPath(List<INode> nodes, INode start, INode end, Func<IEdge,float> distances)
         {
-            HashSet<INodeReadOnly> unvisited = new HashSet<INodeReadOnly>(nodes);
-            Dictionary<INodeReadOnly, DijkstraData> track = new Dictionary<INodeReadOnly, DijkstraData> { [start] = new DijkstraData { Price = 0 } };
+            HashSet<INode> unvisited = new HashSet<INode>(nodes);
+            Dictionary<INode, DijkstraData> track = new Dictionary<INode, DijkstraData> { [start] = new DijkstraData { Price = 0 } };
 
             while (true)
             {
-                INodeReadOnly current = unvisited
+                INode current = unvisited
                     .Where(n => track.ContainsKey(n))
                     .OrderBy(n => track[n].Price)
                     .FirstOrDefault();
 
-                if (current == null) return new List<INodeReadOnly>();
+                if (current == null) return new List<INode>();
                 if (current == end) break;
 
                 foreach (var edge in current.Edges)
                 {
-                    INodeReadOnly next = OtherNode(edge,current);
-                    if (!distances.TryGetValue(edge, out var distance))
-                        continue;
-
-                    double price = track[current].Price + distance;
+                    INode next = OtherNode(edge,current);
+                    
+                    double price = track[current].Price + distances(edge);
 
                     if (!track.ContainsKey(next) || price < track[next].Price)
                         track[next] = new DijkstraData { Previous = current, Price = price };
@@ -40,16 +38,16 @@ namespace TDS.Pathfinding
             return TrackToPath(track, end);
         }
 
-        private INodeReadOnly OtherNode(IEdge edge, INodeReadOnly current)
+        private INode OtherNode(IEdge edge, INode current)
         {
             return edge.From == current ? edge.To : edge.From;
         }
 
-        private List<INodeReadOnly> TrackToPath(Dictionary<INodeReadOnly, DijkstraData> track, INodeReadOnly end)
+        private List<INode> TrackToPath(Dictionary<INode, DijkstraData> track, INode end)
         {
-            List<INodeReadOnly> path = new List<INodeReadOnly>();
+            List<INode> path = new List<INode>();
             
-            for (INodeReadOnly n = end; n != null; n = track[n].Previous)
+            for (INode n = end; n != null; n = track[n].Previous)
             {
                 path.Insert(0, n);
             }
@@ -60,7 +58,7 @@ namespace TDS.Pathfinding
 
     class DijkstraData
     {
-        public INodeReadOnly Previous { get; set; }
+        public INode Previous { get; set; }
         public double Price { get; set; }
     }
 }

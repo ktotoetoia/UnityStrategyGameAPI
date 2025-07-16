@@ -5,21 +5,21 @@ namespace TDS.Graphs
     public class Edge<T> : IEdge, IValue<T>
     {
         public T Value { get; set; }
-        public INodeReadOnly From { get; }
-        public INodeReadOnly To { get; }
+        public INode From { get; }
+        public INode To { get; }
 
-        public Edge(INodeReadOnly from, INodeReadOnly to) : this(from, to, default)
+        public Edge(INode from, INode to) : this(from, to, default)
         {
         }
 
-        public Edge(INodeReadOnly from, INodeReadOnly to, T value)
+        public Edge(INode from, INode to, T value)
         {
             From = from;
             To = to;
             Value = value;
         }
 
-        public INodeReadOnly GetOther(INodeReadOnly node)
+        public INode GetOther(INode node)
         {
             if (node == null || (node != From && node != To)) throw new ArgumentException();
 
@@ -29,7 +29,7 @@ namespace TDS.Graphs
 
     public class Edge : Edge<object>
     {
-        public Edge(INodeReadOnly from, INodeReadOnly to) : base(from, to)
+        public Edge(INode from, INode to) : base(from, to)
         {
         }
     }

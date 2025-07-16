@@ -2,9 +2,9 @@
 {
     public interface IEdge
     {
-        INodeReadOnly From { get; }
-        INodeReadOnly To { get; }
+        INode From { get; }
+        INode To { get; }
 
-        INodeReadOnly GetOther(INodeReadOnly node);
+        INode GetOther(INode node);
     }
 }
