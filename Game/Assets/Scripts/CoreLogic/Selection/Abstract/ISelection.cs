@@ -2,10 +2,10 @@
 
 namespace TDS.SelectionSystem
 {
-    public interface ISelection
+    public interface ISelection<out T>
     {
-        ISelectable First { get; }
-        IEnumerable<ISelectable> Selected { get; }
+        T First { get; }
+        IEnumerable<T> Selected { get; }
 
         void Deselect();
     }

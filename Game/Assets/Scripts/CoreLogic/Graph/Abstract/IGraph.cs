@@ -1,10 +1,10 @@
 ﻿namespace TDS.Graphs
 {
-    public interface IGraph : IGraphReadOnly
+    public interface IGraph<T> : IGraphReadOnly<T>
     {
-        IEdge Connect(INode first, INode second);
-        INode CreateNode();
-        void Disconnect(IEdge edge);
-        void RemoveNode(INode node);
+        IEdge<T> Connect(INode<T> first, INode<T> second);
+        INode<T> CreateNode();
+        void Disconnect(IEdge<T> edge);
+        void RemoveNode(INode<T> node);
     }
 }

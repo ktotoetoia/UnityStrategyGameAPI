@@ -2,11 +2,12 @@
 
 namespace TDS.Graphs
 {
-    public class GraphReadOnly : IGraphReadOnly
+    public class GraphReadOnly<T> : IGraphReadOnly<T>
     {
-        public IReadOnlyList<INode> Nodes { get; }
-        public IReadOnlyList<IEdge> Edges { get; }
-        public GraphReadOnly(IReadOnlyList<INode> nodes, IReadOnlyList<IEdge> edges)
+        public IReadOnlyList<INode<T>> Nodes { get; }
+        public IReadOnlyList<IEdge<T>> Edges { get; }
+        
+        public GraphReadOnly(IReadOnlyList<INode<T>> nodes, IReadOnlyList<IEdge<T>> edges)
         {
             Nodes = nodes;
             Edges = edges;

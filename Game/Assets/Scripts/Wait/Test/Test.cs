@@ -36,7 +36,7 @@ namespace TDS
             if (_game.GameContext.Selector.Selection.First != null)
             {
                 Gizmos.color = Color.blue;
-                Gizmos.DrawSphere((_game.GameContext.Selector.Selection.First.Object as ITerrain).Area.Position,0.2f);
+                Gizmos.DrawSphere(_game.GameContext.Selector.GetSelectionOfType<ITerrain>().First.Area.Position,0.2f);
             }
         }
     }

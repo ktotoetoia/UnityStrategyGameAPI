@@ -10,25 +10,40 @@ namespace TDS.SelectionSystem
     public class EntitySelector : ISelector
     {
         public event Action OnSelected;
+        private ISelection<IEntity> _selection;
         
         public float Range { get; set; } = 0.2f;
         public IWorld World { get; set; }
-        public ISelection Selection { get; private set; }
-
+        public ISelection<object> Selection => _selection;
+        
         public EntitySelector(IWorld world)
         {
             World = world;
-            Selection = new Selection();
+            _selection = new Selection<IEntity>();
         }
 
         public void UpdateSelection(Vector3 position)
         {
-            IEntity ent = null;
-            var distance = Range;
+            _selection.Deselect();
+            _selection = GetSelection<IEntity>(position);
+            OnSelected?.Invoke();
+        }
 
-            foreach (var entity in World.EntityRegister.Entities)
+        public void UpdateSelection(Bounds bounds)
+        {
+            _selection.Deselect();
+            _selection = GetSelection<IEntity>(bounds);
+            OnSelected?.Invoke();
+        }
+
+        public ISelection<T> GetSelection<T>(Vector3 position) where T : class
+        {            
+            IEntity ent = null;
+            float distance = Range;
+            
+            foreach (IEntity entity in World.EntityRegister.Entities.Where(x=> x is T))
             {
-                var lDistance = Vector3.Distance(entity.Transform.Position, position);
+                float lDistance = Vector3.Distance(entity.Transform.Position, position);
 
                 if (lDistance <= distance)
                 {
@@ -36,19 +51,20 @@ namespace TDS.SelectionSystem
                     distance = lDistance;
                 }
             }
-
-            Selection.Deselect();
-            Selection = new Selection(new SelectableWrapper(ent));
-            OnSelected?.Invoke();
+            return new Selection<T>(ent as T);
         }
 
-        public void UpdateSelection(Bounds bounds)
-        {
-            IEnumerable<ISelectable> selected = World.EntityRegister.Entities
-                .Where(x => bounds.Contains(x.Transform.Position)).Select(x => new SelectableWrapper(x)).ToList();
+        public ISelection<T> GetSelection<T>(Bounds bounds) where T : class
+        {            
+            List<T> selected = World.EntityRegister.Entities
+                .Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
 
-            Selection.Deselect();
-            Selection = new Selection(selected);
+            return new Selection<T>(selected);
+        }
+
+        public ISelection<T> GetSelectionOfType<T>() where T : class
+        {
+            return new Selection<T>(_selection.Selected.OfType<T>());
         }
     }
 }

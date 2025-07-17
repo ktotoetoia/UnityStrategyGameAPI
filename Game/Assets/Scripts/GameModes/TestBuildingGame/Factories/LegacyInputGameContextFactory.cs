@@ -15,7 +15,7 @@ namespace BuildingsTestGame
                 AssignStage = new GameStage(),
                 BuildStage = new GameStage(),
                 EventStage = new GameStage(),
-                Selector = new BuildingTerrainSelector(world.Map),
+                Selector = new TerrainSelector(world.Map),
             };
             
             (context.AssignStage as GameStage).CommandHandler = new AssignStageCommandHandler();

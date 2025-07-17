@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace TDS.Graphs
 {
-    public interface IGraphReadOnly
+    public interface IGraphReadOnly<T>
     {
-        IReadOnlyList<INode> Nodes { get; }
-        IReadOnlyList<IEdge> Edges { get; }
+        IReadOnlyList<INode<T>> Nodes { get; }
+        IReadOnlyList<IEdge<T>> Edges { get; }
     }
 }

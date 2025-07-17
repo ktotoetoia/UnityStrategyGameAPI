@@ -2,13 +2,8 @@
 
 namespace TDS.Graphs
 {
-    public interface INode : INode<object>
+    public interface INode<T> :IValue<T>
     {
-        
-    }
-
-    public interface INode<T> : IValue<T>
-    {
-        IEnumerable<IEdge> Edges { get; }
+        IEnumerable<IEdge<T>> Edges { get; }
     }
 }

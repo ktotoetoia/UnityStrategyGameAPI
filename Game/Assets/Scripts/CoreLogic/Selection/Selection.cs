@@ -3,29 +3,30 @@ using System.Linq;
 
 namespace TDS.SelectionSystem
 {
-    public class Selection : ISelection
+    public class Selection<T> : ISelection<T>
     {
-        public ISelectable First { get; private set; }
-        public IEnumerable<ISelectable> Selected { get; private set; }
+        private List<T> _selected;
+
+        public T First => _selected.FirstOrDefault();
+        public IEnumerable<T> Selected => _selected;
      
-        public Selection() : this(null, new List<ISelectable>())
+        public Selection() : this(new List<T>())
         {
         }
 
-        public Selection(ISelectable oneSelected) : this(oneSelected, new List<ISelectable> { oneSelected })
+        public Selection(T oneSelected) : this(new List<T> { oneSelected })
         {
         }
 
-        public Selection(IEnumerable<ISelectable> selected) : this(selected.FirstOrDefault(), selected)
+        public Selection(IEnumerable<T> selected) : this(selected.ToList())
         {
         }
 
-        public Selection(ISelectable first, IEnumerable<ISelectable> selected)
+        public Selection(List<T> selected)
         {
-            First = first;
-            Selected = selected;
+            _selected = new List<T>(selected);
 
-            foreach (ISelectable sel in selected)
+            foreach (ISelectable sel in _selected.OfType<ISelectable>())
             {
                 sel.OnSelected();
             }
@@ -33,13 +34,12 @@ namespace TDS.SelectionSystem
 
         public void Deselect()
         {
-            foreach (ISelectable selected in Selected)
+            foreach (ISelectable sel in _selected.OfType<ISelectable>())
             {
-                selected.OnDeselected();
+                sel.OnDeselected();
             }
 
-            First = null;
-            Selected = new List<ISelectable>();
+            _selected = new List<T>();
         }
     }
 }

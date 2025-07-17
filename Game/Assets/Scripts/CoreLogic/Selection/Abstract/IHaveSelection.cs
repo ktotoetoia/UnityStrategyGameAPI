@@ -2,6 +2,6 @@
 {
     public interface IHaveSelection
     {
-        ISelection Selection { get; }
+        ISelection<object> Selection { get; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿namespace TDS.Graphs
 {
-    public interface IEdge
+    public interface IEdge<T>
     {
-        INode From { get; }
-        INode To { get; }
-
-        INode GetOther(INode node);
+        INode<T> From { get; }
+        INode<T> To { get; }
     }
 }

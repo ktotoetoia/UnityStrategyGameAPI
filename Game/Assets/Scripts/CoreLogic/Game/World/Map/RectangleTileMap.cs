@@ -1,12 +1,13 @@
-﻿using TDS.Graphs;
+﻿using System.Linq;
+using TDS.Graphs;
 using UnityEngine;
 
 namespace TDS.Worlds
 {
-    public class RectangleTileMap : Map
+    public class RectangleTileMap : Map, IGraphMap
     {
-        private GridGraph _graph;
-        public GridGraph Graph => _graph;
+        private GridGraph<ITerrain> _graph;
+        public IGraphReadOnly<ITerrain> Graph => _graph;
         public ITerrain[,] TerrainsMatrix { get; }
         
         public RectangleTileMap(Vector2Int gridSize) : this(gridSize, new BoundsTerrainFactory())
@@ -23,7 +24,7 @@ namespace TDS.Worlds
         {
             TerrainsMatrix = new ITerrain[gridSize.x, gridSize.y];
             Vector2 offset = gridSize * tileSize / 2 - tileSize / 2;
-            _graph = new GridGraph(gridSize.x, gridSize.y);
+            _graph = new GridGraph<ITerrain>(gridSize.x, gridSize.y);
             
             for (int x = 0; x < gridSize.x; x++)
             {
@@ -36,6 +37,11 @@ namespace TDS.Worlds
                     _graph.NodeMatrix[x,y].Value = TerrainsMatrix[x, y];
                 }
             }
+        }
+
+        public INode<ITerrain> GetNode(ITerrain terrain)
+        {
+            return _graph.Nodes.FirstOrDefault(x => x.Value == terrain);
         }
     }
 }
