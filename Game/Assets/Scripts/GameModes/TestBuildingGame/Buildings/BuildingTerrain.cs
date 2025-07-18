@@ -1,5 +1,7 @@
 ﻿using TDS.Entities;
 using TDS.Worlds;
+using UnityEngine;
+using Terrain = TDS.Worlds.Terrain;
 
 namespace BuildingsTestGame
 {

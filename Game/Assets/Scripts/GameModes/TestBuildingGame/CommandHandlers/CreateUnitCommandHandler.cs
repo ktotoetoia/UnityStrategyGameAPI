@@ -11,7 +11,7 @@ namespace BuildingsTestGame
         {
             if (CanDoCommand(command, out CreateUnitCommand com))
             {
-                IUnit unit = new DefaultUnit();
+                IUnit unit = new DefaultUnit(){Name = "Default Unit"};
                 
                 com.EntityRegister.AddEntity(unit);
                 com.Building.AddToQueue(unit);

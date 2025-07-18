@@ -8,7 +8,7 @@ namespace BuildingsTestGame
     {
         public BuildingTerrain Create(Bounds param1)
         {
-            return new BuildingTerrain(new BoundsArea(param1));
+            return new BuildingTerrain(new BoundsArea(param1)) {Name = "Building Terrain"};
         }
     }
 }

@@ -5,6 +5,7 @@ using TDS.TurnSystem;
 using TDS.Worlds;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace TDS
 {
@@ -14,11 +15,13 @@ namespace TDS
         [SerializeField] private Vector2Int _size;
         [SerializeField] private Vector2Int _firstBuildingPosition;
         private BuildingGame _game;
+        [FormerlySerializedAs("_ui")] [SerializeField] private BuildingGameUI buildingGameUI;
         
         private void Awake()
         {
             _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
             GetComponent<MapUIDebug>().Map = _game.World.Map;
+            buildingGameUI.Selector = _game.GameContext.Selector;
         }
 
         private void Update()
