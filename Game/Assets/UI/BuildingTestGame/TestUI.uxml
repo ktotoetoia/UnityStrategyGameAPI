@@ -3,7 +3,9 @@
     <ui:VisualElement name="AllContainer" style="flex-grow: 1;">
         <ui:VisualElement name="MiddleContainer" class="middleScreenContainer" />
         <ui:VisualElement name="BottomContainer" class="bottomContainer">
-            <ui:VisualElement name="EmptyContainer" class="bottomContainerEmpty" />
+            <ui:VisualElement name="EmptyContainer" class="bottomContainerEmpty">
+                <ui:Label text="Label" name="StageLabel" class="nameLabel" />
+            </ui:VisualElement>
             <ui:VisualElement name="InfoContainer" class="infoContainer">
                 <ui:Label text="TerrainName" name="TerrainLabel" class="nameLabel" />
                 <ui:Label text="UnitName" name="UnitLabel" class="nameLabel" style="flex-shrink: 1;" />

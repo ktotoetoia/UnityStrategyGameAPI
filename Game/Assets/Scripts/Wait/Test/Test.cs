@@ -21,7 +21,7 @@ namespace TDS
         {
             _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
             GetComponent<MapUIDebug>().Map = _game.World.Map;
-            buildingGameUI.Selector = _game.GameContext.Selector;
+            buildingGameUI.Game = _game;
         }
 
         private void Update()
