@@ -1,3 +1,4 @@
+using System;
 using TDS.SelectionSystem;
 using TDS.Worlds;
 using UnityEngine;
@@ -8,42 +9,58 @@ namespace BuildingsTestGame
     public class BuildingGameUI : MonoBehaviour
     {
         private UIDocument _document;
-        private Label _unitName;
-        private Label _terrainName;
-        private Label _buildingName;
-        private ISelector _selector;
+        private Label _unitLabel;
+        private Label _terrainLabel;
+        private Label _buildingLabel;
+        private Label _stageLabel;
+        private BuildingGame _game;
 
-        public ISelector Selector
+        public BuildingGame Game
         {
             get
             {
-                return _selector; 
+                return _game; 
             }
             set
             {
                 _document ??= GetComponent<UIDocument>();
-                _unitName ??= _document.rootVisualElement.Q<Label>("UnitLabel");
-                _terrainName ??= _document.rootVisualElement.Q<Label>("TerrainLabel");
-                _buildingName ??= _document.rootVisualElement.Q<Label>("BuildingLabel");
+                _unitLabel ??= _document.rootVisualElement.Q<Label>("UnitLabel");
+                _terrainLabel ??= _document.rootVisualElement.Q<Label>("TerrainLabel");
+                _buildingLabel ??= _document.rootVisualElement.Q<Label>("BuildingLabel");
+                _stageLabel ??= _document.rootVisualElement.Q<Label>("StageLabel");
                 
-                _selector = value;
-                _selector.OnSelected += () =>
+                _game = value;
+                _game.GameContext.Selector.OnSelected += () =>
                 {
-                    BuildingTerrain terrain = _selector.GetSelectionOfType<BuildingTerrain>().First;
+                    BuildingTerrain terrain = _game.GameContext.Selector.GetSelectionOfType<BuildingTerrain>().First;
 
                     if (terrain != null)
                     {
-                        _terrainName.text = terrain.Name;
-                        _buildingName.text = terrain.Building?.Name ?? "No Building";
-                        _unitName.text = terrain.Unit?.Name ?? "No Unit";
+                        _terrainLabel.text = terrain.Name;
+                        _buildingLabel.text = terrain.Building?.Name ?? "No Building";
+                        _unitLabel.text = terrain.Unit?.Name ?? "No Unit";
                     }
                 };
             }
-        } 
-        
-        private void Awake()
+        }
+
+        public void Update()
         {
-            _document = GetComponent<UIDocument>();
+            if (Game != null)
+            {
+                if (Game.AssignStage == Game.TurnSwitcher.CurrentUser)
+                {
+                    _stageLabel.text = nameof(Game.AssignStage);
+                }
+                if (Game.BuildStage == Game.TurnSwitcher.CurrentUser)
+                {
+                    _stageLabel.text = nameof(Game.BuildStage);
+                }
+                if (Game.EventStage == Game.TurnSwitcher.CurrentUser)
+                {
+                    _stageLabel.text = nameof(Game.EventStage);
+                }
+            }
         }
     }
 }

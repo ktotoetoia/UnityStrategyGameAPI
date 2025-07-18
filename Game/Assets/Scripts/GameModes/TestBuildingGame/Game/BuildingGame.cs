@@ -28,7 +28,6 @@ namespace BuildingsTestGame
         
         public void Update()
         {
-            GameContext.CurrentStage = CurrentStage;
             GameContext.Update();
             TurnSwitcher.Update();
             CurrentStage.Update();

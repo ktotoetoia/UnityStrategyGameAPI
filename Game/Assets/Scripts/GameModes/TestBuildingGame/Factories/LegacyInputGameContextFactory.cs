@@ -1,4 +1,5 @@
 ﻿using TDS;
+using TDS.Pathfinding;
 using TDS.SelectionSystem;
 using TDS.TurnSystem;
 using TDS.Worlds;
@@ -16,6 +17,7 @@ namespace BuildingsTestGame
                 BuildStage = new GameStage(),
                 EventStage = new GameStage(),
                 Selector = new TerrainSelector(world.Map),
+                Pathfinder = new DijkstraAlgorithm()
             };
             
             (context.AssignStage as GameStage).CommandHandler = new AssignStageCommandHandler();

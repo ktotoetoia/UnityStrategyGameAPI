@@ -1,4 +1,5 @@
-﻿using TDS.SelectionSystem;
+﻿using TDS.Pathfinding;
+using TDS.SelectionSystem;
 using TDS.Worlds;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace BuildingsTestGame
         public IGameStage AssignStage { get; set; }
         public IGameStage BuildStage { get; set; }
         public IGameStage EventStage { get; set; }
-        public IGameStage CurrentStage { get; set; }
         public ISelector Selector { get; set; }
+        public IPathfinder Pathfinder { get; set; }
         
         public void Update()
         {

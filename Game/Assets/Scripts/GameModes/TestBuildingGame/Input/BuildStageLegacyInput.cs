@@ -16,7 +16,7 @@ namespace BuildingsTestGame
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                handler.DoCommand(new EndTurnCommand(_context.CurrentStage));
+                handler.DoCommand(new EndTurnCommand(_context.BuildStage));
             }
         }
     }

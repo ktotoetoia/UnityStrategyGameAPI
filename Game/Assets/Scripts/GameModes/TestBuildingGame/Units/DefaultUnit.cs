@@ -1,5 +1,4 @@
 ﻿using TDS.Entities;
-using TDS.Factions;
 
 namespace BuildingsTestGame
 {

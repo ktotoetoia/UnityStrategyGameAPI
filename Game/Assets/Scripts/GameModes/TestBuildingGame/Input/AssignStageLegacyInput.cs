@@ -14,13 +14,11 @@ namespace BuildingsTestGame
     {
         private IBuildingGameContext _context;
         private List<INode<ITerrain>> _path;
-        private DijkstraAlgorithm _pathfinding;
         private RectangleTileMap _map;
         
         public AssignStageLegacyInput(IBuildingGameContext context)
         {
             _context = context;
-            _pathfinding = new DijkstraAlgorithm();
             _map = _context.World.Map as RectangleTileMap;
         }
         
@@ -28,7 +26,7 @@ namespace BuildingsTestGame
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                handler.DoCommand(new EndTurnCommand(_context.CurrentStage));
+                handler.DoCommand(new EndTurnCommand(_context.AssignStage));
             }
 
             if (Input.GetKeyDown(KeyCode.C))
@@ -40,7 +38,7 @@ namespace BuildingsTestGame
             {
                 ISelection<ITerrain> selection = _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 
-                _path = _pathfinding.GetPath(_map.Graph.Nodes.ToList(), 
+                _path = _context.Pathfinder.GetPath(_map.Graph.Nodes.ToList(), 
                     _map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First),
                     _map.GetNode(selection.First),
                     x => 1);
@@ -50,7 +48,7 @@ namespace BuildingsTestGame
             {
                 for (int i = 0; i < _path.Count - 1; i++)
                 {
-                    Debug.DrawLine(_path[i].Value.Area.Position,(_path[i+1].Value as ITerrain).Area.Position);
+                    Debug.DrawLine(_path[i].Value.Area.Position,_path[i+1].Value.Area.Position);
                 }
             }
         }
