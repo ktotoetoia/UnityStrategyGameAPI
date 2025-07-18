@@ -5,7 +5,7 @@ using TDS.Graphs;
 
 namespace TDS.Pathfinding
 {
-    public class DijkstraAlgorithm
+    public class DijkstraAlgorithm : IPathfinder
     {
         public List<INode<T>> GetPath<T>(
             List<INode<T>> nodes,
