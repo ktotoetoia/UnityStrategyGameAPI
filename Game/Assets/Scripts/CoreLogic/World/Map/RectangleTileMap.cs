@@ -15,20 +15,20 @@ namespace TDS.Worlds
             
         }
         
-        public RectangleTileMap(Vector2Int gridSize, IFactory<ITerrain, Bounds> terrainFactory) : this(gridSize,terrainFactory,Vector2.one)
+        public RectangleTileMap(Vector2Int tileCount, IFactory<ITerrain, Bounds> terrainFactory) : this(tileCount,Vector2.one, terrainFactory)
         {
             
         }
         
-        public RectangleTileMap(Vector2Int gridSize, IFactory<ITerrain,Bounds> terrainFactory,Vector2 tileSize)
+        public RectangleTileMap(Vector2Int tileCount, Vector2 tileSize, IFactory<ITerrain, Bounds> terrainFactory)
         {
-            TerrainsMatrix = new ITerrain[gridSize.x, gridSize.y];
-            Vector2 offset = gridSize * tileSize / 2 - tileSize / 2;
-            _graph = new GridGraph<ITerrain>(gridSize.x, gridSize.y);
+            TerrainsMatrix = new ITerrain[tileCount.x, tileCount.y];
+            Vector2 offset = tileCount * tileSize / 2 - tileSize / 2;
+            _graph = new GridGraph<ITerrain>(tileCount.x, tileCount.y);
             
-            for (int x = 0; x < gridSize.x; x++)
+            for (int x = 0; x < tileCount.x; x++)
             {
-                for (int y = 0; y < gridSize.y; y++)
+                for (int y = 0; y < tileCount.y; y++)
                 {
                     ITerrain terrain = terrainFactory.Create(new Bounds(new Vector3(x, y) * tileSize - offset, tileSize));
                     

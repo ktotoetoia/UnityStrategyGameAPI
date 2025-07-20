@@ -30,7 +30,7 @@ namespace TDS.Graphs
             for (int x = 0; x < Width; x++)
             for (int y = 0; y < Height; y++)
             {
-                var node = new Node<T>();
+                Node<T> node = new Node<T>();
                 _nodeMatrix[x, y] = node;
                 _nodes.Add(node);
             }
@@ -53,7 +53,7 @@ namespace TDS.Graphs
 
         private void AddEdge(Node<T> a, Node<T> b)
         {
-            var edge = new Edge<T>(a, b);
+            Edge<T> edge = new Edge<T>(a, b);
             _edges.Add(edge);
             a.Add(edge);
             b.Add(edge);

@@ -14,12 +14,12 @@ namespace BuildingsTestGame
     {
         private IBuildingGameContext _context;
         private List<INode<ITerrain>> _path;
-        private RectangleTileMap _map;
+        private IGraphMap _map;
         
         public AssignStageLegacyInput(IBuildingGameContext context)
         {
             _context = context;
-            _map = _context.World.Map as RectangleTileMap;
+            _map = _context.World.Map as IGraphMap;
         }
         
         public void HandleInput(ICommandHandler handler)
