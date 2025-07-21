@@ -7,13 +7,14 @@ using TDS.Pathfinding;
 using TDS.SelectionSystem;
 using TDS.Worlds;
 using UnityEngine;
+using Terrain = TDS.Worlds.Terrain;
 
 namespace BuildingsTestGame
 {
     public class AssignStageLegacyInput : IInputHandler
     {
         private IBuildingGameContext _context;
-        private List<INode<ITerrain>> _path;
+        private IGraphReadOnly<ITerrain> _path;
         private IGraphMap _map;
         
         public AssignStageLegacyInput(IBuildingGameContext context)
@@ -37,18 +38,16 @@ namespace BuildingsTestGame
             if (Input.GetMouseButtonDown(1))
             {
                 ISelection<ITerrain> selection = _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                
-                _path = _context.Pathfinder.GetPath(_map.Graph.Nodes.ToList(), 
-                    _map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First),
-                    _map.GetNode(selection.First),
-                    x => 1);
+
+                _path = _context.Pathfinder.GetAvailableMovement(
+                    _map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First), 3);
             }
 
             if (_path != null)
             {
-                for (int i = 0; i < _path.Count - 1; i++)
+                for (int i = 0; i < _path.Nodes.Count - 1; i++)
                 {
-                    Debug.DrawLine(_path[i].Value.Area.Position,_path[i+1].Value.Area.Position);
+                    Debug.DrawLine(_path.Nodes[i].Value.Area.Position,_path.Nodes[i+1].Value.Area.Position);
                 }
             }
         }

@@ -7,8 +7,6 @@ using TDS.Pathfinding;
 using TDS.TurnSystem;
 using TDS.Worlds;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace TDS
 {
@@ -17,14 +15,15 @@ namespace TDS
     {
         [SerializeField] private Vector2Int _size;
         [SerializeField] private Vector2Int _firstBuildingPosition;
+        [SerializeField] private BuildingGameUI _buildingGameUI;
+        [SerializeField] private int _f;
         private BuildingGame _game;
-        [FormerlySerializedAs("_ui")] [SerializeField] private BuildingGameUI buildingGameUI;
         
         private void Awake()
         {
             _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
             GetComponent<MapUIDebug>().Map = _game.World.Map;
-            buildingGameUI.Game = _game;
+            _buildingGameUI.Game = _game;
         }
 
         private void Update()
@@ -46,8 +45,8 @@ namespace TDS
             }
             Gizmos.color = Color.blue;
 
-            IGraphReadOnly<ITerrain> graph = new BreadthSearch()
-                .GetArea(
+            IGraphReadOnly<ITerrain> graph = new BreadthFirstTraversal()
+                .FindReachableSubgraph(
                     (_game.GameContext.World.Map as IGraphMap).GetNode(_game.GameContext.Selector
                         .GetSelectionOfType<ITerrain>().First),
                     x => x.Count() < 4);

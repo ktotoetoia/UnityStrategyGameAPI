@@ -5,9 +5,11 @@ using TDS.Graphs;
 
 namespace TDS.Pathfinding
 {
-    public class BreadthSearch
+    public class BreadthFirstTraversal : IGraphTraversal
     {
-        public IGraphReadOnly<T> GetArea<T>(INode<T> startNode,Func<IEnumerable<INode<T>>, bool> canPathTo)
+        public IGraphReadOnly<T> FindReachableSubgraph<T>(
+            INode<T> startNode,
+            Func<IEnumerable<INode<T>>, bool> canPathTo)
         {
             var newNodes = new Dictionary<INode<T>, Node<T>>();
             var newEdges = new HashSet<IEdge<T>>();
@@ -36,7 +38,7 @@ namespace TDS.Pathfinding
                             var neighborNewNode = CreateNewNode(neighbor);
                             newNodes[neighbor] = neighborNewNode;
 
-                            CreateNewEdge(currentNewNode, neighborNewNode, newEdges);
+                            CreateNewEdgeIfNotConnected(currentNewNode, neighborNewNode, newEdges);
 
                             queue.Enqueue(newPath);
                         }
@@ -44,7 +46,7 @@ namespace TDS.Pathfinding
                     else
                     {
                         var neighborNewNode = newNodes[neighbor];
-                        CreateNewEdge(currentNewNode, neighborNewNode, newEdges);
+                        CreateNewEdgeIfNotConnected(currentNewNode, neighborNewNode, newEdges);
                     }
                 }
             }
@@ -57,15 +59,29 @@ namespace TDS.Pathfinding
             return new Node<T>(originalNode.Value);
         }
 
-        private void CreateNewEdge<T>(Node<T> from, Node<T> to, HashSet<IEdge<T>> edgeSet)
+        private void CreateNewEdgeIfNotConnected<T>(Node<T> from, Node<T> to, HashSet<IEdge<T>> edgeSet)
         {
-            var newEdge = new Edge<T>(from, to);
-
-            if (edgeSet.Add(newEdge))
+            if (!HasEdgeBetween(from, to))
             {
-                from.Add(newEdge);
-                to.Add(newEdge);
+                var newEdge = new Edge<T>(from, to);
+
+                if (edgeSet.Add(newEdge))
+                {
+                    from.Add(newEdge);
+                    to.Add(newEdge);
+                }
             }
+        }
+
+        private bool HasEdgeBetween<T>(Node<T> a, Node<T> b)
+        {
+            foreach (var edge in a.Edges)
+            {
+                var neighbor = edge.From.Equals(a) ? edge.To : edge.From;
+                if (neighbor.Equals(b))
+                    return true;
+            }
+            return false;
         }
 
         private INode<T> GetNeighbor<T>(IEdge<T> edge, INode<T> current)

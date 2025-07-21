@@ -17,7 +17,7 @@ namespace BuildingsTestGame
                 BuildStage = new GameStage(),
                 EventStage = new GameStage(),
                 Selector = new TerrainSelector(world.Map),
-                Pathfinder = new Dijkstra()
+                Pathfinder = new MapPathfinder(world.Map)
             };
             
             (context.AssignStage as GameStage).CommandHandler = new AssignStageCommandHandler();

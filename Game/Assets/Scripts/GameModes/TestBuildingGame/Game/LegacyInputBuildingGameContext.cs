@@ -12,7 +12,7 @@ namespace BuildingsTestGame
         public IGameStage BuildStage { get; set; }
         public IGameStage EventStage { get; set; }
         public ISelector Selector { get; set; }
-        public IPathfinder Pathfinder { get; set; }
+        public IMapPathfinder Pathfinder { get; set; }
         
         public void Update()
         {

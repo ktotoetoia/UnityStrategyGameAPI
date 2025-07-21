@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using TDS.Graphs;
+using TDS.Worlds;
+
+namespace BuildingsTestGame
+{
+    public interface IDistanceCounter
+    {
+        float GetDistance<T>(IEnumerable<INode<T>> path) where T : ITerrain;
+    }
+}
