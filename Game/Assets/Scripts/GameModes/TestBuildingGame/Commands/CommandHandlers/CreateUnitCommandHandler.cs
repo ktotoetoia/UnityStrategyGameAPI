@@ -1,7 +1,5 @@
 ﻿using TDS.Commands;
 using TDS.Entities;
-using TDS.SelectionSystem;
-using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
@@ -11,7 +9,7 @@ namespace BuildingsTestGame
         {
             if (CanDoCommand(command, out CreateUnitCommand com))
             {
-                IUnit unit = new DefaultUnit(){Name = "Default Unit"};
+                IUnit unit = new DefaultUnit{Name = "Default Unit"};
                 
                 com.EntityRegister.AddEntity(unit);
                 com.Building.AddToQueue(unit);

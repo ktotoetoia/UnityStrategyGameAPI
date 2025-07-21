@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using TDS;
+﻿using System.Linq;
 using TDS.Commands;
 using TDS.Graphs;
-using TDS.Pathfinding;
-using TDS.SelectionSystem;
 using TDS.Worlds;
 using UnityEngine;
-using Terrain = TDS.Worlds.Terrain;
 
 namespace BuildingsTestGame
 {
@@ -37,10 +32,13 @@ namespace BuildingsTestGame
 
             if (Input.GetMouseButtonDown(1))
             {
-                ISelection<ITerrain> selection = _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                _path = _context.Pathfinder.GetAvailableMovement(_map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First), 3);
 
-                _path = _context.Pathfinder.GetAvailableMovement(
-                    _map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First), 3);
+                INode<ITerrain> from = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.GetSelectionOfType<ITerrain>().First);
+                INode<ITerrain> to = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).First);
+                
+                handler.DoCommand(new MoveUnitCommand(_context.Selector.GetSelectionOfType<BuildingTerrain>().First.Unit,
+                    _context.Pathfinder.GetPath(_path,from, to)));
             }
 
             if (_path != null)

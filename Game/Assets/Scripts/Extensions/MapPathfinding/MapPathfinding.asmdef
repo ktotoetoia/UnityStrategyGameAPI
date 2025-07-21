@@ -1,16 +1,11 @@
 {
-    "name": "BuildingTest",
+    "name": "MapPathfinding",
     "rootNamespace": "",
     "references": [
-        "GUID:81e9ebc6e2164b14c87d08c8ed4f786f",
         "GUID:7ea4dc7242dc935488943a22edf55314",
-        "GUID:7b993c3fdd39d9740a35536abf69b87f",
-        "GUID:5ae0911dc0f446c48942707132d1dafb",
-        "GUID:3ad0f7ff4444ab2498de68a10682f4bd",
-        "GUID:8b31c08b0b931e4429f3b97ac0400ee9",
         "GUID:22a26919b91dfcb4e83bd96fdf58233b",
-        "GUID:a0b7ab44c3050254ab090dc50ab7d437",
-        "GUID:232cb8d4b0e2c8d49a2075cdf77af762"
+        "GUID:8b31c08b0b931e4429f3b97ac0400ee9",
+        "GUID:81e9ebc6e2164b14c87d08c8ed4f786f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -8,7 +8,7 @@ namespace TDS.Pathfinding
     public class Dijkstra : IPathfinder
     {
         public List<INode<T>> GetPath<T>(
-            List<INode<T>> nodes,
+            IEnumerable<INode<T>> nodes,
             INode<T> start,
             INode<T> end,
             Func<IEdge<T>, float> distances)

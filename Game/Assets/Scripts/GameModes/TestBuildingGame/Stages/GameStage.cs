@@ -1,5 +1,4 @@
-﻿using TDS;
-using TDS.Commands;
+﻿using TDS.Commands;
 using TDS.TurnSystem;
 
 namespace BuildingsTestGame

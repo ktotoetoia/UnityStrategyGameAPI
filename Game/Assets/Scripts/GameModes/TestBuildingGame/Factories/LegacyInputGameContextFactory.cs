@@ -1,7 +1,7 @@
-﻿using TDS;
-using TDS.Pathfinding;
+﻿using System.Collections.Generic;
+using TDS;
+using TDS.Commands;
 using TDS.SelectionSystem;
-using TDS.TurnSystem;
 using TDS.Worlds;
 
 namespace BuildingsTestGame
@@ -20,13 +20,25 @@ namespace BuildingsTestGame
                 Pathfinder = new MapPathfinder(world.Map)
             };
             
-            (context.AssignStage as GameStage).CommandHandler = new AssignStageCommandHandler();
-            (context.AssignStage as GameStage).InputHandler = new AssignStageLegacyInput(context);
-            (context.BuildStage as GameStage).CommandHandler = new BuildStageCommandHandler();
-            (context.BuildStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
-            (context.EventStage as GameStage).CommandHandler = new EventStageCommandHandler(context);
-            (context.EventStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
+            (context.AssignStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+            {
+                new EndTurnCommandHandler(),
+                new CreateUnitCommandHandler(),
+                new MoveUnitCommandHandler(),
+            });
+            (context.BuildStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+            {
+                new EndTurnCommandHandler(),
+            });
+            (context.EventStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+            {
+                new EndTurnCommandHandler(),
+            });
             
+            (context.AssignStage as GameStage).InputHandler = new AssignStageLegacyInput(context);
+            (context.BuildStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
+            (context.EventStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
+
             return context;
         }
     }

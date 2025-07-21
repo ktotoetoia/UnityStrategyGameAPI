@@ -1,6 +1,4 @@
-﻿using TDS.Worlds;
-
-namespace BuildingsTestGame
+﻿namespace BuildingsTestGame
 {
     public class Building : IBuilding
     {

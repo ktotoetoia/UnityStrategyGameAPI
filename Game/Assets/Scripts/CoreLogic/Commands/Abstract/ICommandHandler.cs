@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace TDS.Commands
+﻿namespace TDS.Commands
 {
     public interface ICommandHandler
     {

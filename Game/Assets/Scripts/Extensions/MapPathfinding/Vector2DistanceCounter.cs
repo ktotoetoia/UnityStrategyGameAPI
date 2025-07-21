@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class PositionBasedDistanceCounter : IDistanceCounter
+    public class Vector2DistanceCounter : IDistanceCounter
     {
         public float GetDistance<T>(IEnumerable<INode<T>> path) where T : ITerrain
         {
@@ -25,6 +25,11 @@ namespace BuildingsTestGame
             }
             
             return distance;
+        }
+
+        public float GetDistance<T>(IEdge<T> edge) where T : ITerrain
+        {
+            return Vector2.Distance(edge.From.Value.Area.Position, edge.To.Value.Area.Position);
         }
     }
 }

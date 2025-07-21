@@ -1,10 +1,5 @@
-﻿using System;
-using System.Linq;
-using BuildingsTestGame;
+﻿using BuildingsTestGame;
 using TDS.Entities;
-using TDS.Graphs;
-using TDS.Pathfinding;
-using TDS.TurnSystem;
 using TDS.Worlds;
 using UnityEngine;
 
@@ -44,22 +39,6 @@ namespace TDS
                 Gizmos.DrawSphere(_game.GameContext.Selector.GetSelectionOfType<ITerrain>().First.Area.Position,0.2f);
             }
             Gizmos.color = Color.blue;
-
-            IGraphReadOnly<ITerrain> graph = new BreadthFirstTraversal()
-                .FindReachableSubgraph(
-                    (_game.GameContext.World.Map as IGraphMap).GetNode(_game.GameContext.Selector
-                        .GetSelectionOfType<ITerrain>().First),
-                    x => x.Count() < 4);
-            
-            foreach (INode<ITerrain> node in graph.Nodes)
-            {
-                Gizmos.DrawSphere(node.Value.Area.Position,0.2f);
-            }
-
-            foreach (IEdge<ITerrain> edge in graph.Edges)
-            {
-                Gizmos.DrawLine(edge.From.Value.Area.Position,edge.To.Value.Area.Position);
-            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TDS.Entities;
+﻿using TDS.Entities;
 
 namespace TDS.Worlds
 {

@@ -1,6 +1,3 @@
-using System;
-using TDS.SelectionSystem;
-using TDS.Worlds;
 using UnityEngine;
 using UnityEngine.UIElements;
 

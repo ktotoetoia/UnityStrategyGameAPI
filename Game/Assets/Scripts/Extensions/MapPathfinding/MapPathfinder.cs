@@ -1,4 +1,5 @@
-﻿using TDS.Graphs;
+﻿using System.Collections.Generic;
+using TDS.Graphs;
 using TDS.Pathfinding;
 using TDS.Worlds;
 
@@ -13,7 +14,7 @@ namespace BuildingsTestGame
 
         public IDistanceCounter DistanceCounter
         {
-            get =>_distanceCounter??= new PositionBasedDistanceCounter();
+            get =>_distanceCounter??= new Vector2DistanceCounter();
             set => _distanceCounter = value;
         }
         
@@ -32,6 +33,13 @@ namespace BuildingsTestGame
         public IGraphReadOnly<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain
         {
             return _traversal.FindReachableSubgraph(startNode, x => DistanceCounter.GetDistance(x) <= maxDistance);
+        }
+
+        public IPath<T> GetPath<T>(IGraphReadOnly<T> graph, INode<T> from, INode<T> to) where T : ITerrain
+        {
+            IEnumerable<INode<T>> nodes = _pathfinder.GetPath(graph.Nodes, from, to, x => DistanceCounter.GetDistance(x));
+            
+            return new Path<T>(nodes);
         }
     }
 }
