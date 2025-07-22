@@ -11,19 +11,14 @@ namespace BuildingsTestGame
     public class UIDebugHandler : MonoBehaviour
     {
         [SerializeField] GameObject _unitPrefab;
-
+        [SerializeField] private float _moveSpeed = 2f;
         private Dictionary<IUnit, GameObject> _units = new();
         private ISelection<ITerrain> currentSelection;
         private IPath<ITerrain> _path;
         private IUnit _currentUnit;
 
         public ICommandQueue Queue { get; set; }
-
-        // How fast to move in units per second
-        [SerializeField] private float _moveSpeed = 2f;
-
-        private Vector3 _currentTargetPos;
-        private bool _isMoving = false;
+        private bool _isMoving;
 
         private void Update()
         {
@@ -61,7 +56,6 @@ namespace BuildingsTestGame
                 }
 
                 _isMoving = true;
-                _currentTargetPos = _path.Nodes[1].Value.Area.Position;
             }
         }
 
