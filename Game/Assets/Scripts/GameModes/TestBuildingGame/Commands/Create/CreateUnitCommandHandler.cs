@@ -13,6 +13,9 @@ namespace BuildingsTestGame
                 
                 com.EntityRegister.AddEntity(unit);
                 com.Building.AddToQueue(unit);
+                
+                com.CreatedUnit =  unit;
+                com.Finish(CommandStatus.Success);
             }
         }
     }

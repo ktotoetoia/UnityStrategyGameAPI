@@ -6,40 +6,46 @@ using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
-    public class LegacyInputGameContextFactory : IFactory<LegacyInputBuildingGameContext,IWorld>
+    public class LegacyInputGameContextFactory : IFactory<(GameStage,GameStage,GameStage),IWorld>
     {
-        public LegacyInputBuildingGameContext Create(IWorld world)
+        public (GameStage,GameStage,GameStage) Create(IWorld world)
         {
-            LegacyInputBuildingGameContext context = new LegacyInputBuildingGameContext()
-            {
-                World = world,
-                AssignStage = new GameStage(),
-                BuildStage = new GameStage(),
-                EventStage = new GameStage(),
-                Selector = new TerrainSelector(world.Map),
-                Pathfinder = new MapPathfinder(world.Map)
-            };
+            GameStage assignStage = new GameStage();
+            GameStage buildStage = new GameStage();
+            GameStage eventStage = new GameStage();
             
-            (context.AssignStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+            assignStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
             {
                 new EndTurnCommandHandler(),
                 new CreateUnitCommandHandler(),
                 new MoveUnitCommandHandler(),
-            });
-            (context.BuildStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+                new SelectorCommandHandler(),
+            }));
+            buildStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
             {
                 new EndTurnCommandHandler(),
-            });
-            (context.EventStage as GameStage).CommandHandler = new CompositeCommandHandler(new List<ICommandHandler>
+                new SelectorCommandHandler(),
+            }));
+            eventStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
             {
                 new EndTurnCommandHandler(),
-            });
+            }));
             
-            (context.AssignStage as GameStage).InputHandler = new AssignStageLegacyInput(context);
-            (context.BuildStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
-            (context.EventStage as GameStage).InputHandler = new BuildStageLegacyInput(context);
+            LegacyInputBuildingGameContext context = new LegacyInputBuildingGameContext()
+            {
+                AssignStage = assignStage,
+                BuildStage = buildStage,
+                EventStage = eventStage,
+                World = world,
+                Selector = new TerrainSelector(world.Map),
+                Pathfinder = new MapPathfinder(world.Map),
+            };
+            
+            assignStage.InputHandler = new AssignStageLegacyInput(context);
+            buildStage.InputHandler = new BuildStageLegacyInput(context);
+            eventStage.InputHandler = new BuildStageLegacyInput(context);
 
-            return context;
+            return (assignStage,buildStage,eventStage);
         }
     }
 }

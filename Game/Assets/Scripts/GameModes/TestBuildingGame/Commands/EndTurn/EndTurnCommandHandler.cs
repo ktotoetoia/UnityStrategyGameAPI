@@ -11,9 +11,10 @@ namespace BuildingsTestGame
 
         public void DoCommand(ICommand command)
         {
-            if (CanDoCommand(command))
+            if (command is EndTurnCommand com)
             {
-                (command as EndTurnCommand).TurnUser.EndTurn();
+                com.TurnUser.EndTurn();
+                com.Finish(CommandStatus.Success);
             }
         }
     }

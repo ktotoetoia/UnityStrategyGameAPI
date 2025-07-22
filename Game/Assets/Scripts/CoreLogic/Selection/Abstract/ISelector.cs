@@ -12,6 +12,6 @@ namespace TDS.SelectionSystem
         ISelection<T> GetSelection<T>(Vector3 position) where T : class;
         ISelection<T> GetSelection<T>(Bounds bounds)where T : class;
         
-        ISelection<T> GetSelectionOfType<T>()where T : class;
+        ISelection<T> SelectionOfType<T>()where T : class;
     }
 }

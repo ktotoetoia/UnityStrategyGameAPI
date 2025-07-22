@@ -2,6 +2,7 @@
 {
     public interface ICommand
     {
-        //todo
+        CommandStatus Status { get; }
+        void Finish(CommandStatus status);
     }
 }

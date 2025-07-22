@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,17 +28,6 @@ namespace BuildingsTestGame
                 _stageLabel ??= _document.rootVisualElement.Q<Label>("StageLabel");
                 
                 _game = value;
-                _game.GameContext.Selector.OnSelected += () =>
-                {
-                    BuildingTerrain terrain = _game.GameContext.Selector.GetSelectionOfType<BuildingTerrain>().First;
-
-                    if (terrain != null)
-                    {
-                        _terrainLabel.text = terrain.Name;
-                        _buildingLabel.text = terrain.Building?.Name ?? "No Building";
-                        _unitLabel.text = terrain.Unit?.Name ?? "No Unit";
-                    }
-                };
             }
         }
 

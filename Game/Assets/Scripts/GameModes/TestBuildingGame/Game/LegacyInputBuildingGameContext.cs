@@ -12,13 +12,5 @@ namespace BuildingsTestGame
         public IGameStage EventStage { get; set; }
         public ISelector Selector { get; set; }
         public IMapPathfinder Pathfinder { get; set; }
-        
-        public void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Selector.UpdateSelection((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            }
-        }
     }
 }

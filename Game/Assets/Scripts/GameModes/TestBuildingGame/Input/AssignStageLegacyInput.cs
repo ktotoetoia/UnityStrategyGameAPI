@@ -18,27 +18,32 @@ namespace BuildingsTestGame
             _map = _context.World.Map as IGraphMap;
         }
         
-        public void HandleInput(ICommandHandler handler)
+        public void HandleInput(ICommandQueue handler)
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                handler.DoCommand(new EndTurnCommand(_context.AssignStage));
+                handler.Enqueue(new EndTurnCommand(_context.AssignStage));
             }
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                handler.DoCommand(new CreateUnitCommand(AssignStageUnit.Builder,_context.Selector.GetSelectionOfType<BuildingTerrain>().First.Building as IProductionBuilding,_context.World.EntityRegister));
+                handler.Enqueue(new CreateUnitCommand(AssignStageUnit.Builder,_context.Selector.SelectionOfType<BuildingTerrain>().First.Building as IProductionBuilding,_context.World.EntityRegister));
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                _path = _context.Pathfinder.GetAvailableMovement(_map.GetNode(_context.Selector.GetSelectionOfType<ITerrain>().First), 3);
+                _path = _context.Pathfinder.GetAvailableMovement(_map.GetNode(_context.Selector.SelectionOfType<ITerrain>().First), 3);
 
-                INode<ITerrain> from = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.GetSelectionOfType<ITerrain>().First);
+                INode<ITerrain> from = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.SelectionOfType<ITerrain>().First);
                 INode<ITerrain> to = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).First);
                 
-                handler.DoCommand(new MoveUnitCommand(_context.Selector.GetSelectionOfType<BuildingTerrain>().First.Unit,
+                handler.Enqueue(new MoveUnitCommand(_context.Selector.SelectionOfType<BuildingTerrain>().First.Unit,
                     _context.Pathfinder.GetPath(_path,from, to)));
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                handler.Enqueue(new SelectAtPositionCommand(_context.Selector, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)));
             }
 
             if (_path != null)

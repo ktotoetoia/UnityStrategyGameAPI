@@ -42,7 +42,7 @@ namespace TDS.SelectionSystem
             return selection;
         }
 
-        public ISelection<T> GetSelectionOfType<T>()where T : class
+        public ISelection<T> SelectionOfType<T>()where T : class
         {
             return new Selection<T>(_selection.Selected.OfType<T>());
         }

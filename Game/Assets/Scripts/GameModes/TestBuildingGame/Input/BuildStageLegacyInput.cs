@@ -12,11 +12,11 @@ namespace BuildingsTestGame
             _context = context;
         }
         
-        public void HandleInput(ICommandHandler handler)
+        public void HandleInput(ICommandQueue handler)
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                handler.DoCommand(new EndTurnCommand(_context.BuildStage));
+                handler.Enqueue(new EndTurnCommand(_context.BuildStage));
             }
         }
     }

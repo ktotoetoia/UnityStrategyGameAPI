@@ -11,10 +11,12 @@ namespace BuildingsTestGame
 
         public void DoCommand(ICommand command)
         {
-            if (command is MoveUnitCommand c && c.path.Start.Value is BuildingTerrain t1 && c.path.End.Value is BuildingTerrain t2)
+            if (command is MoveUnitCommand c && c.Path.Start.Value is BuildingTerrain t1 && c.Path.End.Value is BuildingTerrain t2)
             {
                 t1.Unit = null;
                 t2.Unit = c.Unit;
+                
+                c.Finish(CommandStatus.Success);
             }
         }
     }

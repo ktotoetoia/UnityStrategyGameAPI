@@ -4,7 +4,7 @@ using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
-    public interface IBuildingGameContext : IUpdatable
+    public interface IBuildingGameContext
     {
         public IWorld World { get; }
         public IGameStage AssignStage { get; }
