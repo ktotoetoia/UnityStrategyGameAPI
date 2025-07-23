@@ -13,23 +13,18 @@ namespace BuildingsTestGame
             GameStage assignStage = new GameStage();
             GameStage buildStage = new GameStage();
             GameStage eventStage = new GameStage();
+            assignStage.EventBus = new EventBus();
+            assignStage.EventBus.Subscribe(new EndTurnCommandHandler());
+            assignStage.EventBus.Subscribe(new CreateUnitCommandHandler());
+            assignStage.EventBus.Subscribe(new MoveUnitCommandHandler());
+            assignStage.EventBus.Subscribe(new SelectorCommandHandler());
             
-            assignStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
-            {
-                new EndTurnCommandHandler(),
-                new CreateUnitCommandHandler(),
-                new MoveUnitCommandHandler(),
-                new SelectorCommandHandler(),
-            }));
-            buildStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
-            {
-                new EndTurnCommandHandler(),
-                new SelectorCommandHandler(),
-            }));
-            eventStage.CommandQueue = new CommandQueue(new CompositeCommandHandler(new List<ICommandHandler>
-            {
-                new EndTurnCommandHandler(),
-            }));
+            buildStage.EventBus = new EventBus();
+            buildStage.EventBus.Subscribe(new EndTurnCommandHandler());
+            buildStage.EventBus.Subscribe(new SelectorCommandHandler());
+
+            eventStage.EventBus = new EventBus();
+            eventStage.EventBus.Subscribe(new EndTurnCommandHandler());
             
             LegacyInputBuildingGameContext context = new LegacyInputBuildingGameContext()
             {

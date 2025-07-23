@@ -2,20 +2,11 @@
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommandHandler : ICommandHandler
+    public class EndTurnCommandHandler : IEventHandler<EndTurnCommand>
     {
-        public bool CanDoCommand(ICommand command)
-        {
-            return command is EndTurnCommand;
-        }
-
-        public void DoCommand(ICommand command)
-        {
-            if (command is EndTurnCommand com)
-            {
-                com.TurnUser.EndTurn();
-                com.Finish(CommandStatus.Success);
-            }
+        public void Handle(EndTurnCommand evt)
+        {                
+            evt.TurnUser.EndTurn();
         }
     }
 }

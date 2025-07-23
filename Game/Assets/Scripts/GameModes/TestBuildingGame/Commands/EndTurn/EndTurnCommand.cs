@@ -3,7 +3,7 @@ using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommand : Command
+    public class EndTurnCommand : IEvent
     {
         public ITurnUserManual TurnUser { get; }
 

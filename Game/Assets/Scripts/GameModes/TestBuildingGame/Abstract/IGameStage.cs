@@ -6,7 +6,7 @@ namespace BuildingsTestGame
 {
     public interface IGameStage : ITurnUserManual, IUpdatable
     {
-        public ICommandQueue CommandQueue { get; }
+        public IEventBus EventBus { get; }
         public IInputHandler InputHandler { get; }
     }
 }

@@ -3,20 +3,14 @@ using TDS.Entities;
 
 namespace BuildingsTestGame
 {
-    public class CreateUnitCommandHandler : CompositeCommandHandler.CommandHandler<CreateUnitCommand>
+    public class CreateUnitCommandHandler  : IEventHandler<CreateUnitCommand>
     {
-        public override void DoCommand(ICommand command)
+        public void Handle(CreateUnitCommand evt)
         {
-            if (CanDoCommand(command, out CreateUnitCommand com))
-            {
-                IUnit unit = new DefaultUnit{Name = "Default Unit"};
+            IUnit unit = new DefaultUnit{Name = "Default Unit"};
                 
-                com.EntityRegister.AddEntity(unit);
-                com.Building.AddToQueue(unit);
-                
-                com.CreatedUnit =  unit;
-                com.Finish(CommandStatus.Success);
-            }
+            evt.EntityRegister.AddEntity(unit);
+            evt.Building.AddToQueue(unit);
         }
     }
 }

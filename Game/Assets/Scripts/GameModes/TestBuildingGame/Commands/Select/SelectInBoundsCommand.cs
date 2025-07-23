@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class SelectInBoundsCommand : Command
+    public class SelectInBoundsCommand : IEvent
     {
         public ISelector Selector { get; init; }
         public Bounds Bounds { get; init; }

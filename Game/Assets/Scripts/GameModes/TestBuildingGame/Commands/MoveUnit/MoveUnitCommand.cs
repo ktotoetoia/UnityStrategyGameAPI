@@ -4,7 +4,7 @@ using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommand : Command
+    public class MoveUnitCommand : IEvent
     {
         public IUnit Unit { get;}
         public IPath<ITerrain> Path { get;}

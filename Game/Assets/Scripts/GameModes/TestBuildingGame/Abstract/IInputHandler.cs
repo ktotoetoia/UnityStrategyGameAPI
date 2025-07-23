@@ -4,6 +4,6 @@ namespace BuildingsTestGame
 {
     public interface IInputHandler
     {
-        public void HandleInput(ICommandQueue queue);
+        public void HandleInput(IEventBus queue);
     }
 }

@@ -18,16 +18,16 @@ namespace BuildingsTestGame
             _map = _context.World.Map as IGraphMap;
         }
         
-        public void HandleInput(ICommandQueue handler)
+        public void HandleInput(IEventBus handler)
         { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                handler.Enqueue(new EndTurnCommand(_context.AssignStage));
+                handler.Publish(new EndTurnCommand(_context.AssignStage));
             }
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                handler.Enqueue(new CreateUnitCommand(AssignStageUnit.Builder,_context.Selector.SelectionOfType<BuildingTerrain>().First.Building as IProductionBuilding,_context.World.EntityRegister));
+                handler.Publish(new CreateUnitCommand(AssignStageUnit.Builder,_context.Selector.SelectionOfType<BuildingTerrain>().First.Building as IProductionBuilding,_context.World.EntityRegister));
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -37,13 +37,13 @@ namespace BuildingsTestGame
                 INode<ITerrain> from = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.SelectionOfType<ITerrain>().First);
                 INode<ITerrain> to = _path.Nodes.FirstOrDefault(x => x.Value == _context.Selector.GetSelection<ITerrain>((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).First);
                 
-                handler.Enqueue(new MoveUnitCommand(_context.Selector.SelectionOfType<BuildingTerrain>().First.Unit,
+                handler.Publish(new MoveUnitCommand(_context.Selector.SelectionOfType<BuildingTerrain>().First.Unit,
                     _context.Pathfinder.GetPath(_path,from, to)));
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                handler.Enqueue(new SelectAtPositionCommand(_context.Selector, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+                handler.Publish(new SelectAtPositionCommand(_context.Selector, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)));
             }
 
             if (_path != null)

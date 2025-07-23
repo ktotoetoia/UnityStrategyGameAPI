@@ -5,12 +5,12 @@ namespace BuildingsTestGame
 {
     public class GameStage : TurnUser, IGameStage
     {
-        public ICommandQueue CommandQueue { get; set; }
         public IInputHandler InputHandler { get; set; }
+        public IEventBus EventBus { get; set; }
         
-        public GameStage(ICommandQueue commandHandler, IInputHandler inputHandler)
+        public GameStage(IEventBus eventBus, IInputHandler inputHandler)
         {
-            CommandQueue = commandHandler;
+            EventBus = eventBus;
             InputHandler = inputHandler;
         }
 
@@ -21,7 +21,7 @@ namespace BuildingsTestGame
 
         public void Update()
         {
-            InputHandler.HandleInput(CommandQueue);
+            InputHandler.HandleInput(EventBus);
         }
     }
 }
