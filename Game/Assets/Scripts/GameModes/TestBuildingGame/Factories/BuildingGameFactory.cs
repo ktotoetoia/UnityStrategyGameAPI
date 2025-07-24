@@ -1,4 +1,5 @@
 using TDS;
+using TDS.Events;
 using TDS.Worlds;
 using UnityEngine;
 
@@ -16,12 +17,14 @@ namespace BuildingsTestGame
         
         public BuildingGame Create()
         {
-            return new BuildingGame(CreateWorld());
+            IEventBus bus = new EventBus();
+            
+            return new BuildingGame(CreateWorld(bus),bus);
         }
 
-        private World CreateWorld()
+        private World CreateWorld(IEventBus bus)
         {
-            RectangleTileMap  tileMap = new RectangleTileMap(Size,new BuildingTerrainFactory());
+            RectangleTileMap tileMap = new RectangleTileMap(Size,new BuildingTerrainFactory(bus));
             
             SetBase(tileMap);
             
@@ -30,7 +33,7 @@ namespace BuildingsTestGame
 
         private void SetBase(RectangleTileMap tileMap)
         {
-            (tileMap.TerrainsMatrix[StartingPosition.x, StartingPosition.y] as BuildingTerrain).Building = new FirstBuilding();
+            ((BuildingTerrain)tileMap.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
         }
     }
 }

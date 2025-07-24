@@ -1,12 +1,22 @@
-﻿using TDS.Commands;
+﻿using TDS.Events;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommandHandler : IEventHandler<EndTurnCommand>
+    public class EndTurnCommandHandler : IEventHandler
     {
-        public void Handle(EndTurnCommand evt)
-        {                
-            evt.TurnUser.EndTurn();
+        public bool CanHandle(IEvent evt)
+        {
+            return evt is EndTurnCommand;
+        }
+
+        public void Handle(IEvent evt)
+        {
+            if (evt is not EndTurnCommand command)
+            {
+                throw new System.ArgumentException();
+            }
+            
+            command.TurnUser.EndTurn();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TDS.Commands
+﻿namespace TDS.Events
 {
     public interface IEvent
     {

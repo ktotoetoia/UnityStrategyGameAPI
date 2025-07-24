@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace TDS.Commands
+namespace TDS.Events
 {
-    public interface IEventHandler<in TEvent> where TEvent : IEvent
+    public interface IEventHandler
     {
-        void Handle(TEvent evt);
+        bool CanHandle(IEvent evt);
+        void Handle(IEvent evt);
     }
 }

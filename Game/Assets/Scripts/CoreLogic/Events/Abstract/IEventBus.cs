@@ -1,10 +1,9 @@
-﻿namespace TDS.Commands
+﻿namespace TDS.Events
 {
     public interface IEventBus
     {
-        void Subscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent;
-        void Unsubscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent;
-
-        void Publish<TEvent>(TEvent evt) where TEvent : IEvent;
+        void Subscribe(IEventHandler handler);
+        void Unsubscribe(IEventHandler handler);
+        void Publish(IEvent evt);
     }
 }

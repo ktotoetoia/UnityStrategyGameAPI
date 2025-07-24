@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using TDS;
-using TDS.Commands;
+using TDS.Events;
 using TDS.SelectionSystem;
 using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
-    public class LegacyInputGameContextFactory : IFactory<(GameStage,GameStage,GameStage),IWorld>
+    public class LegacyInputStagesFactory : IFactory<(GameStage,GameStage,GameStage),IWorld>
     {
         public (GameStage,GameStage,GameStage) Create(IWorld world)
         {

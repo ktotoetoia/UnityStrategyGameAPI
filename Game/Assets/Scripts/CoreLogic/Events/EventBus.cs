@@ -2,45 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TDS.Commands
+namespace TDS.Events
 {
     public class EventBus : IEventBus
     {
-        private readonly Dictionary<Type, List<object>> _handlers = new();
+        private readonly List<IEventHandler> _handlers = new();
 
-        public void Subscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent
+        public void Subscribe(IEventHandler handler)
         {
-            Type eventType = typeof(TEvent);
-            
-            if (!_handlers.ContainsKey(eventType))
-            {
-                _handlers[eventType] = new List<object>();
-            }
-
-            _handlers[eventType].Add(handler);
+            _handlers.Add(handler);
         }
 
-        public void Unsubscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent
+        public void Unsubscribe(IEventHandler handler)
         {
-            Type eventType = typeof(TEvent);
-            
-            if (_handlers.TryGetValue(eventType, out var list))
-            {
-                list.Remove(handler);
-            }
+            _handlers.Remove(handler);
         }
 
-        public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
+        public void Publish(IEvent evt)
         {
-            Type eventType = typeof(TEvent);
-            
-            if (_handlers.TryGetValue(eventType, out var list))
+            foreach (var handler in _handlers)
             {
-                foreach (IEventHandler<TEvent> handler in list.Cast<IEventHandler<TEvent>>())
+                if (handler.CanHandle(evt))
                 {
                     handler.Handle(evt);
                 }
             }
         }
     }
+    
 }

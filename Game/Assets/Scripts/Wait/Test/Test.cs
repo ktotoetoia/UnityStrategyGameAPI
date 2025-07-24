@@ -1,12 +1,13 @@
 ﻿using BuildingsTestGame;
 using TDS.Entities;
+using TDS.Events;
 using TDS.Worlds;
 using UnityEngine;
 
 namespace TDS
 {
     [DefaultExecutionOrder(100)]
-    public class Test : MonoBehaviour
+    public class Test : MonoBehaviour, IEventHandler
     {
         [SerializeField] private Vector2Int _size;
         [SerializeField] private Vector2Int _firstBuildingPosition;
@@ -19,6 +20,7 @@ namespace TDS
             _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
             GetComponent<MapUIDebug>().Map = _game.World.Map;
             _buildingGameUI.Game = _game;
+            _game.WorldEventBus.Subscribe(this);
         }
 
         private void Update()
@@ -34,6 +36,20 @@ namespace TDS
             }
 
             Gizmos.color = Color.blue;
+        }
+
+        public bool CanHandle(IEvent evt)
+        {
+            return true;
+        }
+
+        public void Handle(IEvent evt)
+        {
+            if(evt is PropertyChangeEvent<IUnit,BuildingTerrain> asd)
+            {
+                Debug.Log(asd.OldValue);
+                Debug.Log(asd.NewValue);
+            }
         }
     }
 }

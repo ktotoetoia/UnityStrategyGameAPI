@@ -1,16 +1,26 @@
-﻿using TDS.Commands;
+﻿using TDS.Events;
 using TDS.Entities;
 
 namespace BuildingsTestGame
 {
-    public class CreateUnitCommandHandler  : IEventHandler<CreateUnitCommand>
+    public class CreateUnitCommandHandler  : IEventHandler
     {
-        public void Handle(CreateUnitCommand evt)
+        public bool CanHandle(IEvent evt)
         {
+            return evt is CreateUnitCommand;
+        }
+
+        public void Handle(IEvent evt)
+        {
+            if (evt is not CreateUnitCommand command)
+            {
+                throw new System.ArgumentException();
+            }
+            
             IUnit unit = new DefaultUnit{Name = "Default Unit"};
                 
-            evt.EntityRegister.AddEntity(unit);
-            evt.Building.AddToQueue(unit);
+            command.EntityRegister.AddEntity(unit);
+            command.Building.AddToQueue(unit);
         }
     }
 }
