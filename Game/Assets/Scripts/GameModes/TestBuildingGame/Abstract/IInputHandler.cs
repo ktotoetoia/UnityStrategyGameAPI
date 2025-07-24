@@ -1,9 +1,10 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 
 namespace BuildingsTestGame
 {
     public interface IInputHandler
     {
-        public void HandleInput(IEventBus queue);
+        public void HandleInput(ICommandSequencer sequencer);
     }
 }

@@ -1,4 +1,5 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 using TDS.TurnSystem;
 
 namespace BuildingsTestGame
@@ -6,11 +7,11 @@ namespace BuildingsTestGame
     public class GameStage : TurnUser, IGameStage
     {
         public IInputHandler InputHandler { get; set; }
-        public IEventBus EventBus { get; set; }
+        public ICommandSequencer CommandSequencer { get; set; }
         
-        public GameStage(IEventBus eventBus, IInputHandler inputHandler)
+        public GameStage(ICommandSequencer commandSequencer, IInputHandler inputHandler)
         {
-            EventBus = eventBus;
+            CommandSequencer = commandSequencer;
             InputHandler = inputHandler;
         }
 
@@ -21,7 +22,7 @@ namespace BuildingsTestGame
 
         public void Update()
         {
-            InputHandler.HandleInput(EventBus);
+            InputHandler.HandleInput(CommandSequencer);
         }
     }
 }

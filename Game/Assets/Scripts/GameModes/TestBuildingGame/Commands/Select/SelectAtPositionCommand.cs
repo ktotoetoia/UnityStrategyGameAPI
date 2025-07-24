@@ -1,10 +1,11 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 using TDS.SelectionSystem;
 using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class SelectAtPositionCommand : IEvent
+    public class SelectAtPositionCommand : Command
     {
         public ISelector Selector { get; init; }
         public Vector3 Position { get; init; }

@@ -1,10 +1,11 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 using TDS.Entities;
 using TDS.Worlds;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommand : IEvent
+    public class MoveUnitCommand : Command
     {
         public IUnit Unit { get;}
         public IPath<ITerrain> Path { get;}

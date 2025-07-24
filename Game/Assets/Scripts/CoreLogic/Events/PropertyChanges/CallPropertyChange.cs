@@ -20,24 +20,24 @@ namespace TDS.Events
                 
                 if (!EqualityComparer<T>.Default.Equals(oldValue, _value))
                 {
-                    EventBus.Publish(new PropertyChangeEvent<T,TOwner>(oldValue, _value,Owner));
+                    EventPublisher.Publish(new PropertyChangeEvent<T,TOwner>(oldValue, _value,Owner));
                 }
             }
         }
         
-        public IEventBus EventBus { get; }
+        public IEventPublisher  EventPublisher { get; }
         public TOwner Owner { get; }
 
-        public CallPropertyChange(TOwner owner, IEventBus eventBus) : this(default, owner, eventBus)
+        public CallPropertyChange(TOwner owner, IEventPublisher eventPublisher) : this(default, owner, eventPublisher)
         {
             
         }
 
-        public CallPropertyChange(T value, TOwner owner, IEventBus eventBus)
+        public CallPropertyChange(T value, TOwner owner, IEventPublisher  eventPublisher)
         {
             _value = value;
             Owner = owner;
-            EventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            EventPublisher = eventPublisher ?? throw new ArgumentNullException(nameof(eventPublisher));
         }
     }
 }

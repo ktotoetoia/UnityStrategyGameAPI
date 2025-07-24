@@ -1,4 +1,6 @@
-﻿using TDS;
+﻿using System.Collections.Generic;
+using TDS;
+using TDS.Commands;
 using TDS.Events;
 using TDS.TurnSystem;
 using TDS.Worlds;

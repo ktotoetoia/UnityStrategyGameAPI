@@ -1,10 +1,11 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 using TDS.SelectionSystem;
 using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class SelectInBoundsCommand : IEvent
+    public class SelectInBoundsCommand : ICommand
     {
         public ISelector Selector { get; init; }
         public Bounds Bounds { get; init; }

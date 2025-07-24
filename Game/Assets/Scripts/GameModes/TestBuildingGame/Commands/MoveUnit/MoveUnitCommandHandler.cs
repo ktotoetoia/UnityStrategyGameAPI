@@ -1,22 +1,36 @@
-﻿using TDS.Events;
+﻿using System;
+using System.Collections.Generic;
+using TDS.Commands;
+using TDS.Events;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommandHandler : IEventHandler
+    public class MoveUnitCommandHandler : ICommandHandler
     {
-        public bool CanHandle(IEvent evt)
+        public bool CanDoCommand(ICommand command)
         {
-            return evt is MoveUnitCommand command && command.Path.Start.Value is BuildingTerrain&& command.Path.End.Value is BuildingTerrain;
+            return command is MoveUnitCommand moveUnitCommand &&
+                   moveUnitCommand.Path.Start.Value is BuildingTerrain &&
+                   moveUnitCommand.Path.End.Value is BuildingTerrain;
         }
 
-        public void Handle(IEvent evt)
+        public ICommandStatus DoCommand(ICommand command)
         {
-            if (evt is MoveUnitCommand command && command.Path.Start.Value is BuildingTerrain t1 &&
-                command.Path.End.Value is BuildingTerrain t2)
+            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Path.Start.Value is BuildingTerrain t1 &&
+                moveUnitCommand.Path.End.Value is BuildingTerrain t2)
             {
                 t1.Unit = null;
-                t2.Unit = command.Unit;
+                t2.Unit = moveUnitCommand.Unit;
+
+                return new CommandStatus(Status.Success, command, this);
             }
+
+            return new CommandStatus(Status.Failed, command, this);
+        }
+
+        public IEnumerable<ICommandStatus> UpdateCommands()
+        {
+            return Array.Empty<ICommandStatus>();
         }
     }
 }

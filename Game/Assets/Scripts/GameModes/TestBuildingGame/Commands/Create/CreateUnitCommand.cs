@@ -1,10 +1,11 @@
 ﻿using System;
+using TDS.Commands;
 using TDS.Events;
 using TDS.Entities;
 
 namespace BuildingsTestGame
 {
-    public class CreateUnitCommand : IEvent
+    public class CreateUnitCommand : Command
     {
         public AssignStageUnit UnitType { get; }
         public IProductionBuilding Building { get; }

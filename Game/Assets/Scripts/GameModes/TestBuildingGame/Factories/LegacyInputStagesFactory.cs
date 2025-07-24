@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TDS;
+using TDS.Commands;
 using TDS.Events;
 using TDS.SelectionSystem;
 using TDS.Worlds;
@@ -13,18 +14,21 @@ namespace BuildingsTestGame
             GameStage assignStage = new GameStage();
             GameStage buildStage = new GameStage();
             GameStage eventStage = new GameStage();
-            assignStage.EventBus = new EventBus();
-            assignStage.EventBus.Subscribe(new EndTurnCommandHandler());
-            assignStage.EventBus.Subscribe(new CreateUnitCommandHandler());
-            assignStage.EventBus.Subscribe(new MoveUnitCommandHandler());
-            assignStage.EventBus.Subscribe(new SelectorCommandHandler());
+            CommandSequencer assignSeq = new CommandSequencer();
+            assignStage.CommandSequencer = assignSeq;
+            assignSeq.HandlersList.Add(new EndTurnCommandHandler());
+            assignSeq.HandlersList.Add(new CreateUnitCommandHandler());
+            assignSeq.HandlersList.Add(new MoveUnitCommandHandler());
+            assignSeq.HandlersList.Add(new SelectorCommandHandler());
             
-            buildStage.EventBus = new EventBus();
-            buildStage.EventBus.Subscribe(new EndTurnCommandHandler());
-            buildStage.EventBus.Subscribe(new SelectorCommandHandler());
+            CommandSequencer buildSeq = new CommandSequencer();
+            buildStage.CommandSequencer = buildSeq;
+            buildSeq.HandlersList.Add(new EndTurnCommandHandler());
+            buildSeq.HandlersList.Add(new SelectorCommandHandler());
 
-            eventStage.EventBus = new EventBus();
-            eventStage.EventBus.Subscribe(new EndTurnCommandHandler());
+            CommandSequencer eventSeq = new CommandSequencer();
+            eventStage.CommandSequencer = eventSeq;
+            eventSeq.HandlersList.Add(new EndTurnCommandHandler());
             
             LegacyInputBuildingGameContext context = new LegacyInputBuildingGameContext()
             {

@@ -1,27 +1,38 @@
-﻿using TDS.Events;
+﻿using System;
+using System.Collections.Generic;
+using TDS.Commands;
 
 namespace BuildingsTestGame
 {
-    public class SelectorCommandHandler : IEventHandler
+    public class SelectorCommandHandler : ICommandHandler
     {
-        public bool CanHandle(IEvent evt)
+        public bool CanDoCommand(ICommand command)
         {
-            return evt is SelectAtPositionCommand or SelectInBoundsCommand;
+            return command is SelectAtPositionCommand or SelectInBoundsCommand;
         }
 
-        public void Handle(IEvent evt)
-        {
-            if (evt is SelectAtPositionCommand command)
+        public ICommandStatus DoCommand(ICommand command)
+        {            
+            if (command is SelectAtPositionCommand selectAtPositionCommand)
             {
-                command.Selector.UpdateSelection(command.Position);
+                selectAtPositionCommand.Selector.UpdateSelection(selectAtPositionCommand.Position);
                 
-                return;
+                return new CommandStatus(Status.Success,command,this);
             }
 
-            if (evt is SelectInBoundsCommand inBoundsCommand)
+            if (command is SelectInBoundsCommand inBoundsCommand)
             {
                 inBoundsCommand.Selector.UpdateSelection(inBoundsCommand.Bounds);
+                
+                return new CommandStatus(Status.Success,command,this);
             }
+            
+            return new CommandStatus(Status.Failed,command,this);
+        }
+
+        public IEnumerable<ICommandStatus> UpdateCommands()
+        {
+            return Array.Empty<ICommandStatus>();
         }
     }
 }

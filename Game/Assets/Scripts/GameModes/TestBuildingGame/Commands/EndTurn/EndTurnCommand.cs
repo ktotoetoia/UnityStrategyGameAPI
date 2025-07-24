@@ -1,9 +1,10 @@
-﻿using TDS.Events;
+﻿using TDS.Commands;
+using TDS.Events;
 using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommand : IEvent
+    public class EndTurnCommand : Command
     {
         public ITurnUserManual TurnUser { get; }
 
