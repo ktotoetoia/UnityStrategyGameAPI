@@ -12,6 +12,7 @@ namespace TDS
         [SerializeField] private Vector2Int _firstBuildingPosition;
         [SerializeField] private BuildingGameUI _buildingGameUI;
         [SerializeField] private int _f;
+        [SerializeField] AssignStageLegacyInput _assignStageInput;
         private BuildingGame _game;
         
         private void Awake()
@@ -20,6 +21,7 @@ namespace TDS
             GetComponent<MapUIDebug>().Map = _game.World.Map;
             _buildingGameUI.Game = _game;
             _game.WorldEventBus.Subscribe(this);
+            _assignStageInput.BuildingGame = _game;
         }
 
         private void Update()

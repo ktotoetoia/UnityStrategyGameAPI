@@ -17,7 +17,7 @@ namespace BuildingsTestGame
         public IGameStage EventStage  { get; }
         public IGameStage CurrentStage => TurnSwitcher.CurrentUser as IGameStage;
         
-        public BuildingGame(IWorld world, IEventBus bus) : this(world,bus, new LegacyInputStagesFactory())
+        public BuildingGame(IWorld world, IEventBus bus) : this(world,bus, new StagesFactory())
         {
             
         }
@@ -39,7 +39,6 @@ namespace BuildingsTestGame
         public void Update()
         {
             TurnSwitcher.Update();
-            CurrentStage.Update();
         }
     }
 }

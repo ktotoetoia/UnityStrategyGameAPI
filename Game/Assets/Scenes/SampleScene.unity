@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 1377791927}
   - component: {fileID: 1377791930}
   - component: {fileID: 1377791926}
+  - component: {fileID: 1377791931}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -309,6 +310,7 @@ MonoBehaviour:
   _firstBuildingPosition: {x: 1, y: 1}
   _buildingGameUI: {fileID: 125937415}
   _f: 0
+  _assignStageInput: {fileID: 1377791931}
 --- !u!4 &1377791927
 Transform:
   m_ObjectHideFlags: 0
@@ -336,8 +338,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861637d9f62c410e9ff397dd3de826c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointsSize: 0.3
   _gapSize: 0.1
+  _pointsSize: 0.3
+--- !u!114 &1377791931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377791925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93fe5bf22fd74803925637f8c9ae42d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

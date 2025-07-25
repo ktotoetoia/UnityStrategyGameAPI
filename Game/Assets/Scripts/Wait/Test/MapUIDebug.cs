@@ -6,8 +6,8 @@ namespace TDS.Entities
 {
     public class MapUIDebug : MonoBehaviour
     {
-        [SerializeField] private float _pointsSize = 0.3f;
         [SerializeField] private float _gapSize = 0.1f;
+        [SerializeField] float _pointsSize;
         public IMap Map { get; set; }
 
         private void OnDrawGizmos()
@@ -30,6 +30,7 @@ namespace TDS.Entities
             
             if (point is BuildingTerrain t)
             {
+                
                 if (t.Unit != null)
                 {
                     Gizmos.color = Color.red;

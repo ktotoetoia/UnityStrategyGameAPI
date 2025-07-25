@@ -5,9 +5,8 @@ using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public interface IGameStage : ITurnUserManual, IUpdatable
+    public interface IGameStage : ITurnUserManual
     {
         public ICommandSequencer CommandSequencer { get; }
-        public IInputHandler InputHandler { get; }
     }
 }
