@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public interface IArea : IHavePosition
     {

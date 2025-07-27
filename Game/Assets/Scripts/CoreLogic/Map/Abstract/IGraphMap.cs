@@ -1,6 +1,6 @@
 ﻿using TDS.Graphs;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public interface IGraphMap : IMap
     {

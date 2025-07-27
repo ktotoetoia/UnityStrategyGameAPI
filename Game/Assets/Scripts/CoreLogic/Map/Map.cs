@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public class Map : IMap
     {

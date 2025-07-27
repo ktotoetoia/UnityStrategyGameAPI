@@ -2,7 +2,7 @@
 using TDS.Graphs;
 using UnityEngine;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public class RectangleTileMap : Map, IGraphMap
     {

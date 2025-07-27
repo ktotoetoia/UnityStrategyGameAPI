@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public class BoundsArea : IArea
     {
+        public Bounds Bounds { get; }
+        public Vector3 Position => Bounds.center;
+        
         public BoundsArea(Bounds bounds)
         {
             Bounds = bounds;
         }
-
-        public Bounds Bounds { get; }
-        public Vector3 Position => Bounds.center;
 
         public bool Contains(Vector3 position)
         {

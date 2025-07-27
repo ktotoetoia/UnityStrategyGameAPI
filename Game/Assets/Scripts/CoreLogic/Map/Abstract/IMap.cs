@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace TDS.Worlds
+namespace TDS.Maps
 {
     public interface IMap
     {

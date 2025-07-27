@@ -1,4 +1,4 @@
-﻿namespace TDS.Worlds
+﻿namespace TDS.Maps
 {
     public class Terrain : ITerrain
     {
