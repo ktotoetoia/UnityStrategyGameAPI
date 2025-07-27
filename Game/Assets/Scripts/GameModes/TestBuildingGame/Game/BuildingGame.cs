@@ -1,38 +1,39 @@
 ﻿using System.Collections.Generic;
 using TDS;
 using TDS.Commands;
+using TDS.Entities;
 using TDS.Events;
 using TDS.TurnSystem;
-using TDS.Worlds;
+using TDS.Maps;
 
 namespace BuildingsTestGame
 {
     public class BuildingGame : ITurnBasedGame
     {
-        public IWorld World { get; }
-        public IEventBus WorldEventBus { get; }
+        public IMap Map { get; }
+        public IEntityRegister EntityRegister { get; }
+        public IEventSubscriber EntityRegisterEvents { get; }
+        public IEventSubscriber MapEvents { get; }
         public ITurnSwitcher TurnSwitcher { get; }
         public IGameStage AssignStage { get; }
         public IGameStage BuildStage { get; }
         public IGameStage EventStage  { get; }
         public IGameStage CurrentStage => TurnSwitcher.CurrentUser as IGameStage;
         
-        public BuildingGame(IWorld world, IEventBus bus) : this(world,bus, new StagesFactory())
+        public BuildingGame(IMap map, IEventSubscriber bus) : this(map,bus, new StagesFactory())
         {
             
         }
 
-        public BuildingGame(IWorld world,IEventBus worldEventBus, IFactory<(GameStage,GameStage,GameStage),IWorld> GameStagesFactory)
+        public BuildingGame(IMap map,IEventSubscriber mapEvents, IFactory<(GameStage,GameStage,GameStage)> GameStagesFactory)
         {
-            World = world;
-            WorldEventBus = worldEventBus;
-            
-            (GameStage, GameStage, GameStage) a = GameStagesFactory.Create(world);
-            
-            AssignStage = a.Item1;
-            BuildStage = a.Item2;
-            EventStage = a.Item3;
-            
+            Map = map;
+            MapEvents = mapEvents;
+            EntityRegister register = new EntityRegister();
+            EntityRegister = register;
+            EntityRegisterEvents = new EntityRegisterEvents(register);
+            (AssignStage, BuildStage, EventStage) = GameStagesFactory.Create();
+
             TurnSwitcher = new TurnSwitcher(new ITurnUser[] { AssignStage, BuildStage, EventStage });
         }
         

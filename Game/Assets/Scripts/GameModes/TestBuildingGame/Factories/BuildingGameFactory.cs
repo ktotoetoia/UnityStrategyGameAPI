@@ -1,6 +1,6 @@
 using TDS;
 using TDS.Events;
-using TDS.Worlds;
+using TDS.Maps;
 using UnityEngine;
 
 namespace BuildingsTestGame
@@ -19,16 +19,16 @@ namespace BuildingsTestGame
         {
             IEventBus bus = new EventBus();
             
-            return new BuildingGame(CreateWorld(bus),bus);
+            return new BuildingGame(CreateMap(bus),bus);
         }
 
-        private World CreateWorld(IEventBus bus)
+        private IMap CreateMap(IEventBus bus)
         {
             RectangleTileMap tileMap = new RectangleTileMap(Size,new BuildingTerrainFactory(bus));
             
             SetBase(tileMap);
-            
-            return new World(tileMap);
+
+            return tileMap;
         }
 
         private void SetBase(RectangleTileMap tileMap)

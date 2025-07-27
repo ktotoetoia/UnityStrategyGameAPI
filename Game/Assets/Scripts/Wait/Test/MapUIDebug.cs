@@ -1,5 +1,5 @@
 ﻿using BuildingsTestGame;
-using TDS.Worlds;
+using TDS.Maps;
 using UnityEngine;
 
 namespace TDS.Entities

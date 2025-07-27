@@ -17,10 +17,11 @@ namespace TDS
         
         private void Awake()
         {
-            _game = new BuildingGameFactory(_size){StartingPosition = _firstBuildingPosition }.Create();
-            GetComponent<MapUIDebug>().Map = _game.World.Map;
+            _game = new BuildingGameFactory(_size) { StartingPosition = _firstBuildingPosition }.Create();
+            GetComponent<MapUIDebug>().Map = _game.Map;
+            GetComponent<UnitTracker>().Game = _game;
             _buildingGameUI.Game = _game;
-            _game.WorldEventBus.Subscribe(this);
+            _game.MapEvents.Subscribe(this);
             _assignStageInput.BuildingGame = _game;
         }
 

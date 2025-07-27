@@ -1,7 +1,7 @@
 ﻿using TDS.Entities;
 using TDS.Events;
-using TDS.Worlds;
-using Terrain = TDS.Worlds.Terrain;
+using TDS.Maps;
+using Terrain = TDS.Maps.Terrain;
 
 namespace BuildingsTestGame
 {
@@ -13,7 +13,11 @@ namespace BuildingsTestGame
         public IUnit Unit
         {
             get => _unit.Value;
-            set => _unit.Value = value;
+            set
+            { 
+                _unit.Value = value;
+                value?.Transform.SetPosition(Area.Position);
+            }
         }
         
         public IBuilding Building

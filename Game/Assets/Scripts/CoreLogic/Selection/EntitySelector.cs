@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TDS.Entities;
-using TDS.Worlds;
+using TDS.Maps;
 using UnityEngine;
 
 namespace TDS.SelectionSystem
@@ -13,12 +13,12 @@ namespace TDS.SelectionSystem
         private ISelection<IEntity> _selection;
         
         public float Range { get; set; } = 0.2f;
-        public IWorld World { get; set; }
+        public IEntityRegister EntityRegister { get; set; }
         public ISelection<object> Selection => _selection;
         
-        public EntitySelector(IWorld world)
+        public EntitySelector(IEntityRegister entityRegister)
         {
-            World = world;
+            EntityRegister = entityRegister;
             _selection = new Selection<IEntity>();
         }
 
@@ -41,7 +41,7 @@ namespace TDS.SelectionSystem
             IEntity ent = null;
             float distance = Range;
             
-            foreach (IEntity entity in World.EntityRegister.Entities.Where(x=> x is T))
+            foreach (IEntity entity in EntityRegister.Entities.Where(x=> x is T))
             {
                 float lDistance = Vector3.Distance(entity.Transform.Position, position);
 
@@ -56,7 +56,7 @@ namespace TDS.SelectionSystem
 
         public ISelection<T> GetSelection<T>(Bounds bounds) where T : class
         {            
-            List<T> selected = World.EntityRegister.Entities
+            List<T> selected = EntityRegister.Entities
                 .Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
 
             return new Selection<T>(selected);

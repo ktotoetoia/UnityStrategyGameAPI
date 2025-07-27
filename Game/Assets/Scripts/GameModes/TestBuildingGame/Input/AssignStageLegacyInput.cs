@@ -5,7 +5,7 @@ using TDS.Commands;
 using TDS.Entities;
 using TDS.Graphs;
 using TDS.SelectionSystem;
-using TDS.Worlds;
+using TDS.Maps;
 using UnityEngine;
 
 namespace TDS
@@ -28,9 +28,9 @@ namespace TDS
 
                 if (_game == null) return;
 
-                _selector = new TerrainSelector(_game.World.Map);
-                _pathfinder = new MapPathfinder(_game.World.Map);
-                _map = _game.World.Map as IGraphMap;
+                _selector = new TerrainSelector(_game.Map);
+                _pathfinder = new MapPathfinder(_game.Map);
+                _map = _game.Map as IGraphMap;
                 _commandSequencer = _game.AssignStage.CommandSequencer;
             }
         }
@@ -68,7 +68,7 @@ namespace TDS
                 if (_selector.SelectionOfType<BuildingTerrain>().First.Building is IProductionBuilding selectedBuilding)
                 {
                     _commandSequencer.IssueCommand(
-                        new CreateUnitCommand(AssignStageUnit.Builder, selectedBuilding, _game.World.EntityRegister)
+                        new CreateUnitCommand(AssignStageUnit.Builder, selectedBuilding, _game.EntityRegister)
                     );
                 }
             }

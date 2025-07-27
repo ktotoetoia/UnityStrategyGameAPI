@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TDS.Commands;
+using TDS.Entities;
 using TDS.Events;
 
 namespace BuildingsTestGame
@@ -21,8 +22,15 @@ namespace BuildingsTestGame
             {
                 t1.Unit = null;
                 t2.Unit = moveUnitCommand.Unit;
+                
+                CommandStatus status = new CommandStatus(Status.Success,moveUnitCommand, this);
 
-                return new CommandStatus(Status.Success, command, this);
+                if (moveUnitCommand.Unit.TryGetComponent(out IEventComponent eventComponent))
+                {
+                    eventComponent.Publish(new UnitCommandEvent(status));
+                }
+                
+                return status;
             }
 
             return new CommandStatus(Status.Failed, command, this);

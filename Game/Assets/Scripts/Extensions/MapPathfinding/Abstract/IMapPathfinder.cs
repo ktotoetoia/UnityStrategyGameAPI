@@ -1,5 +1,5 @@
 ﻿using TDS.Graphs;
-using TDS.Worlds;
+using TDS.Maps;
 
 namespace BuildingsTestGame
 {

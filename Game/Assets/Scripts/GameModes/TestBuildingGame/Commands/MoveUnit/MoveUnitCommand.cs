@@ -1,7 +1,7 @@
 ﻿using TDS.Commands;
 using TDS.Events;
 using TDS.Entities;
-using TDS.Worlds;
+using TDS.Maps;
 
 namespace BuildingsTestGame
 {

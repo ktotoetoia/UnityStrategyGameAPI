@@ -6,7 +6,6 @@ namespace BuildingsTestGame
     {
         public void AddToQueue(IUnit unit)
         {
-            unit.Transform.SetPosition(Terrain.Area.Position);
             Terrain.Unit =  unit;
         }
     }

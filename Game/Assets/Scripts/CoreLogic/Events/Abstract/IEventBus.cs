@@ -1,13 +1,19 @@
 ﻿namespace TDS.Events
 {
-    public interface IEventBus : IEventPublisher, IEventSubscriber
+    public interface IEventBus : IEventBus<IEvent>
+    {
+        
+    }
+    
+    public interface IEventBus<in T>: IEventPublisher<T>, IEventSubscriber
+        where T : IEvent
     {
         
     }
 
-    public interface IEventPublisher
+    public interface IEventPublisher<in TEvent> where TEvent : IEvent
     {
-        void Publish(IEvent evt);
+        void Publish(TEvent evt);
     }
 
     public interface IEventSubscriber

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TDS.Graphs;
-using TDS.Worlds;
+using TDS.Maps;
 
 namespace BuildingsTestGame
 {

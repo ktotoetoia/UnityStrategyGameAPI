@@ -9,8 +9,8 @@ namespace TDS.Entities
     {
         private readonly List<IEntity> _entities = new();
 
-        public event Action OnEntityAdded;
-        public event Action OnEntityRemoved;
+        public event Action<IEntity> OnEntityAdded;
+        public event Action<IEntity> OnEntityRemoved;
 
         public IEnumerable<IEntity> Entities
         {
@@ -30,7 +30,7 @@ namespace TDS.Entities
             }
 
             _entities.Add(entity);
-            OnEntityAdded?.Invoke();
+            OnEntityAdded?.Invoke(entity);
         }
 
         public void RemoveEntity(IEntity entity)
@@ -43,7 +43,7 @@ namespace TDS.Entities
             }
 
             _entities.Remove(entity);
-            OnEntityRemoved?.Invoke();
+            OnEntityRemoved?.Invoke(entity);
         }
 
         public IEnumerator<IEntity> GetEnumerator()

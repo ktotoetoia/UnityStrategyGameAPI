@@ -1,4 +1,4 @@
-﻿using TDS.Worlds;
+﻿using TDS.Maps;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,19 +9,20 @@ namespace TDS.Entities
         [SerializeField] private int _fontSize = 20;
         [SerializeField] private float _pointsSize = 0.3f;
 
-        public IWorld World { get; set; }
+        public IMap Map { get; set; }
+        public IEntityRegister EntityRegister { get; set; }
 
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying || World == null) return;
+            if (!Application.isPlaying) return;
 
-            foreach (var terrain in World.Map.Terrains)
+            foreach (var terrain in Map.Terrains)
             {
                 Gizmos.color = Color.grey;
                 DrawTerrain(terrain);
             }
 
-            foreach (var entity in World.EntityRegister)
+            foreach (var entity in EntityRegister)
             {
                 var position = entity.Transform.Position;
                 var style = new GUIStyle

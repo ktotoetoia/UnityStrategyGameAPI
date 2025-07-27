@@ -16,15 +16,22 @@ namespace BuildingsTestGame
         {
             if (command is not CreateUnitCommand createUnitCommand)
             {
-                throw new System.ArgumentException();
+                throw new ArgumentException();
             }
             
-            IUnit unit = new DefaultUnit{Name = "Default Unit"};
-                
+            DefaultUnit unit = new DefaultUnit{Name = "Default Unit"};
+
             createUnitCommand.EntityRegister.AddEntity(unit);
             createUnitCommand.Building.AddToQueue(unit);
             
-            return new CommandStatus(Status.Success,createUnitCommand, this);
+            CommandStatus status =  new CommandStatus(Status.Success,createUnitCommand, this);
+            
+            if (unit.TryGetComponent(out IEventComponent eventComponent))
+            {
+                eventComponent.Publish(new UnitCommandEvent(status));
+            }
+            
+            return status;
         }
 
         public IEnumerable<ICommandStatus> UpdateCommands()

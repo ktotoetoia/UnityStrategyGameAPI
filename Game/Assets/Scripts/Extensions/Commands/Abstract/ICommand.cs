@@ -2,7 +2,7 @@
 
 namespace TDS.Commands
 {
-    public interface ICommand : IEvent
+    public interface ICommand
     {
         
     }

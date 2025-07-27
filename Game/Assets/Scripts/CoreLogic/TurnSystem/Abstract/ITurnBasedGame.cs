@@ -1,10 +1,12 @@
-﻿using TDS.Worlds;
+﻿using TDS.Entities;
+using TDS.Maps;
 
 namespace TDS.TurnSystem
 {
     public interface ITurnBasedGame
     {
-        public IWorld World { get; }
+        public IEntityRegister EntityRegister { get; }
+        public IMap Map { get; }
         public ITurnSwitcher TurnSwitcher { get; }
     }
 }
