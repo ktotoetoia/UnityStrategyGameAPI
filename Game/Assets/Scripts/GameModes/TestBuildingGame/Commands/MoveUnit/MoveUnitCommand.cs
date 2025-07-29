@@ -7,10 +7,10 @@ namespace BuildingsTestGame
 {
     public class MoveUnitCommand : Command
     {
-        public IUnit Unit { get;}
+        public IEntity Unit { get;}
         public IPath<ITerrain> Path { get;}
      
-        public MoveUnitCommand(IUnit Unit,IPath<ITerrain> Path)
+        public MoveUnitCommand(IEntity Unit,IPath<ITerrain> Path)
         {
             this.Unit = Unit;
             this.Path = Path;

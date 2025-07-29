@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TDS.Handlers;
 
 namespace TDS.Events
 {
     public class EventBus : IEventBus
     {
-        private readonly List<IEventHandler> _handlers = new();
+        private readonly List<IHandler<IEvent>> _handlers = new();
 
-        public void Subscribe(IEventHandler handler)
+        public void Subscribe(IHandler<IEvent> handler)
         {
             _handlers.Add(handler);
         }
 
-        public void Unsubscribe(IEventHandler handler)
+        public void Unsubscribe(IHandler<IEvent> handler)
         {
             _handlers.Remove(handler);
         }

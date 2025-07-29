@@ -4,7 +4,7 @@ namespace BuildingsTestGame
 {
     public class FirstBuilding : Building, IProductionBuilding
     {
-        public void AddToQueue(IUnit unit)
+        public void AddToQueue(IEntity unit)
         {
             Terrain.Unit =  unit;
         }

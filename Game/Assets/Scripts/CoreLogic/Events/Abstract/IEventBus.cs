@@ -1,4 +1,6 @@
-﻿namespace TDS.Events
+﻿using TDS.Handlers;
+
+namespace TDS.Events
 {
     public interface IEventBus : IEventBus<IEvent>
     {
@@ -18,7 +20,7 @@
 
     public interface IEventSubscriber
     {
-        void Subscribe(IEventHandler handler);
-        void Unsubscribe(IEventHandler handler);
+        void Subscribe(IHandler<IEvent> handler);
+        void Unsubscribe(IHandler<IEvent> handler);
     }
 }

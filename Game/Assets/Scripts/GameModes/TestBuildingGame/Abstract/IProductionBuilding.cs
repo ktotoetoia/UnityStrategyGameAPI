@@ -6,6 +6,6 @@ namespace BuildingsTestGame
 {
     public interface IProductionBuilding : IBuilding
     {
-        void AddToQueue(IUnit unit);
+        void AddToQueue(IEntity unit);
     }
 }

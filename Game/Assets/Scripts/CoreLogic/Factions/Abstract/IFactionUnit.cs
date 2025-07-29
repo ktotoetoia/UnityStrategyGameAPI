@@ -2,7 +2,7 @@
 
 namespace TDS.Entities
 {
-    public interface IFactionUnit : IUnit
+    public interface IFactionUnit : IEntity
     {
         public IFaction Faction { get; }
     }

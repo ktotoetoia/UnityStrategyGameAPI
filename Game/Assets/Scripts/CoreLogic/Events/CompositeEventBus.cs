@@ -1,6 +1,8 @@
-﻿namespace TDS.Events
+﻿using TDS.Handlers;
+
+namespace TDS.Events
 {
-    public class CompositeEventBus : IEventBus, IEventHandler
+    public class CompositeEventBus : IEventBus, IHandler<IEvent>
     {
         private readonly IEventBus _eventBus;
 
@@ -11,12 +13,12 @@
             _eventBus = eventBus;
         }
 
-        public void Subscribe(IEventHandler handler)
+        public void Subscribe(IHandler<IEvent> handler)
         {
             _eventBus.Subscribe(handler);
         }
 
-        public void Unsubscribe(IEventHandler handler)
+        public void Unsubscribe(IHandler<IEvent> handler)
         {
             _eventBus.Unsubscribe(handler);
         }

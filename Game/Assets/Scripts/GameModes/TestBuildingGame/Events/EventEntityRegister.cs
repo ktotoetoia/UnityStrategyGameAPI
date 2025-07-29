@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TDS.Commands;
 using TDS.Entities;
 using TDS.Events;
+using TDS.Handlers;
 
 namespace BuildingsTestGame
 {
@@ -24,12 +25,12 @@ namespace BuildingsTestGame
             };
         }
         
-        public void Subscribe(IEventHandler handler)
+        public void Subscribe(IHandler<IEvent> handler)
         {
             _eventBus.Subscribe(handler);
         }
 
-        public void Unsubscribe(IEventHandler handler)
+        public void Unsubscribe(IHandler<IEvent> handler)
         {
             _eventBus.Unsubscribe(handler);
         }

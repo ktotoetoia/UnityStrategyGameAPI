@@ -8,9 +8,9 @@ namespace BuildingsTestGame
     public class BuildingTerrain : Terrain
     {
         private readonly ICallPropertyChange<IBuilding,BuildingTerrain> _building;
-        private readonly ICallPropertyChange<IUnit, BuildingTerrain> _unit;
+        private readonly ICallPropertyChange<IEntity, BuildingTerrain> _unit;
 
-        public IUnit Unit
+        public IEntity Unit
         {
             get => _unit.Value;
             set
@@ -37,13 +37,13 @@ namespace BuildingsTestGame
         public BuildingTerrain(IArea area) : base(area)
         {
             _building = new NoCallPropertyChange<IBuilding, BuildingTerrain>(this);
-            _unit = new NoCallPropertyChange<IUnit, BuildingTerrain>(this);
+            _unit = new NoCallPropertyChange<IEntity, BuildingTerrain>(this);
         }
 
         public BuildingTerrain(IArea area, IEventBus eventBus) : base(area)
         {
             _building = new CallPropertyChange<IBuilding, BuildingTerrain>(this,eventBus);
-            _unit = new CallPropertyChange<IUnit, BuildingTerrain>(this,eventBus);
+            _unit = new CallPropertyChange<IEntity, BuildingTerrain>(this,eventBus);
         }
     }
 }

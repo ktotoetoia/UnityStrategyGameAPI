@@ -1,6 +1,7 @@
 ﻿using TDS.Commands;
 using TDS.Components;
 using TDS.Events;
+using TDS.Handlers;
 
 namespace BuildingsTestGame
 {
@@ -8,12 +9,12 @@ namespace BuildingsTestGame
     {
         private IEventBus<IEvent> _events = new EventBus(); 
         
-        public void Subscribe(IEventHandler handler)
+        public void Subscribe(IHandler<IEvent> handler)
         {
             _events?.Subscribe(handler);
         }
 
-        public void Unsubscribe(IEventHandler handler)
+        public void Unsubscribe(IHandler<IEvent> handler)
         {
             _events?.Unsubscribe(handler);
         }

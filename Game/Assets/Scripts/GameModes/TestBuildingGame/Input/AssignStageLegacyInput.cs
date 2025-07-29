@@ -85,7 +85,7 @@ namespace TDS
                 ITerrain targetTerrain = _selector.GetSelection<ITerrain>((Vector2)clickPosition).First;
                 INode<ITerrain> to = path.Nodes.FirstOrDefault(n => n.Value == targetTerrain);
 
-                IUnit unit = _selector.SelectionOfType<BuildingTerrain>().First.Unit;
+                IEntity unit = _selector.SelectionOfType<BuildingTerrain>().First.Unit;
                 if (from != null && to != null && unit != null)
                 {
                     _commandSequencer.IssueCommand(

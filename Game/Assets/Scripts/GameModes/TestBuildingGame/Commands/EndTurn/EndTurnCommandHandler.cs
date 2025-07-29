@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using TDS.Commands;
 using TDS.Events;
+using TDS.Handlers;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommandHandler : ICommandHandler
+    public class EndTurnCommandHandler : IHandler<ICommand>
     {
-        public bool CanDoCommand(ICommand command)
+        public bool CanHandle(ICommand command)
         {
             return command is EndTurnCommand;
         }
 
-        public ICommandStatus DoCommand(ICommand command)
+        public void Handle(ICommand command)
         {
             if (command is not EndTurnCommand com)
             {
@@ -20,12 +21,6 @@ namespace BuildingsTestGame
             }
             
             com.TurnUser.EndTurn();
-            return new CommandStatus(Status.Success, command, this);
-        }
-
-        public IEnumerable<ICommandStatus> UpdateCommands()
-        {
-            return Array.Empty<ICommandStatus>();
         }
     }
 }

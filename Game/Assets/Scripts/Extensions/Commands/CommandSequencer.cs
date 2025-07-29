@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TDS.Events;
+using TDS.Handlers;
 using UnityEngine;
 
 namespace TDS.Commands
@@ -8,51 +9,35 @@ namespace TDS.Commands
     {
         private readonly IEventBus _eventBus;
         
-        public IList<ICommandHandler> HandlersList { get; }
+        public IList<IHandler<ICommand>> HandlersList { get; }
         public IEventSubscriber CommandEvents => _eventBus;
-        public IEnumerable<ICommandHandler> Handlers => HandlersList;
+        public IEnumerable<IHandler<ICommand>> Handlers => HandlersList;
         
-        public CommandSequencer() : this(new EventBus(), new List<ICommandHandler>())
+        public CommandSequencer() : this(new EventBus(), new List<IHandler<ICommand>>())
         {
             
         }
 
-        public CommandSequencer(IEventBus eventBus, IEnumerable<ICommandHandler> handlers) : this(eventBus, new List<ICommandHandler>(handlers))
+        public CommandSequencer(IEventBus eventBus, IEnumerable<IHandler<ICommand>> handlers) : this(eventBus, new List<IHandler<ICommand>>(handlers))
         {
             
         }
 
-        public CommandSequencer(IEventBus eventBus, IList<ICommandHandler> handlers)
+        public CommandSequencer(IEventBus eventBus, IList<IHandler<ICommand>> handlers)
         {
             _eventBus = eventBus;
-            HandlersList = new List<ICommandHandler>(handlers);
+            HandlersList = new List<IHandler<ICommand>>(handlers);
         }
-        
-        public void Update()
-        {
-            foreach (ICommandHandler handler in HandlersList)
-            {
-                foreach (ICommandStatus status in handler.UpdateCommands())
-                {
-                    _eventBus.Publish(new CommandUpdatedEvent(status));
-                }
-            }
-        }
-        
-        public ICommandStatus IssueCommand(ICommand command)
+
+        public void IssueCommand(ICommand command)
         {
             foreach (var handler in Handlers)
             {
-                if (handler.CanDoCommand(command))
+                if (handler.TryHandle(command))
                 {
-                    ICommandStatus status =  handler.DoCommand(command);
-                    _eventBus.Publish(new CommandIssuedEvent(status));
-
-                    return status;
+                    return;
                 }
             }
-
-            return new CommandStatus(Status.Failed, command, null);
         }
     }
 }
