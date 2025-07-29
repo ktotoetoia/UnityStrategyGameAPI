@@ -1,6 +1,6 @@
 ﻿using TDS.Entities;
 
-namespace BuildingsTestGame
+namespace TDS.Events
 {
     public class EntityAddedEvent :SingleValueEvent<IEntity>
     {

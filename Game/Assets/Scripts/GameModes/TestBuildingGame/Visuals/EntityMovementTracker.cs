@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BuildingsTestGame;
+using TDS.Commands;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
@@ -18,7 +19,7 @@ namespace TDS
         {
             if (entity .TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new TypeFilteredHandler<ICommandEvent<MoveUnitCommand>,IEvent>(UpdateUnit));
+                eventComponent.Subscribe(new ActionHandler<ICommandEvent<MoveUnitCommand>>(UpdateUnit));
                 
                 _entities[entity] = Instantiate(_prefab);
                 _prefab.transform.position = entity.Transform.Position;
@@ -33,6 +34,7 @@ namespace TDS
 
         private void UpdateUnit(ICommandEvent<MoveUnitCommand> commandEvent)
         {
+            Debug.Log(commandEvent);
             MoveUnitCommand command = commandEvent.Command;
             _movements.Add(new Movement(_entities[command.Unit].transform.position,command.Unit.Transform.Position,command.Unit));
         }

@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TDS.Commands;
-using TDS.Entities;
-using TDS.Events;
+﻿using TDS.Entities;
 using TDS.Handlers;
 
-namespace BuildingsTestGame
+namespace TDS.Events
 {
     public class EntityRegisterEvents : IEventSubscriber
     {
@@ -24,13 +20,13 @@ namespace BuildingsTestGame
                 _eventBus.Publish(new EntityRemovedEvent(x));
             };
         }
-        
-        public void Subscribe(IHandler<IEvent> handler)
+
+        public void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
         {
             _eventBus.Subscribe(handler);
         }
 
-        public void Unsubscribe(IHandler<IEvent> handler)
+        public void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
         {
             _eventBus.Unsubscribe(handler);
         }

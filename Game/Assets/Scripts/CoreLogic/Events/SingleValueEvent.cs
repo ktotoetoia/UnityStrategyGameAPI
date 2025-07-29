@@ -1,6 +1,4 @@
-﻿using TDS.Events;
-
-namespace BuildingsTestGame
+﻿namespace TDS.Events
 {
     public class SingleValueEvent<T> : IEvent
     {

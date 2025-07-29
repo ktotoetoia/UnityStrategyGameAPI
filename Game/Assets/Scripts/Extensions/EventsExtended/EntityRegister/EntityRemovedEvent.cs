@@ -1,7 +1,6 @@
 ﻿using TDS.Entities;
-using TDS.Events;
 
-namespace BuildingsTestGame
+namespace TDS.Events
 {
     public class EntityRemovedEvent : SingleValueEvent<IEntity>
     {

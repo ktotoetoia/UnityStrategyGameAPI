@@ -8,7 +8,6 @@ namespace BuildingsTestGame
     public class BuildingGameFactory : IFactory<BuildingGame>
     {
         public Vector2Int TileCount { get; set; }
-        public Vector3 TileSize { get; set; } = Vector3.one;
         public Vector2Int StartingPosition { get; set; }
         
         public BuildingGameFactory(Vector2Int tileCount)
@@ -25,16 +24,16 @@ namespace BuildingsTestGame
 
         private IMap CreateMap(IEventBus bus)
         {
-            RectangleTileMap tileMap = new RectangleTileMap(TileCount,TileSize,new BuildingTerrainFactory(bus));
+            RectangleMap map = new RectangleMap(TileCount,new BuildingTerrainFactory(bus));
             
-            SetBase(tileMap);
+            SetBase(map);
 
-            return tileMap;
+            return map;
         }
 
-        private void SetBase(RectangleTileMap tileMap)
+        private void SetBase(RectangleMap map)
         {
-            ((BuildingTerrain)tileMap.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
+            ((BuildingTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
         }
     }
 }

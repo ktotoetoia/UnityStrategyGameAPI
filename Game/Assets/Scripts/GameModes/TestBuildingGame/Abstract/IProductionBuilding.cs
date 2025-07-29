@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using TDS.Entities;
-using TDS.Events;
+﻿using TDS.Entities;
 
 namespace BuildingsTestGame
 {

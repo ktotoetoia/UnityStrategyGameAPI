@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using TDS;
-using TDS.Commands;
+﻿using TDS;
 using TDS.Entities;
 using TDS.Events;
-using TDS.TurnSystem;
 using TDS.Maps;
+using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {

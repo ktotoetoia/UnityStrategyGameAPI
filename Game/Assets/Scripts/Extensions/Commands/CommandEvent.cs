@@ -1,6 +1,4 @@
-﻿using TDS.Commands;
-
-namespace BuildingsTestGame
+﻿namespace TDS.Commands
 {
     public class CommandEvent<T> : ICommandEvent<T> where T : ICommand
     {

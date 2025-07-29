@@ -1,6 +1,4 @@
-﻿using TDS.Events;
-
-namespace TDS.Commands
+﻿namespace TDS.Commands
 {
     public interface ICommand
     {

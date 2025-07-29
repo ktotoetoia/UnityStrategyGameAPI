@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using TDS;
+﻿using TDS;
 using TDS.Commands;
-using TDS.Events;
-using TDS.SelectionSystem;
-using TDS.Maps;
 
 namespace BuildingsTestGame
 {

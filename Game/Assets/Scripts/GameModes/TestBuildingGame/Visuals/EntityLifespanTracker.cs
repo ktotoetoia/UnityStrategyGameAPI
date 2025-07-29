@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BuildingsTestGame;
-using TDS.Commands;
+﻿using System.Collections.Generic;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
@@ -11,7 +8,7 @@ namespace TDS
 {
     public class EntityLifespanTracker : MonoBehaviour
     {
-        private List<IEntityObserver>  _observers = new List<IEntityObserver>();
+        private List<IEntityObserver>  _observers = new();
         private IEventSubscriber _entityRegisterEvents;
 
         public IEventSubscriber EntityRegisterEvents
@@ -23,8 +20,8 @@ namespace TDS
             set
             {
                 _entityRegisterEvents  = value;
-                _entityRegisterEvents.Subscribe(new TypeFilteredHandler<EntityAddedEvent,IEvent>(x => Add(x.Value)));
-                _entityRegisterEvents.Subscribe(new TypeFilteredHandler<EntityRemovedEvent,IEvent>(x => Remove(x.Value)));
+                _entityRegisterEvents.Subscribe(new ActionHandler<EntityAddedEvent>(x => Add(x.Value)));
+                _entityRegisterEvents.Subscribe(new ActionHandler<EntityRemovedEvent>(x => Remove(x.Value)));
             }
         }
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using TDS.Commands;
-using TDS.Events;
 using TDS.Handlers;
 
 namespace BuildingsTestGame

@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BuildingsTestGame;
 using TDS.Events;
 using TDS.Handlers;
 using TDS.Maps;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace TDS.Entities
 {
-    public class TerrainDistributor : MonoBehaviour
+    public class TileMapSetup : MonoBehaviour
     {
         private readonly List<IHandler<ITerrain>> TerrainDrawers = new();
         private BuildingGame _game;
+        private Tilemap _tilemap;
 
         public BuildingGame Game
         {
@@ -19,6 +20,11 @@ namespace TDS.Entities
             set
             {
                 _game = value;
+                
+                if (_game.Map is RectangleMap map)
+                {
+                    new RectangleMapGridSetup().Setup(map,_tilemap.layoutGrid);
+                }
 
                 foreach (ITerrain terrain in _game.Map.Terrains)
                 {
@@ -35,6 +41,7 @@ namespace TDS.Entities
 
         private void Awake()
         {
+            _tilemap = GetComponent<Tilemap>();
             GetComponents(TerrainDrawers);
         }
     }

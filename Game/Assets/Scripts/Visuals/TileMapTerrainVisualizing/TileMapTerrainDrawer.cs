@@ -17,13 +17,7 @@ namespace TDS.Entities
 
         public void Handle(ITerrain terrain)
         {
-            UpdateGrid(terrain);
             _tilemap.SetTile(_tilemap.WorldToCell(terrain.Area.Position), _tile);
-        }
-
-        private void UpdateGrid(ITerrain terrain)
-        {
-            
         }
     }
 }
