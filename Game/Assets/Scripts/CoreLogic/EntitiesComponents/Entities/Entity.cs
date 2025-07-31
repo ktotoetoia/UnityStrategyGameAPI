@@ -20,22 +20,14 @@ namespace TDS.Entities
 
         public void AddComponent(IComponent component)
         {
-            if (IsDestroyed)
-            {
-                throw new System.Exception("Entity has already been destroyed.");
-            }
-            
+            ThrowExceptionIfDestroyed();
             _components.Add(component);
             component.Init(this);
         }
 
         public void RemoveComponent(IComponent component)
         {
-            if (IsDestroyed)
-            {
-                throw new System.Exception("Entity has already been destroyed.");
-            }
-            
+            ThrowExceptionIfDestroyed();
             _components.Remove(component);
             component.Destroy();
         }
@@ -43,10 +35,7 @@ namespace TDS.Entities
 
         public void Destroy()
         {
-            if (IsDestroyed)
-            {
-                return;
-            }
+            ThrowExceptionIfDestroyed();
             
             foreach (IComponent component in _components)
             {
@@ -55,6 +44,14 @@ namespace TDS.Entities
             
             _components.Clear();
             IsDestroyed = true;
+        }
+
+        protected void ThrowExceptionIfDestroyed()
+        {
+            if (IsDestroyed)
+            {
+                throw new System.Exception("Entity has already been destroyed.");
+            }
         }
     }
 }

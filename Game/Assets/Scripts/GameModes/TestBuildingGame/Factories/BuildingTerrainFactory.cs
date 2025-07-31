@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class BuildingTerrainFactory : IFactory<BuildingTerrain,Bounds>
+    public class BuildingTerrainFactory : IFactory<GameTerrain,Bounds>
     {
         private IEventBus _eventBus;
 
@@ -19,14 +19,14 @@ namespace BuildingsTestGame
             _eventBus = bus;
         }
         
-        public BuildingTerrain Create(Bounds param1)
+        public GameTerrain Create(Bounds param1)
         {
             if (_eventBus != null)
             {
-                return new BuildingTerrain(new BoundsArea(param1), _eventBus) { Name = "Building Terrain" };
+                return new GameTerrain(new BoundsArea(param1), _eventBus) { Name = "Building Terrain" };
             }
             
-            return new BuildingTerrain(new BoundsArea(param1)) {Name = "Building Terrain"};
+            return new GameTerrain(new BoundsArea(param1)) {Name = "Building Terrain"};
         }
     }
 }

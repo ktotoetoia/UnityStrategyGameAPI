@@ -7,6 +7,7 @@ namespace TDS.Maps
     public class RectangleMap : Map, IGraphMap
     {
         private readonly GridGraph<ITerrain> _graph;
+        
         public IGraphReadOnly<ITerrain> Graph => _graph;
         public ITerrain[,] TerrainsMatrix { get; }
 

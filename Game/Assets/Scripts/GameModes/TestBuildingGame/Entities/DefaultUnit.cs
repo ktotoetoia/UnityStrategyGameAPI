@@ -2,14 +2,18 @@
 
 namespace BuildingsTestGame
 {
-    public class DefaultUnit : Entity
+    public class DefaultUnit : Entity, IUnit
     {
-        public IEventComponent EventComponent { get; }
+        public IEventComponent Events { get; }
+        public IMapMovementComponent MapMovement { get; }
         
         public DefaultUnit()
         {
-            EventComponent = new EventComponent();
-            AddComponent(EventComponent);
+            Name = "Default Unit";
+            Events = new EventComponent();
+            AddComponent(Events);
+            MapMovement = new MapMovementComponent();
+            AddComponent(MapMovement);
         }
     }
 }

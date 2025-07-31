@@ -33,7 +33,7 @@ namespace BuildingsTestGame
 
         private void SetBase(RectangleMap map)
         {
-            ((BuildingTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
+            ((GameTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
         }
     }
 }

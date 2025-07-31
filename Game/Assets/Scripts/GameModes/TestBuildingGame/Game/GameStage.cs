@@ -5,9 +5,9 @@ namespace BuildingsTestGame
 {
     public class GameStage : TurnUser, IGameStage
     {
-        public ICommandSequencer CommandSequencer { get; set; }
+        public ITurnCommandSequencer CommandSequencer { get; set; }
         
-        public GameStage(ICommandSequencer commandSequencer)
+        public GameStage(ITurnCommandSequencer commandSequencer)
         {
             CommandSequencer = commandSequencer;
         }

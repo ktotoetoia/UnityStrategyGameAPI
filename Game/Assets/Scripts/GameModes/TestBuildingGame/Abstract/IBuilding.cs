@@ -4,6 +4,6 @@ namespace BuildingsTestGame
 {
     public interface IBuilding : IHaveName
     {
-        BuildingTerrain Terrain { get; set; }
+        IGameTerrain Terrain { get; set; }
     }
 }

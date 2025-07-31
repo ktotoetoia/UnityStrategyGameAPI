@@ -353,12 +353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f7157af5e4ef449b95bb392a0c6f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tileCount: {x: 3, y: 8}
+  _tileCount: {x: 12, y: 12}
   _firstBuildingPosition: {x: 1, y: 1}
+  _tileMapSetup: {fileID: 1666527975}
   _buildingGameUI: {fileID: 125937415}
-  _f: 0
   _assignStageInput: {fileID: 1377791931}
-  tileMapSetup: {fileID: 1666527975}
 --- !u!4 &1377791927
 Transform:
   m_ObjectHideFlags: 0
@@ -386,6 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861637d9f62c410e9ff397dd3de826c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showTerrainArea: 1
+  _showUnits: 1
+  _showBuildings: 1
   _gapSize: 0.1
   _pointsSize: 0.3
 --- !u!114 &1377791931
@@ -400,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fe5bf22fd74803925637f8c9ae42d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _f: 2
 --- !u!114 &1377791932
 MonoBehaviour:
   m_ObjectHideFlags: 0

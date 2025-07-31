@@ -34,11 +34,11 @@ namespace TDS.Events
 
         public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
         {
-            foreach (var type in GetTypeHierarchy(typeof(TEvent)))
+            foreach (Type type in GetTypeHierarchy(typeof(TEvent)))
             {
                 if (_handlers.TryGetValue(type, out var list))
                 {
-                    foreach (var handlerObj in list)
+                    foreach (object handlerObj in list)
                     {
                         if (handlerObj is IHandler<TEvent> exactHandler)
                         {

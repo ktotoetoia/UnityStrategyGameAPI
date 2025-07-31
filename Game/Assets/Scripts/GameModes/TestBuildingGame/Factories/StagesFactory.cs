@@ -18,9 +18,9 @@ namespace BuildingsTestGame
             CommandSequencer eventSeq = new CommandSequencer();
             eventSeq.HandlersList.Add(new EndTurnCommandHandler());
             
-            GameStage assignStage = new GameStage(assignSeq);
-            GameStage buildStage = new GameStage(buildSeq);
-            GameStage eventStage = new GameStage(eventSeq);
+            GameStage assignStage = new GameStage(new TurnCommandSequencer(assignSeq));
+            GameStage buildStage = new GameStage(new TurnCommandSequencer(buildSeq));
+            GameStage eventStage = new GameStage(new TurnCommandSequencer(eventSeq));
 
             return (assignStage,buildStage,eventStage);
         }

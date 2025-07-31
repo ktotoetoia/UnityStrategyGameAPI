@@ -22,6 +22,7 @@ namespace BuildingsTestGame
                 }
                 
                 distance += Vector2.Distance(node.Value.Area.Position, startNode.Value.Area.Position);
+                startNode = node;
             }
             
             return distance;

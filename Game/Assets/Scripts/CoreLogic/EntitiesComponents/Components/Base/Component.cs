@@ -1,14 +1,32 @@
-﻿using TDS.Entities;
+﻿using System;
+using TDS.Entities;
 
 namespace TDS.Components
 {
     public class Component : IComponent
     {
-        public IEntity Entity { get; protected set; }
-        public bool IsDestroyed { get; private set; }
+        private IEntity _entity;
 
+        public IEntity Entity
+        {
+            get
+            {
+                ThrowExceptionIfDestroyed();
+                
+                return _entity;
+            }
+            
+            private set => _entity = value;
+        }
+        public bool IsDestroyed { get; protected set; }
+        
         public virtual void Destroy()
         {
+            if (IsDestroyed)
+            {
+                throw new Exception("Component has already been destroyed.");
+            }
+            
             Entity = null;
             IsDestroyed = true;
         }
@@ -16,6 +34,14 @@ namespace TDS.Components
         public virtual void Init(IEntity entity)
         {
             Entity = entity;
+        }
+
+        protected void ThrowExceptionIfDestroyed()
+        {
+            if (IsDestroyed)
+            {
+                throw new Exception("Component has been destroyed.");
+            }
         }
     }
 }

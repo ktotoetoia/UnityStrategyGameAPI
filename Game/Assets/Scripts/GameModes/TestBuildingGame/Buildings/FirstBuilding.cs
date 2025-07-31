@@ -1,12 +1,14 @@
-﻿using TDS.Entities;
+﻿using System.Linq;
+using TDS;
+using TDS.Entities;
 
 namespace BuildingsTestGame
 {
     public class FirstBuilding : Building, IProductionBuilding
     {
-        public void AddToQueue(IEntity unit)
+        public void AddToQueue(IFactory<IUnit> entityFactory)
         {
-            Terrain.Unit =  unit;
+            Terrain.Unit = entityFactory.Create();
         }
     }
 }

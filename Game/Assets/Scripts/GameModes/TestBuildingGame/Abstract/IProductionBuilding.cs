@@ -1,9 +1,10 @@
-﻿using TDS.Entities;
+﻿using TDS;
+using TDS.Entities;
 
 namespace BuildingsTestGame
 {
     public interface IProductionBuilding : IBuilding
     {
-        void AddToQueue(IEntity unit);
+        void AddToQueue(IFactory<IUnit> entityFactory);
     }
 }

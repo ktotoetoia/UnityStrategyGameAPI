@@ -34,7 +34,6 @@ namespace TDS
 
         private void UpdateUnit(ICommandEvent<MoveUnitCommand> commandEvent)
         {
-            Debug.Log(commandEvent);
             MoveUnitCommand command = commandEvent.Command;
             _movements.Add(new Movement(_entities[command.Unit].transform.position,command.Unit.Transform.Position,command.Unit));
         }

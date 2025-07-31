@@ -6,26 +6,22 @@ namespace TDS.Commands
 {
     public class CommandSequencer : ICommandSequencer
     {
-        private readonly IEventBus _eventBus;
-        
         public IList<IHandler<ICommand>> HandlersList { get; }
-        public IEventSubscriber CommandEvents => _eventBus;
         public IEnumerable<IHandler<ICommand>> Handlers => HandlersList;
         
-        public CommandSequencer() : this(new EventBus(), new List<IHandler<ICommand>>())
+        public CommandSequencer() : this(new List<IHandler<ICommand>>())
         {
             
         }
 
-        public CommandSequencer(IEventBus eventBus, IEnumerable<IHandler<ICommand>> handlers) : this(eventBus, new List<IHandler<ICommand>>(handlers))
+        public CommandSequencer(IEnumerable<IHandler<ICommand>> handlers) : this(new List<IHandler<ICommand>>(handlers))
         {
             
         }
 
-        public CommandSequencer(IEventBus eventBus, IList<IHandler<ICommand>> handlers)
+        public CommandSequencer(IList<IHandler<ICommand>> handlers)
         {
-            _eventBus = eventBus;
-            HandlersList = new List<IHandler<ICommand>>(handlers);
+            HandlersList = handlers;
         }
 
         public void IssueCommand(ICommand command)

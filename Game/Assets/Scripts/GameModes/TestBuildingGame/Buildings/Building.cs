@@ -3,6 +3,6 @@
     public class Building : IBuilding
     {
         public string Name { get; set; } = "First Building";
-        public BuildingTerrain Terrain { get; set; }
+        public IGameTerrain Terrain { get; set; }
     }
 }
