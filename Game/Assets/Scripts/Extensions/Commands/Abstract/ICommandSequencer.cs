@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TDS.Events;
 using TDS.Handlers;
 
 namespace TDS.Commands
