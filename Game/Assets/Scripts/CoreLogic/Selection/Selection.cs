@@ -25,21 +25,6 @@ namespace TDS.SelectionSystem
         public Selection(List<T> selected)
         {
             _selected = new List<T>(selected);
-
-            foreach (ISelectable sel in _selected.OfType<ISelectable>())
-            {
-                sel.OnSelected();
-            }
-        }
-
-        public void Deselect()
-        {
-            foreach (ISelectable sel in _selected.OfType<ISelectable>())
-            {
-                sel.OnDeselected();
-            }
-
-            _selected = new List<T>();
         }
     }
 }

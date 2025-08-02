@@ -6,7 +6,5 @@ namespace TDS.SelectionSystem
     {
         T First { get; }
         IEnumerable<T> Selected { get; }
-
-        void Deselect();
     }
 }

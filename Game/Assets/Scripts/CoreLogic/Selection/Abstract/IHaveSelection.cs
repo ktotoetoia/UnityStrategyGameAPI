@@ -2,6 +2,6 @@
 {
     public interface IHaveSelection
     {
-        ISelection<object> Selection { get; }
+        ISelection<T> GetSelection<T>()where T : class;
     }
 }
