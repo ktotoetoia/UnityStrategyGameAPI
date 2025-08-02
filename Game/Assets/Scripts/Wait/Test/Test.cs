@@ -1,9 +1,6 @@
 ﻿using BuildingsTestGame;
 using TDS.Entities;
-using TDS.Events;
-using TDS.Handlers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace TDS
 {

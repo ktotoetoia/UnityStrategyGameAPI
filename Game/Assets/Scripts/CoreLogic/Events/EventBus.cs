@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using TDS.Handlers;
 
 namespace TDS.Events
@@ -11,22 +10,18 @@ namespace TDS.Events
 
         public void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
         {
-            Type type = typeof(TEvent);
-            
+            var type = typeof(TEvent);
             if (!_handlers.TryGetValue(type, out var list))
             {
                 list = new List<object>();
                 _handlers[type] = list;
             }
-            
             list.Add(handler);
         }
 
         public void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
         {
-            Type type = typeof(TEvent);
-            
-            if (_handlers.TryGetValue(type, out var list))
+            if (_handlers.TryGetValue(typeof(TEvent), out var list))
             {
                 list.Remove(handler);
             }
@@ -34,41 +29,40 @@ namespace TDS.Events
 
         public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
         {
-            foreach (Type type in GetTypeHierarchy(typeof(TEvent)))
+            foreach (var type in GetEventTypes(typeof(TEvent)))
             {
                 if (_handlers.TryGetValue(type, out var list))
                 {
-                    foreach (object handlerObj in list)
+                    foreach (var handler in list.ToArray())
                     {
-                        if (handlerObj is IHandler<TEvent> exactHandler)
+                        if (handler is IHandler<TEvent> typedHandler)
                         {
-                            exactHandler.Handle(evt);
-                        }
-                        else if (handlerObj is IHandler<IEvent> genericHandler)
-                        {
-                            genericHandler.Handle(evt);
+                            typedHandler.Handle(evt);
                         }
                     }
                 }
             }
         }
 
-        private IEnumerable<Type> GetTypeHierarchy(Type type)
+        private static IEnumerable<Type> GetEventTypes(Type type)
         {
             var seen = new HashSet<Type>();
+            var queue = new Queue<Type>();
+            queue.Enqueue(type);
 
-            while (type != null && typeof(IEvent).IsAssignableFrom(type))
+            while (queue.Count > 0)
             {
-                if (seen.Add(type))
-                    yield return type;
+                var current = queue.Dequeue();
+                if (current == null || !typeof(IEvent).IsAssignableFrom(current) || !seen.Add(current))
+                    continue;
 
-                foreach (var iface in type.GetInterfaces())
-                {
-                    if (typeof(IEvent).IsAssignableFrom(iface) && seen.Add(iface))
-                        yield return iface;
-                }
+                yield return current;
 
-                type = type.BaseType;
+                if (current.BaseType != null)
+                    queue.Enqueue(current.BaseType);
+
+                foreach (var iface in current.GetInterfaces())
+                    queue.Enqueue(iface);
             }
         }
     }

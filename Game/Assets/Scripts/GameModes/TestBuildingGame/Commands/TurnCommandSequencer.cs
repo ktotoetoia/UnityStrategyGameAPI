@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TDS.Commands;
-using TDS.Events;
 using TDS.Handlers;
 using TDS.TurnSystem;
 
