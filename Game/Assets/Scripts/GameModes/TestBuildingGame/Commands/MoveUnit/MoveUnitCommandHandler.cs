@@ -4,8 +4,6 @@ using TDS.Entities;
 using TDS.Graphs;
 using TDS.Handlers;
 using TDS.Maps;
-using UnityEditor.Build;
-using UnityEngine;
 
 namespace BuildingsTestGame
 {
@@ -20,9 +18,9 @@ namespace BuildingsTestGame
 
         public void Handle(ICommand command)
         {
-            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.Components.Any(x => x is MapMovementComponent))
+            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.Components.Any(x => x is IMapMovementComponent))
             {
-                MapMovementComponent component = moveUnitCommand.Unit.Components.First(x => x is MapMovementComponent) as MapMovementComponent;
+                IMapMovementComponent component = moveUnitCommand.Unit.Components.First(x => x is IMapMovementComponent) as IMapMovementComponent;
                 float pointsLeft = component.MovementPoints;
 
                 foreach (INode<ITerrain> node in moveUnitCommand.Path.Nodes)
@@ -37,14 +35,13 @@ namespace BuildingsTestGame
                         break;
                     }
 
-                    (node.Value as IGameTerrain).Unit = moveUnitCommand.Unit as IUnit;
-                    component.MoveTo(node.Value as IGameTerrain);
+                    (node.Value as IGameTerrain).Unit = moveUnitCommand.Unit;
                     pointsLeft -= 1;
                 }
                 
                 if (moveUnitCommand.Unit.TryGetComponent(out IEventComponent eventComponent))
                 {
-                    eventComponent.Publish(new CommandEvent<MoveUnitCommand>(moveUnitCommand));
+                    eventComponent.Publish(new UnitMovedEvent(moveUnitCommand));
                 }
             }
         }
