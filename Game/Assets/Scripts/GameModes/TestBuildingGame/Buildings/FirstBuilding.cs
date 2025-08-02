@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using TDS;
-using TDS.Entities;
+﻿using TDS;
 
 namespace BuildingsTestGame
 {
@@ -9,6 +7,7 @@ namespace BuildingsTestGame
         public void AddToQueue(IFactory<IUnit> entityFactory)
         {
             Terrain.Unit = entityFactory.Create();
+            Terrain.Unit.Events.Publish(new UnitCreatedEvent(Terrain.Unit,Terrain));
         }
     }
 }
