@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BuildingsTestGame;
 using TDS.Entities;
 using TDS.Events;
@@ -7,16 +8,16 @@ using UnityEngine;
 
 namespace TDS
 {
-    public class EntityMovementTracker : MonoBehaviour, IEntityObserver
+    public class UnitMovementTracker : MonoBehaviour, IEntityObserver
     {
         [SerializeField] private GameObject _prefab;
         [SerializeField] private float _speed;
-        private Dictionary<IEntity, GameObject> _entities = new Dictionary<IEntity, GameObject>();
+        private Dictionary<IEntity, UnitMonoBehaviour> _units = new();
         private List<Movement>  _movements = new List<Movement>();
         
         public void Add(IEntity entity)
         {
-            if (entity .TryGetComponent(out IEventComponent eventComponent))
+            if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit)
             {
                 eventComponent.Subscribe(new SingleTimeEventHandler<UnitCreatedEvent>(InitializeUnit,eventComponent));
             }
@@ -24,29 +25,37 @@ namespace TDS
 
         public void Remove(IEntity entity)
         {
-            Destroy(_entities[entity]);
-            _entities.Remove(entity);
+            Destroy(_units[entity]);
+            _units.Remove(entity);
         }
 
         private void InitializeUnit(UnitCreatedEvent created)
         {
+            UnitMonoBehaviour unitMonoBehaviour = Instantiate(_prefab).GetComponent<UnitMonoBehaviour>();
+
+            if (unitMonoBehaviour is null)
+            {
+                throw new NullReferenceException();
+            }
+            
             created.Unit.Events.Subscribe(new ActionHandler<UnitMovedEvent>(UpdateUnit));
-                
-            _entities[created.Unit] = Instantiate(_prefab);
+
+            _units[created.Unit] =unitMonoBehaviour;
+            unitMonoBehaviour.Unit = created.Unit;
             _prefab.transform.position = created.Unit.Transform.Position;
         }
 
         private void UpdateUnit(UnitMovedEvent movedEvent)
         {
             MoveUnitCommand command = movedEvent.Command;
-            _movements.Add(new Movement(_entities[command.Unit].transform.position,command.Unit.Transform.Position,command.Unit));
+            _movements.Add(new Movement(_units[command.Unit].transform.position,command.Unit.Transform.Position,command.Unit));
         }
 
         private void Update()
         {
             foreach (Movement movement in _movements)
             {
-                _entities[movement.Entity].transform.position = Vector3.Lerp(movement.From,movement.To,movement.Bomb += _speed * Time.deltaTime);
+                _units[movement.Entity].transform.position = Vector3.Lerp(movement.From,movement.To,movement.Bomb += _speed * Time.deltaTime);
             }
         }
 

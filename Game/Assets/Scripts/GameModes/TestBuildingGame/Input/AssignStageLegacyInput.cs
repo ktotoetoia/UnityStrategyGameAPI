@@ -12,7 +12,8 @@ namespace TDS
     {
         [SerializeField] private float _f;
         private IMapPathfinder _pathfinder;
-        private ISelectionController _selection;
+        private ISelector _selector;
+        private ISelectionProvider _terrainSelector;
         private IGraphMap _map;
         private ICommandSequencer _commandSequencer;
         private IGraphReadOnly<ITerrain> _area;
@@ -26,7 +27,8 @@ namespace TDS
                 if (value == null) return;
 
                 _game = value;
-                _selection = new SelectionController(new TerrainSelectionProvider(_game.Map));
+                _selector = new Selector(new RaycastSelectionProvider());
+                _terrainSelector = new TerrainSelectionProvider(_game.Map);
                 _pathfinder = new MapPathfinder(_game.Map);
                 _map = _game.Map as IGraphMap;
                 _commandSequencer = _game.AssignStage.CommandSequencer;
@@ -50,7 +52,7 @@ namespace TDS
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _selection.UpdateSelectionAt(clickPosition);
+                _selector.UpdateSelectionAt(clickPosition);
             }
         }
 
@@ -61,24 +63,25 @@ namespace TDS
                 _commandSequencer.IssueCommand(new EndTurnCommand(_game.AssignStage));
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && _selection.GetSelection<GameTerrain>().First.Building is IProductionBuilding selectedBuilding)
+            if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<GameTerrain>().First.Building is IProductionBuilding selectedBuilding)
             {
                 _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(selectedBuilding, new DefaultUnitFactory(_game.EntityRegister)));
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                IGameTerrain selectedTerrain = _selection.GetSelection<IGameTerrain>().First;
+                IGameTerrain selectedTerrain = _selector.GetSelection<IUnit>().First.MapMovement.Terrain;
+                
                 if (selectedTerrain == null) return;
 
                 _area = _pathfinder.GetAvailableMovement(_map.GetNode(selectedTerrain) ,_f);
 
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                ITerrain targetTerrain = _selection.SelectionProvider.SelectAt<ITerrain>((Vector2)clickPosition).First;
+                ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>((Vector2)clickPosition).First;
                 INode<ITerrain> from = _area.Nodes.FirstOrDefault(n => n.Value == selectedTerrain);
                 INode<ITerrain> to = _area.Nodes.FirstOrDefault(n => n.Value == targetTerrain);
 
-                IUnit unit = _selection.GetSelection<GameTerrain>().First.Unit;
+                IUnit unit = _selector.GetSelection<IUnit>().First;
                 if (from != null && to != null && unit != null)
                 {
                     _commandSequencer.IssueCommand(

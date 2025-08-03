@@ -2,9 +2,8 @@
 
 namespace TDS.SelectionSystem
 {
-    public interface ISelectionController : IHaveSelection
+    public interface ISelector : IHaveSelection
     {
-        event System.Action OnSelected;
         ISelectionProvider SelectionProvider { get; }
         void UpdateSelectionAt(Vector3 position);
         void UpdateSelectionWithin(Bounds bounds);

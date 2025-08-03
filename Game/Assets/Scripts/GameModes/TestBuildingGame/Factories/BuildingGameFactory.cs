@@ -18,22 +18,25 @@ namespace BuildingsTestGame
         public BuildingGame Create()
         {
             IEventBus bus = new EventBus();
+            RectangleMap map = CreateMap(bus);
+            BuildingGame game = new BuildingGame(map, bus);
+            FirstBuilding building = new FirstBuilding();
             
-            return new BuildingGame(CreateMap(bus),bus);
+            ((IGameTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = building;
+            
+            game.EntityRegister.AddEntity(building);
+            
+            return game;
         }
 
-        private IMap CreateMap(IEventBus bus)
+        private RectangleMap CreateMap(IEventBus bus)
         {
-            RectangleMap map = new RectangleMap(TileCount,new BuildingTerrainFactory(bus));
-            
-            SetBase(map);
-
-            return map;
+            return new RectangleMap(TileCount,new BuildingTerrainFactory(bus));
         }
 
         private void SetBase(RectangleMap map)
         {
-            ((GameTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
+            ((IGameTerrain)map.TerrainsMatrix[StartingPosition.x, StartingPosition.y]).Building = new FirstBuilding();
         }
     }
 }

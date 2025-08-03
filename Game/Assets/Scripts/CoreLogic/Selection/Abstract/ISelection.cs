@@ -6,5 +6,7 @@ namespace TDS.SelectionSystem
     {
         T First { get; }
         IEnumerable<T> Selected { get; }
+        
+        ISelection<TT> OfType<TT>();
     }
 }

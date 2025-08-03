@@ -1,8 +1,9 @@
-﻿namespace BuildingsTestGame
+﻿using TDS.Entities;
+
+namespace BuildingsTestGame
 {
-    public class Building : IBuilding
+    public class Building : Entity, IBuilding
     {
-        public string Name { get; set; } = "First Building";
         public IGameTerrain Terrain { get; set; }
     }
 }
