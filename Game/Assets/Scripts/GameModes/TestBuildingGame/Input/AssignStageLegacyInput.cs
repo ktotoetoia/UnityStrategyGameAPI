@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BuildingsTestGame;
 using TDS.Commands;
+using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.SelectionSystem;
@@ -62,15 +63,16 @@ namespace TDS
             {
                 _commandSequencer.IssueCommand(new EndTurnCommand(_game.AssignStage));
             }
-
-            if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<GameTerrain>().First.Building is IProductionBuilding selectedBuilding)
+            
+            if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<IBuilding>().First is IProductionBuilding selectedBuilding)
             {
-                _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(selectedBuilding, new DefaultUnitFactory(_game.EntityRegister)));
+                Debug.Log(_selector.GetSelection<object>().First);
+                _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(selectedBuilding , new DefaultUnitFactory(_game.EntityRegister)));
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                IGameTerrain selectedTerrain = _selector.GetSelection<IUnit>().First.MapMovement.Terrain;
+                IGameTerrain selectedTerrain = _selector.GetSelection<IEntity>().First.GetComponent<IMapMovementComponent>().Terrain;
                 
                 if (selectedTerrain == null) return;
 
@@ -81,7 +83,7 @@ namespace TDS
                 INode<ITerrain> from = _area.Nodes.FirstOrDefault(n => n.Value == selectedTerrain);
                 INode<ITerrain> to = _area.Nodes.FirstOrDefault(n => n.Value == targetTerrain);
 
-                IUnit unit = _selector.GetSelection<IUnit>().First;
+                IEntity unit = _selector.GetSelection<IEntity>().First;
                 if (from != null && to != null && unit != null)
                 {
                     _commandSequencer.IssueCommand(

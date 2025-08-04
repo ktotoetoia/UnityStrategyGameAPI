@@ -2,7 +2,7 @@
 
 namespace BuildingsTestGame
 {
-    public class DefaultUnit : Entity, IUnit
+    public class DefaultUnit : Entity
     {
         public IEventComponent Events { get; }
         public IMapMovementComponent MapMovement { get; }

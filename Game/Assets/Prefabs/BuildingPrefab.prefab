@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2594810440820483802}
   - component: {fileID: 6372398634519295200}
   - component: {fileID: 241239236900949046}
-  - component: {fileID: -6613009978201401564}
+  - component: {fileID: 5532289853900645771}
   m_Layer: 0
-  m_Name: Square
+  m_Name: BuildingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-6613009978201401564
+--- !u!114 &5532289853900645771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,6 +144,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4107010815128742821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f240d7657fd41a99839b7bd4dba5e66, type: 3}
+  m_Script: {fileID: 11500000, guid: f9e11cfdd42b4fccb5e08a78e2c3d311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

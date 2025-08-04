@@ -16,13 +16,15 @@ namespace TDS
         
         private void Awake()
         {
-            _game = new BuildingGameFactory(_tileCount) {StartingPosition = _firstBuildingPosition }.Create();
+            _game = new BuildingGameFactory(_tileCount).Create();
             GetComponent<MapGizmosDebug>().Map = _game.Map;
             GetComponent<EntityLifespanTracker>().EntityRegisterEvents = _game.EntityRegisterEvents;
             
             _tileMapSetup.Game = _game;
             _buildingGameUI.Game = _game;
             _assignStageInput.BuildingGame = _game;
+            
+            new GameInitializer(_firstBuildingPosition).Handle(_game);
         }
 
         private void Update()

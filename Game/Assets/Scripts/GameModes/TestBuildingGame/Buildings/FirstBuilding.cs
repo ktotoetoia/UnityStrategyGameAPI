@@ -1,13 +1,18 @@
 ﻿using TDS;
+using TDS.Entities;
 
 namespace BuildingsTestGame
 {
     public class FirstBuilding : Building, IProductionBuilding
     {
-        public void AddToQueue(IFactory<IUnit> entityFactory)
+        public void AddToQueue(IFactory<IEntity> entityFactory)
         {
             Terrain.Unit = entityFactory.Create();
-            Terrain.Unit.Events.Publish(new UnitCreatedEvent(Terrain.Unit,Terrain));
+
+            if (Terrain.Unit.TryGetComponent(out IEventComponent eventComponent))
+            {
+                eventComponent.Publish(new UnitCreatedEvent(Terrain.Unit,Terrain));
+            }
         }
     }
 }

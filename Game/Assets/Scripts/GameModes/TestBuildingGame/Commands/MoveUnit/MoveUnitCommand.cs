@@ -1,14 +1,15 @@
 ﻿using TDS.Commands;
+using TDS.Entities;
 using TDS.Maps;
 
 namespace BuildingsTestGame
 {
     public class MoveUnitCommand : Command
     {
-        public IUnit Unit { get;}
+        public IEntity Unit { get;}
         public IPath<ITerrain> Path { get;}
      
-        public MoveUnitCommand(IUnit unit,IPath<ITerrain> path)
+        public MoveUnitCommand(IEntity unit,IPath<ITerrain> path)
         {
             Unit = unit;
             Path = path;

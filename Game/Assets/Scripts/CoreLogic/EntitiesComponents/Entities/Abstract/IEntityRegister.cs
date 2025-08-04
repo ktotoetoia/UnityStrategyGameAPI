@@ -9,4 +9,12 @@ namespace TDS.Entities
         void AddEntity(IEntity entity);
         void RemoveEntity(IEntity entity);
     }
+    
+    public interface IEntityRegister<TEntity> : IEnumerable<TEntity> where  TEntity : IEntity
+    {
+        IEnumerable<TEntity> Entities { get; }
+
+        void AddEntity(TEntity entity);
+        void RemoveEntity(TEntity entity);
+    }
 }

@@ -1,18 +1,20 @@
-﻿using TDS.Entities;
+﻿using BuildingsTestGame;
 using TDS.SelectionSystem;
 using UnityEngine;
 
 namespace TDS
 {
-    public class UnitMonoBehaviour : MonoBehaviour, ISelectable
+    public class BuildingMonoBehaviour : MonoBehaviour, ISelectable
     {
-        public IEntity Unit { get; set; }
+        public IBuilding Building { get; set; }
         
         public bool TryGetObject<T>(out T obj)
         {
-            if (Unit is T unit)
+            Debug.Log("sigma");
+            
+            if (Building is T building)
             {
-                obj = unit;
+                obj = building;
                 
                 return true;
             }

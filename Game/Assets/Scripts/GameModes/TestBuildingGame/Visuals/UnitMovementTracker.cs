@@ -25,8 +25,11 @@ namespace TDS
 
         public void Remove(IEntity entity)
         {
-            Destroy(_units[entity]);
-            _units.Remove(entity);
+            if (_units.ContainsKey(entity))
+            {
+                Destroy(_units[entity]);
+                _units.Remove(entity);
+            }
         }
 
         private void InitializeUnit(UnitCreatedEvent created)
@@ -37,9 +40,12 @@ namespace TDS
             {
                 throw new NullReferenceException();
             }
-            
-            created.Unit.Events.Subscribe(new ActionHandler<UnitMovedEvent>(UpdateUnit));
 
+            if (created.Unit.TryGetComponent(out IEventComponent eventComponent))
+            {
+                eventComponent.Subscribe(new ActionHandler<UnitMovedEvent>(UpdateUnit));
+            }
+            
             _units[created.Unit] =unitMonoBehaviour;
             unitMonoBehaviour.Unit = created.Unit;
             _prefab.transform.position = created.Unit.Transform.Position;

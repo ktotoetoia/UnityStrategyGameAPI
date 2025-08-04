@@ -1,13 +1,14 @@
-﻿using TDS.Events;
+﻿using TDS.Entities;
+using TDS.Events;
 
 namespace BuildingsTestGame
 {
     public class UnitCreatedEvent : IEvent
     {
-        public IUnit Unit { get; }
+        public IEntity Unit { get; }
         public IGameTerrain Terrain { get; }
 
-        public UnitCreatedEvent(IUnit unit, IGameTerrain terrain)
+        public UnitCreatedEvent(IEntity unit, IGameTerrain terrain)
         {
             Unit = unit;
             Terrain = terrain;
