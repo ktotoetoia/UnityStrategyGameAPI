@@ -18,9 +18,8 @@ namespace BuildingsTestGame
 
         public void Handle(ICommand command)
         {
-            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.Components.Any(x => x is IMapMovementComponent))
+            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.TryGetComponent(out IMapMovementComponent component))
             {
-                IMapMovementComponent component = moveUnitCommand.Unit.Components.First(x => x is IMapMovementComponent) as IMapMovementComponent;
                 float pointsLeft = component.MovementPoints;
 
                 foreach (INode<ITerrain> node in moveUnitCommand.Path.Nodes)

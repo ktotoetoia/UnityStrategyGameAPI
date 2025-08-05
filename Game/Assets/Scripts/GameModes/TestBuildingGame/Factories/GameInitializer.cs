@@ -23,6 +23,8 @@ namespace BuildingsTestGame
             IGameTerrain terrain = game.Map.Terrains.First(x => x.Area.Contains(StartingPosition) && x is IGameTerrain) as IGameTerrain;
 
             terrain.Building = new FirstBuildingFactory(game.EntityRegister).Create();
+            
+            new EventEntityInitializer().Initialize(terrain.Building);
         }
     }
 }

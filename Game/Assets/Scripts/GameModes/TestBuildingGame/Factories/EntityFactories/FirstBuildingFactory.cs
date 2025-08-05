@@ -14,7 +14,7 @@ namespace BuildingsTestGame
         
         public FirstBuilding Create()
         {
-            FirstBuilding building = new FirstBuilding();
+            FirstBuilding building = new FirstBuilding(new EventEntityInitializer());
             
             EntityRegister.AddEntity(building);
 

@@ -1,11 +1,10 @@
-﻿using Component = TDS.Components.Component;
+﻿using TDS.Components;
 
 namespace BuildingsTestGame
 {
-    public class MapMovementComponent : Component, IMapMovementComponent
+    public class TerrainComponent : Component, ITerrainComponent
     {
         private IGameTerrain _terrain;
-        public float MovementPoints { get; set; } = 2;
 
         public IGameTerrain Terrain
         {

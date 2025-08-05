@@ -6,10 +6,10 @@ namespace BuildingsTestGame
 {
     public class AddUnitCreationToBuildingQueue : Command
     {
-        public IProductionBuilding Building { get; }
+        public IBuildingComponent Building { get; }
         public IFactory<IEntity>  EntityFactory { get; }
 
-        public AddUnitCreationToBuildingQueue(IProductionBuilding building, IFactory<IEntity> entityFactory)
+        public AddUnitCreationToBuildingQueue(IBuildingComponent building, IFactory<IEntity> entityFactory)
         {
             Building = building;
             EntityFactory = entityFactory;

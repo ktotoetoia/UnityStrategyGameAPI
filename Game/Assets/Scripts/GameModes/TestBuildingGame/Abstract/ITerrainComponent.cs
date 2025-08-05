@@ -1,8 +1,8 @@
-﻿using TDS;
+﻿using TDS.Components;
 
 namespace BuildingsTestGame
 {
-    public interface IBuilding : IHaveName
+    public interface ITerrainComponent : IComponent
     {
         IGameTerrain Terrain { get; set; }
     }

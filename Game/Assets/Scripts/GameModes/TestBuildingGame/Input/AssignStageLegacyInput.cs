@@ -64,15 +64,14 @@ namespace TDS
                 _commandSequencer.IssueCommand(new EndTurnCommand(_game.AssignStage));
             }
             
-            if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<IBuilding>().First is IProductionBuilding selectedBuilding)
+            if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<IEntity>().First.TryGetComponent(out IBuildingComponent buildingComponent))
             {
-                Debug.Log(_selector.GetSelection<object>().First);
-                _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(selectedBuilding , new DefaultUnitFactory(_game.EntityRegister)));
+                _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(buildingComponent , new DefaultUnitFactory(_game.EntityRegister)));
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                IGameTerrain selectedTerrain = _selector.GetSelection<IEntity>().First.GetComponent<IMapMovementComponent>().Terrain;
+                IGameTerrain selectedTerrain = _selector.GetSelection<IEntity>().First.GetComponent<ITerrainComponent>().Terrain;
                 
                 if (selectedTerrain == null) return;
 

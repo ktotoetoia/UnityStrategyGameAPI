@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BuildingsTestGame;
 using TDS.Entities;
+using TDS.Events;
 using UnityEngine;
 
 namespace TDS
@@ -9,35 +10,31 @@ namespace TDS
     public class BuildingTracker : MonoBehaviour, IEntityObserver
     {
         [SerializeField] private GameObject _prefab;
-        private Dictionary<IBuilding, BuildingMonoBehaviour> _buildings = new();
+        private Dictionary<IEntity, BuildingMonoBehaviour> _buildings = new();
         
         public void Add(IEntity entity)
         {
-            if (entity is IBuilding building)
+            if (entity.TryGetComponent(out IBuildingComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                InitBuilding(building);
+                eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitBuilding,eventComponent));
             }
         }
 
-        private void InitBuilding(IBuilding building)
+        private void InitBuilding(EntityInitializedEvent init)
         {
             BuildingMonoBehaviour buildingMonoBehaviour = Instantiate(_prefab).GetComponent<BuildingMonoBehaviour>();
-
-            if (buildingMonoBehaviour is null)
-            {
-                throw new NullReferenceException();
-            }
             
-            _buildings[building] = buildingMonoBehaviour;
-            buildingMonoBehaviour.Building = building;
+            _buildings[init.Entity] = buildingMonoBehaviour ?? throw new NullReferenceException();
+            buildingMonoBehaviour.Building = init.Entity;
+            buildingMonoBehaviour.transform.position = init.Entity.GetComponent<ITerrainComponent>().Terrain.Area.Position;
         }
 
         public void Remove(IEntity entity)
         {
-            if (entity is IBuilding building)
+            if (entity.TryGetComponent(out IBuildingComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                Destroy(_buildings[building]);
-                _buildings.Remove(building);
+                Destroy(_buildings[entity]);
+                _buildings.Remove(entity);
             }
         }
     }

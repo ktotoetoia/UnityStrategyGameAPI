@@ -19,7 +19,7 @@ namespace TDS
         {
             if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit)
             {
-                eventComponent.Subscribe(new SingleTimeEventHandler<UnitCreatedEvent>(InitializeUnit,eventComponent));
+                eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitializeUnit,eventComponent));
             }
         }
 
@@ -32,7 +32,7 @@ namespace TDS
             }
         }
 
-        private void InitializeUnit(UnitCreatedEvent created)
+        private void InitializeUnit(EntityInitializedEvent created)
         {
             UnitMonoBehaviour unitMonoBehaviour = Instantiate(_prefab).GetComponent<UnitMonoBehaviour>();
 
@@ -41,14 +41,14 @@ namespace TDS
                 throw new NullReferenceException();
             }
 
-            if (created.Unit.TryGetComponent(out IEventComponent eventComponent))
+            if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
             {
                 eventComponent.Subscribe(new ActionHandler<UnitMovedEvent>(UpdateUnit));
             }
             
-            _units[created.Unit] =unitMonoBehaviour;
-            unitMonoBehaviour.Unit = created.Unit;
-            _prefab.transform.position = created.Unit.Transform.Position;
+            _units[created.Entity] =unitMonoBehaviour;
+            unitMonoBehaviour.Unit = created.Entity;
+            _prefab.transform.position = created.Entity.Transform.Position;
         }
 
         private void UpdateUnit(UnitMovedEvent movedEvent)
