@@ -3,7 +3,7 @@ using TDS.Graphs;
 using TDS.Maps;
 using UnityEngine;
 
-namespace BuildingsTestGame
+namespace TDS.Maps
 {
     public class Vector2DistanceCounter : IDistanceCounter
     {

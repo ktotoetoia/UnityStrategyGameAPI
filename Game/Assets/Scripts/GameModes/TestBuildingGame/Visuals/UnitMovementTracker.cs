@@ -11,9 +11,7 @@ namespace TDS
     public class UnitMovementTracker : MonoBehaviour, IEntityObserver
     {
         [SerializeField] private GameObject _prefab;
-        [SerializeField] private float _speed;
         private Dictionary<IEntity, UnitMonoBehaviour> _units = new();
-        private List<Movement>  _movements = new List<Movement>();
         
         public void Add(IEntity entity)
         {
@@ -43,7 +41,7 @@ namespace TDS
 
             if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new ActionHandler<UnitMovedEvent>(UpdateUnit));
+                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrain, ITerrainComponent>>(UpdateUnit));
             }
             
             _units[created.Entity] =unitMonoBehaviour;
@@ -51,34 +49,9 @@ namespace TDS
             _prefab.transform.position = created.Entity.Transform.Position;
         }
 
-        private void UpdateUnit(UnitMovedEvent movedEvent)
+        private void UpdateUnit(PropertyChangeEvent<IGameTerrain, ITerrainComponent> eve)
         {
-            MoveUnitCommand command = movedEvent.Command;
-            _movements.Add(new Movement(_units[command.Unit].transform.position,command.Unit.Transform.Position,command.Unit));
-        }
-
-        private void Update()
-        {
-            foreach (Movement movement in _movements)
-            {
-                _units[movement.Entity].transform.position = Vector3.Lerp(movement.From,movement.To,movement.Bomb += _speed * Time.deltaTime);
-            }
-        }
-
-        private class Movement
-        {
-            public Vector3 From { get; }
-            public Vector3 To { get; }
-            public IEntity Entity { get; }
-            
-            public float Bomb { get; set; }
-            
-            public Movement(Vector3 from, Vector3 to, IEntity entity)
-            {
-                From = from;
-                To = to;
-                Entity = entity;
-            }
+            _units[eve.Owner.Entity].MoveTo(eve.NewValue.Area.Position);
         }
     }
 }

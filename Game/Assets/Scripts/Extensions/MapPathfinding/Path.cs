@@ -3,7 +3,7 @@ using System.Linq;
 using TDS.Graphs;
 using TDS.Maps;
 
-namespace BuildingsTestGame
+namespace TDS.Maps
 {
     public class Path<T> : IPath<T>  where T : ITerrain
     {

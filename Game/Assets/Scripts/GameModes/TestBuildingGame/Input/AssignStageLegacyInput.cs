@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BuildingsTestGame;
 using TDS.Commands;
 using TDS.Entities;
@@ -12,7 +13,7 @@ namespace TDS
     public class AssignStageLegacyInput : MonoBehaviour
     {
         [SerializeField] private float _f;
-        private IMapPathfinder _pathfinder;
+        private MapPathfinder _pathfinder;
         private ISelector _selector;
         private ISelectionProvider _terrainSelector;
         private IGraphMap _map;
@@ -33,6 +34,7 @@ namespace TDS
                 _pathfinder = new MapPathfinder(_game.Map);
                 _map = _game.Map as IGraphMap;
                 _commandSequencer = _game.AssignStage.CommandSequencer;
+                _pathfinder.PathResolver = new NoUnitPathResolver();
             }
         }
 
@@ -109,6 +111,16 @@ namespace TDS
                     Gizmos.DrawLine(edge.From.Value.Area.Position, edge.To.Value.Area.Position);
                 }
             }
+        }
+    }
+
+    public class NoUnitPathResolver : IPathResolver
+    {
+        public bool CanPathThrough<T>(IEnumerable<INode<T>> path) where T : ITerrain
+        {
+
+
+            return path.Count(x => (x.Value as IGameTerrain).Unit != null ) ==  1;
         }
     }
 }

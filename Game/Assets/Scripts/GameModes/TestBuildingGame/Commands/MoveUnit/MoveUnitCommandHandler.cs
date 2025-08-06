@@ -37,11 +37,6 @@ namespace BuildingsTestGame
                     (node.Value as IGameTerrain).Unit = moveUnitCommand.Unit;
                     pointsLeft -= 1;
                 }
-                
-                if (moveUnitCommand.Unit.TryGetComponent(out IEventComponent eventComponent))
-                {
-                    eventComponent.Publish(new UnitMovedEvent(moveUnitCommand));
-                }
             }
         }
     }

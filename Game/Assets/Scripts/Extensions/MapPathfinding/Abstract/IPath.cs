@@ -2,7 +2,7 @@
 using TDS.Graphs;
 using TDS.Maps;
 
-namespace BuildingsTestGame
+namespace TDS.Maps
 {
     public interface IPath<T> where T : ITerrain
     {

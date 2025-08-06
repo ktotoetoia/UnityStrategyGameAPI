@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.Pathfinding;
 
-namespace BuildingsTestGame
+namespace TDS.Maps
 {
     public class MapPathfinder : IMapPathfinder
     {
@@ -11,13 +12,20 @@ namespace BuildingsTestGame
         private IMap _map;
         private IPathfinder _pathfinder;
         private IGraphTraversal _traversal;
+        private IPathResolver _pathResolver;
 
         public IDistanceCounter DistanceCounter
         {
             get =>_distanceCounter??= new Vector2DistanceCounter();
             set => _distanceCounter = value;
         }
-        
+
+        public IPathResolver PathResolver
+        {
+            get => _pathResolver ??= new PathResolver();
+            set => _pathResolver = value;
+        }
+
         public MapPathfinder(IMap map) : this(map, new Dijkstra(),new BreadthFirstTraversal())
         {
             
@@ -32,7 +40,7 @@ namespace BuildingsTestGame
         
         public IGraphReadOnly<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain
         {
-            return _traversal.FindReachableSubgraph(startNode, x => DistanceCounter.GetDistance(x) <= maxDistance);
+            return _traversal.FindReachableSubgraph(startNode, x => DistanceCounter.GetDistance(x) <= maxDistance && PathResolver.CanPathThrough(x));
         }
 
         public IPath<T> GetPath<T>(IGraphReadOnly<T> graph, INode<T> from, INode<T> to) where T : ITerrain
