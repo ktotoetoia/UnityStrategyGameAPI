@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BuildingsTestGame;
 using TDS.Events;
 using TDS.Handlers;
 using TDS.Maps;
@@ -11,22 +10,22 @@ namespace TDS.Entities
     public class TileMapSetup : MonoBehaviour
     {
         private readonly List<IHandler<ITerrain>> TerrainDrawers = new();
-        private BuildingGame _game;
+        private IMap _map;
         private Tilemap _tilemap;
 
-        public BuildingGame Game
+        public IMap Map
         {
-            get => _game;
+            get => _map;
             set
             {
-                _game = value;
+                _map = value;
                 
-                if (_game.Map is RectangleMap map)
+                if (_map is RectangleMap map)
                 {
                     new RectangleMapGridSetup().Setup(map,_tilemap.layoutGrid);
                 }
 
-                foreach (ITerrain terrain in _game.Map.Terrains)
+                foreach (ITerrain terrain in _map.Terrains)
                 {
                     foreach (IHandler<ITerrain> terrainDrawer in TerrainDrawers)
                     {

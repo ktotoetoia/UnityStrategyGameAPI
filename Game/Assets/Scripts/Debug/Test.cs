@@ -20,7 +20,7 @@ namespace TDS
             GetComponent<MapGizmosDebug>().Map = _game.Map;
             GetComponent<EntityLifespanTracker>().EntityRegisterEvents = _game.EntityRegisterEvents;
             
-            _tileMapSetup.Game = _game;
+            _tileMapSetup.Map = _game.Map;
             _buildingGameUI.Game = _game;
             _assignStageInput.BuildingGame = _game;
             
