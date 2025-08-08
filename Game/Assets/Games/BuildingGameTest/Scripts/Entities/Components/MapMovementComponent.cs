@@ -4,6 +4,6 @@ namespace BuildingsTestGame
 {
     public class MapMovementComponent : Component, IMapMovementComponent
     {
-        public float MovementPoints { get; set; } = 2;
+        public float MovementPoints { get; set; } = 6;
     }
 }

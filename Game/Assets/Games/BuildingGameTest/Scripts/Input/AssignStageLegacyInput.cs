@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BuildingsTestGame;
+﻿using BuildingsTestGame;
 using TDS.Commands;
 using TDS.Entities;
 using TDS.Graphs;
@@ -54,6 +52,11 @@ namespace TDS
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out ITerrainComponent terrainComponent))
+                {
+                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain) ,_f).Graph;
+                }
+
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _selector.UpdateSelectionAt(clickPosition);
             }
@@ -73,24 +76,14 @@ namespace TDS
 
             if (Input.GetMouseButtonDown(1))
             {
-                IGameTerrain selectedTerrain = _selector.GetSelection<IEntity>().First.GetComponent<ITerrainComponent>().Terrain;
-                
-                if (selectedTerrain == null) return;
-
-                _area = _pathfinder.GetAvailableMovement(_map.GetNode(selectedTerrain) ,_f);
 
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 IGameTerrain targetTerrain = _terrainSelector.SelectAt<IGameTerrain>((Vector2)clickPosition).First;
-                INode<ITerrain> from = _area.Nodes.FirstOrDefault(n => n.Value == selectedTerrain);
-                INode<ITerrain> to = _area.Nodes.FirstOrDefault(n => n.Value == targetTerrain);
-
                 IEntity unit = _selector.GetSelection<IEntity>().First;
-                if (from != null && to != null && unit != null)
-                {
-                    _commandSequencer.IssueCommand(
-                        new MoveUnitCommand(unit, targetTerrain,_pathfinder)
-                    );
-                }
+                
+                _commandSequencer.IssueCommand(
+                    new MoveUnitCommand(unit, targetTerrain,_pathfinder)
+                );
             }
         }
 
@@ -111,16 +104,6 @@ namespace TDS
                     Gizmos.DrawLine(edge.From.Value.Area.Position, edge.To.Value.Area.Position);
                 }
             }
-        }
-    }
-
-    public class NoUnitPathResolver : IPathResolver
-    {
-        public bool CanPathThrough<T>(IEnumerable<INode<T>> path) where T : ITerrain
-        {
-
-
-            return path.Count(x => (x.Value as IGameTerrain).Unit != null ) ==  1;
         }
     }
 }

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using TDS.Graphs;
+using UnityEngine;
 
 namespace TDS.Pathfinding
 {
     public class Dijkstra : IPathfinder
     {
-        public List<INode<T>> GetPath<T>(
+        public IPath<T> GetPath<T>(
             IEnumerable<INode<T>> nodes,
             INode<T> start,
             INode<T> end,
@@ -26,7 +27,7 @@ namespace TDS.Pathfinding
                     .OrderBy(n => track[n].Price)
                     .FirstOrDefault();
 
-                if (current == null) return new List<INode<T>>();
+                if (current == null) return new EmptyPath<T>();
                 if (current.Equals(end)) break;
 
                 foreach (var edge in current.Edges)
@@ -41,7 +42,7 @@ namespace TDS.Pathfinding
 
                 unvisited.Remove(current);
             }
-
+            
             return TrackToPath(track, end);
         }
 
@@ -50,15 +51,22 @@ namespace TDS.Pathfinding
             return Equals(edge.From, current) ? edge.To : edge.From;
         }
 
-        private List<INode<T>> TrackToPath<T>(Dictionary<INode<T>, DijkstraData<T>> track, INode<T> end)
+        private IPath<T> TrackToPath<T>(Dictionary<INode<T>, DijkstraData<T>> track, INode<T> end)
         {
-            List<INode<T>> path = new();
+            List<INode<T>> nodes = new();
+            
             for (var n = end; n != null; n = track[n].Previous)
             {
-                path.Insert(0, n);
+                nodes.Insert(0, n);
             }
 
-            return path;
+            List<IPathSegment<T>> segments = new();
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
+                segments.Add(new PathSegment<T>(nodes[i], nodes[i + 1]));
+            }
+            
+            return segments.Count > 0 ? new Path<T>(segments) : new EmptyPath<T>();
         }
 
         class DijkstraData<T>

@@ -3,6 +3,7 @@ using System.Linq;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.Pathfinding;
+using UnityEngine;
 
 namespace TDS.Maps
 {
@@ -38,29 +39,26 @@ namespace TDS.Maps
             _traversal = traversal;
         }
         
-        public IGraphReadOnly<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain
+        public ISubGraph<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain
         {
             return _traversal.FindReachableSubgraph(startNode, x => DistanceCounter.GetDistance(x) <= maxDistance && PathResolver.CanPathThrough(x));
         }
 
         public IPath<T> GetPath<T>(IGraphReadOnly<T> graph, INode<T> from, INode<T> to) where T : ITerrain
         {
-            IEnumerable<INode<T>> nodes = _pathfinder.GetPath(graph.Nodes, from, to, x => DistanceCounter.GetDistance(x));
+            return _pathfinder.GetPath(graph.Nodes, from, to, x => DistanceCounter.GetDistance(x));
+        }
+
+        public IPath<ITerrain> GetPath(INode<ITerrain> startNode, INode<ITerrain> to,float distance)
+        {
+            IGraphReadOnly<ITerrain> graph = GetAvailableMovement(startNode, distance).Graph;
             
-            return new Path<T>(nodes);
+            return GetPath(graph, graph.Nodes.FirstOrDefault(x => x.Value.Equals(startNode.Value)), graph.Nodes.FirstOrDefault(x => x.Value.Equals(to.Value)));
         }
 
-        public IPath<T> GetPath<T>(INode<T> startNode, INode<T> to) where T : ITerrain
+        public IPath<ITerrain> GetPath(ITerrain startTerrain, ITerrain endTerrain,float distance)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public IPath<T> GetPath<T>(T startTerrain, T endTerrain) where T : ITerrain
-        {
-            IEnumerable<INode<T>> nodes = null;
-
-
-            return new Path<T>(nodes);
+            return GetPath(_map.GetNode(startTerrain), _map.GetNode(endTerrain), distance);
         }
     }
 }

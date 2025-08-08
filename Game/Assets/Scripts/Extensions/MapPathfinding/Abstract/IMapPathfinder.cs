@@ -1,13 +1,14 @@
 ﻿using TDS.Graphs;
 using TDS.Maps;
+using TDS.Pathfinding;
 
 namespace TDS.Maps
 {
     public interface IMapPathfinder
     {
-        IGraphReadOnly<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain;
+        ISubGraph<T> GetAvailableMovement<T>(INode<T> startNode, float maxDistance) where T : ITerrain;
         IPath<T> GetPath<T>(IGraphReadOnly<T> graph, INode<T> from, INode<T> to) where T : ITerrain;
-        IPath<T> GetPath<T>(INode<T> startNode, INode<T> to) where T : ITerrain;
-        IPath<T> GetPath<T>(T startTerrain, T endTerrain) where T : ITerrain;
+        IPath<ITerrain> GetPath(INode<ITerrain> startNode, INode<ITerrain> to,float distance);
+        IPath<ITerrain> GetPath(ITerrain startTerrain, ITerrain endTerrain,float distance);
     }
 }

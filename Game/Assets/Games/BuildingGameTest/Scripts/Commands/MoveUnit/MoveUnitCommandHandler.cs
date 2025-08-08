@@ -4,6 +4,9 @@ using TDS.Entities;
 using TDS.Graphs;
 using TDS.Handlers;
 using TDS.Maps;
+using TDS.Pathfinding;
+using UnityEngine;
+using Terrain = TDS.Maps.Terrain;
 
 namespace BuildingsTestGame
 {
@@ -11,34 +14,29 @@ namespace BuildingsTestGame
     {
         public bool CanHandle(ICommand command)
         {
-            throw new System.NotImplementedException();
+            return command is MoveUnitCommand movement &&
+                   movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent) &&
+                   movement.Unit.TryGetComponent(out ITerrainComponent terrainComponent) ;
         }
 
         public void Handle(ICommand command)
         {
-            throw new System.NotImplementedException();
-            
-            /*
-            if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.TryGetComponent(out IMapMovementComponent component))
+            if (command is MoveUnitCommand movement && movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out ITerrainComponent terrainComponent))
             {
-                float pointsLeft = component.MovementPoints;
-
-                foreach (INode<ITerrain> node in moveUnitCommand.Path.Nodes)
+                IPath<ITerrain> path = movement.Pathfinder.GetPath(terrainComponent.Terrain,movement.TargetTerrain,movementComponent.MovementPoints);
+                float pointsLeft = movementComponent.MovementPoints;
+                
+                foreach (IPathSegment<ITerrain> segment in path.Segments)
                 {
-                    if (node == moveUnitCommand.Path.Start)
-                    {
-                        continue;
-                    }
-
                     if (pointsLeft <= 0)
                     {
                         break;
                     }
 
-                    (node.Value as IGameTerrain).Unit = moveUnitCommand.Unit;
+                    (segment.To.Value as IGameTerrain).Unit = movement.Unit;
                     pointsLeft -= 1;
                 }
-            }*/
+            }
         }
     }
 }

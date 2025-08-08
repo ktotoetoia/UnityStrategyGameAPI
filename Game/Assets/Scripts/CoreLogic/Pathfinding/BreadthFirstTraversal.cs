@@ -7,35 +7,35 @@ namespace TDS.Pathfinding
 {
     public class BreadthFirstTraversal : IGraphTraversal
     {
-        public IGraphReadOnly<T> FindReachableSubgraph<T>(
+        public ISubGraph<T> FindReachableSubgraph<T>(
             INode<T> startNode,
             Func<IEnumerable<INode<T>>, bool> canPathTo)
         {
-            var newNodes = new Dictionary<INode<T>, Node<T>>();
-            var newEdges = new HashSet<IEdge<T>>();
+            Dictionary<INode<T>, Node<T>> newNodes = new Dictionary<INode<T>, Node<T>>();
+            HashSet<IEdge<T>> newEdges = new HashSet<IEdge<T>>();
 
-            var queue = new Queue<List<INode<T>>>();
+            Queue<List<INode<T>>> queue = new Queue<List<INode<T>>>();
             queue.Enqueue(new List<INode<T>> { startNode });
 
             newNodes[startNode] = CreateNewNode(startNode);
 
             while (queue.Count > 0)
             {
-                var path = queue.Dequeue();
-                var currentNode = path[^1];
-                var currentNewNode = newNodes[currentNode];
+                List<INode<T>> path = queue.Dequeue();
+                INode<T> currentNode = path[^1];
+                Node<T> currentNewNode = newNodes[currentNode];
 
-                foreach (var edge in currentNode.Edges)
+                foreach (IEdge<T> edge in currentNode.Edges)
                 {
-                    var neighbor = GetNeighbor(edge, currentNode);
+                    INode<T> neighbor = GetNeighbor(edge, currentNode);
 
                     if (!newNodes.ContainsKey(neighbor))
                     {
-                        var newPath = new List<INode<T>>(path) { neighbor };
+                        List<INode<T>> newPath = new List<INode<T>>(path) { neighbor };
 
                         if (canPathTo(newPath))
                         {
-                            var neighborNewNode = CreateNewNode(neighbor);
+                            Node<T> neighborNewNode = CreateNewNode(neighbor);
                             newNodes[neighbor] = neighborNewNode;
 
                             CreateNewEdgeIfNotConnected(currentNewNode, neighborNewNode, newEdges);
@@ -45,13 +45,13 @@ namespace TDS.Pathfinding
                     }
                     else
                     {
-                        var neighborNewNode = newNodes[neighbor];
+                        Node<T> neighborNewNode = newNodes[neighbor];
                         CreateNewEdgeIfNotConnected(currentNewNode, neighborNewNode, newEdges);
                     }
                 }
             }
 
-            return new GraphReadOnly<T>(newNodes.Values.ToList(), newEdges.ToList());
+            return new SubGraph<T>(new GraphReadOnly<T>(newNodes.Values.ToList(), newEdges.ToList()));
         }
 
         private Node<T> CreateNewNode<T>(INode<T> originalNode)
@@ -63,7 +63,7 @@ namespace TDS.Pathfinding
         {
             if (!HasEdgeBetween(from, to))
             {
-                var newEdge = new Edge<T>(from, to);
+                Edge<T> newEdge = new Edge<T>(from, to);
 
                 if (edgeSet.Add(newEdge))
                 {
@@ -75,9 +75,9 @@ namespace TDS.Pathfinding
 
         private bool HasEdgeBetween<T>(Node<T> a, Node<T> b)
         {
-            foreach (var edge in a.Edges)
+            foreach (IEdge<T> edge in a.Edges)
             {
-                var neighbor = edge.From.Equals(a) ? edge.To : edge.From;
+                INode<T> neighbor = edge.From.Equals(a) ? edge.To : edge.From;
                 if (neighbor.Equals(b))
                     return true;
             }
