@@ -9,7 +9,7 @@ namespace TDS.Maps
     public class MapPathfinder : IMapPathfinder
     {
         private IDistanceCounter _distanceCounter;
-        private IMap _map;
+        private IGraphMap _map;
         private IPathfinder _pathfinder;
         private IGraphTraversal _traversal;
         private IPathResolver _pathResolver;
@@ -26,12 +26,12 @@ namespace TDS.Maps
             set => _pathResolver = value;
         }
 
-        public MapPathfinder(IMap map) : this(map, new Dijkstra(),new BreadthFirstTraversal())
+        public MapPathfinder(IGraphMap map) : this(map, new Dijkstra(),new BreadthFirstTraversal())
         {
             
         }
 
-        public MapPathfinder(IMap map, IPathfinder pathfinder,IGraphTraversal traversal)
+        public MapPathfinder(IGraphMap map, IPathfinder pathfinder,IGraphTraversal traversal)
         {
             _map = map;
             _pathfinder = pathfinder;
@@ -47,6 +47,19 @@ namespace TDS.Maps
         {
             IEnumerable<INode<T>> nodes = _pathfinder.GetPath(graph.Nodes, from, to, x => DistanceCounter.GetDistance(x));
             
+            return new Path<T>(nodes);
+        }
+
+        public IPath<T> GetPath<T>(INode<T> startNode, INode<T> to) where T : ITerrain
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IPath<T> GetPath<T>(T startTerrain, T endTerrain) where T : ITerrain
+        {
+            IEnumerable<INode<T>> nodes = null;
+
+
             return new Path<T>(nodes);
         }
     }

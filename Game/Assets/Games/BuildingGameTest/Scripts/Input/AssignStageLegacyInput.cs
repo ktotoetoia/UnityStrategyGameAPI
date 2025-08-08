@@ -31,8 +31,8 @@ namespace TDS
                 _game = value;
                 _selector = new Selector(new RaycastSelectionProvider());
                 _terrainSelector = new TerrainSelectionProvider(_game.Map);
-                _pathfinder = new MapPathfinder(_game.Map);
                 _map = _game.Map as IGraphMap;
+                _pathfinder = new MapPathfinder(_map);
                 _commandSequencer = _game.AssignStage.CommandSequencer;
                 _pathfinder.PathResolver = new NoUnitPathResolver();
             }
@@ -80,7 +80,7 @@ namespace TDS
                 _area = _pathfinder.GetAvailableMovement(_map.GetNode(selectedTerrain) ,_f);
 
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>((Vector2)clickPosition).First;
+                IGameTerrain targetTerrain = _terrainSelector.SelectAt<IGameTerrain>((Vector2)clickPosition).First;
                 INode<ITerrain> from = _area.Nodes.FirstOrDefault(n => n.Value == selectedTerrain);
                 INode<ITerrain> to = _area.Nodes.FirstOrDefault(n => n.Value == targetTerrain);
 
@@ -88,7 +88,7 @@ namespace TDS
                 if (from != null && to != null && unit != null)
                 {
                     _commandSequencer.IssueCommand(
-                        new MoveUnitCommand(unit, _pathfinder.GetPath(_area, from, to))
+                        new MoveUnitCommand(unit, targetTerrain,_pathfinder)
                     );
                 }
             }

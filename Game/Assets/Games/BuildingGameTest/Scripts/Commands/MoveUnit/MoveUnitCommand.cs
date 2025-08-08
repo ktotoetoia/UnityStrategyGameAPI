@@ -7,12 +7,14 @@ namespace BuildingsTestGame
     public class MoveUnitCommand : Command
     {
         public IEntity Unit { get;}
-        public IPath<ITerrain> Path { get;}
+        public IMapPathfinder Pathfinder { get;}
+        public IGameTerrain TargetTerrain { get;}
      
-        public MoveUnitCommand(IEntity unit,IPath<ITerrain> path)
+        public MoveUnitCommand(IEntity unit, IGameTerrain targetTerrain, IMapPathfinder pathfinder)
         {
             Unit = unit;
-            Path = path;
+            Pathfinder = pathfinder;
+            TargetTerrain = targetTerrain;
         }
     }
 }

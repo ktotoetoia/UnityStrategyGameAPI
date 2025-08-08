@@ -11,13 +11,14 @@ namespace BuildingsTestGame
     {
         public bool CanHandle(ICommand command)
         {
-            return command is MoveUnitCommand moveUnitCommand &&
-                   moveUnitCommand.Path.Start.Value is GameTerrain &&
-                   moveUnitCommand.Path.End.Value is GameTerrain;
+            throw new System.NotImplementedException();
         }
 
         public void Handle(ICommand command)
         {
+            throw new System.NotImplementedException();
+            
+            /*
             if (command is MoveUnitCommand moveUnitCommand && moveUnitCommand.Unit.TryGetComponent(out IMapMovementComponent component))
             {
                 float pointsLeft = component.MovementPoints;
@@ -37,7 +38,7 @@ namespace BuildingsTestGame
                     (node.Value as IGameTerrain).Unit = moveUnitCommand.Unit;
                     pointsLeft -= 1;
                 }
-            }
+            }*/
         }
     }
 }

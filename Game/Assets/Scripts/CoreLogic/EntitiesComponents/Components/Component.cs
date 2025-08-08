@@ -12,7 +12,6 @@ namespace TDS.Components
             get
             {
                 ThrowExceptionIfDestroyed();
-                
                 return _entity;
             }
             
@@ -33,6 +32,11 @@ namespace TDS.Components
 
         public virtual void Init(IEntity entity)
         {
+            if (Entity != null)
+            {
+                throw new Exception("Component has already been initialized.");
+            }
+            
             Entity = entity;
         }
 

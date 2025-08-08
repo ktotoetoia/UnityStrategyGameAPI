@@ -15,7 +15,7 @@ namespace BuildingsTestGame
 
         public bool CanHandle(BuildingGame game)
         {
-            return !game.Map.Terrains.Any(x => x is IGameTerrain terrain && terrain.Building != null);
+            return !game.Map.Terrains.Any(x => x is IGameTerrain { Building: not null });
         }
 
         public void Handle(BuildingGame game)

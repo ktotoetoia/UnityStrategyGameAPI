@@ -13,7 +13,11 @@ namespace BuildingsTestGame
 
         public IGameTerrain Terrain
         {
-            get => _terrainEvent.Value;
+            get
+            {
+                ThrowExceptionIfDestroyed();
+                return _terrainEvent.Value;  
+            } 
             set
             {
                 ThrowExceptionIfDestroyed();
