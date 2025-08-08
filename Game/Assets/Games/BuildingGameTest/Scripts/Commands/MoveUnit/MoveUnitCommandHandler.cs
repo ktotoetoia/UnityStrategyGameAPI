@@ -1,16 +1,12 @@
-﻿using System.Linq;
-using TDS.Commands;
+﻿using TDS.Commands;
 using TDS.Entities;
-using TDS.Graphs;
 using TDS.Handlers;
 using TDS.Maps;
 using TDS.Pathfinding;
-using UnityEngine;
-using Terrain = TDS.Maps.Terrain;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommandHandler : IHandler<ICommand>
+    public class MoveUnitCommandHandler : IConditionalHandler<ICommand>
     {
         public bool CanHandle(ICommand command)
         {

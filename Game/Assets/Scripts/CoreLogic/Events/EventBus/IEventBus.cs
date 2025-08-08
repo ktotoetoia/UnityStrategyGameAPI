@@ -2,19 +2,19 @@
 
 namespace TDS.Events
 {
-    public interface IEventBus: IEventPublisher, IEventSubscriber
+    public interface IEventBus: IPublisher, ISubscriber
     {
         
     }
 
-    public interface IEventPublisher
+    public interface IPublisher
     {
-        void Publish<TEvent>(TEvent evt) where TEvent : IEvent;
+        void Publish<TType>(TType obj);
     }
 
-    public interface IEventSubscriber
+    public interface ISubscriber
     {
-        void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent;
-        void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent;
+        void Subscribe<TType>(IHandler<TType> handler);
+        void Unsubscribe<TType>(IHandler<TType> handler);
     }
 }

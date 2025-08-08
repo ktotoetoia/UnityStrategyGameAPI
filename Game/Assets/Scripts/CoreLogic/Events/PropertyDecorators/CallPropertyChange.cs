@@ -25,15 +25,15 @@ namespace TDS.Events
             }
         }
         
-        public IEventPublisher  EventPublisher { get; }
+        public IPublisher  EventPublisher { get; }
         public TOwner Owner { get; }
 
-        public CallPropertyChange(TOwner owner, IEventPublisher eventPublisher) : this(default, owner, eventPublisher)
+        public CallPropertyChange(TOwner owner, IPublisher eventPublisher) : this(default, owner, eventPublisher)
         {
             
         }
 
-        public CallPropertyChange(T value, TOwner owner, IEventPublisher eventPublisher)
+        public CallPropertyChange(T value, TOwner owner, IPublisher eventPublisher)
         {
             _value = value;
             Owner = owner;

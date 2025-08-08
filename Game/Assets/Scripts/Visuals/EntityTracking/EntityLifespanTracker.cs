@@ -9,9 +9,9 @@ namespace TDS
     public class EntityLifespanTracker : MonoBehaviour
     {
         private List<IEntityObserver>  _observers = new();
-        private IEventSubscriber _entityRegisterEvents;
+        private ISubscriber _entityRegisterEvents;
 
-        public IEventSubscriber EntityRegisterEvents
+        public ISubscriber EntityRegisterEvents
         {
             get
             {

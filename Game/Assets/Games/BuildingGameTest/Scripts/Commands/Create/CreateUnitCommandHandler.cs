@@ -3,7 +3,7 @@ using TDS.Handlers;
 
 namespace BuildingsTestGame
 {
-    public class CreateUnitCommandHandler  : IHandler<ICommand>
+    public class CreateUnitCommandHandler  : IConditionalHandler<ICommand>
     {
         public bool CanHandle(ICommand command)
         {

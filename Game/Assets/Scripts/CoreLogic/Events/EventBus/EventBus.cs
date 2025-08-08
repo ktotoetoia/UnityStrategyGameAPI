@@ -8,10 +8,10 @@ namespace TDS.Events
     {
         private readonly Dictionary<Type, List<object>> _handlers = new();
 
-        public void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Subscribe<T>(IHandler<T> handler)
         {
-            var type = typeof(TEvent);
-            if (!_handlers.TryGetValue(type, out var list))
+            Type type = typeof(T);
+            if (!_handlers.TryGetValue(type, out List<object> list))
             {
                 list = new List<object>();
                 _handlers[type] = list;
@@ -19,50 +19,28 @@ namespace TDS.Events
             list.Add(handler);
         }
 
-        public void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Unsubscribe<T>(IHandler<T> handler)
         {
-            if (_handlers.TryGetValue(typeof(TEvent), out var list))
+            Type type = typeof(T);
+            if (_handlers.TryGetValue(type, out List<object> list))
             {
                 list.Remove(handler);
+                if (list.Count == 0)
+                    _handlers.Remove(type);
             }
         }
 
-        public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
+        public void Publish<T>(T evt)
         {
-            foreach (var type in GetEventTypes(typeof(TEvent)))
+            Type type = typeof(T);
+            
+            if (_handlers.TryGetValue(type, out List<object> list))
             {
-                if (_handlers.TryGetValue(type, out var list))
+                object[] snapshot = list.ToArray();
+                foreach (object obj in snapshot)
                 {
-                    foreach (var handler in list.ToArray())
-                    {
-                        if (handler is IHandler<TEvent> typedHandler)
-                        {
-                            typedHandler.Handle(evt);
-                        }
-                    }
+                    ((IHandler<T>)obj).Handle(evt);
                 }
-            }
-        }
-
-        private static IEnumerable<Type> GetEventTypes(Type type)
-        {
-            var seen = new HashSet<Type>();
-            var queue = new Queue<Type>();
-            queue.Enqueue(type);
-
-            while (queue.Count > 0)
-            {
-                var current = queue.Dequeue();
-                if (current == null || !typeof(IEvent).IsAssignableFrom(current) || !seen.Add(current))
-                    continue;
-
-                yield return current;
-
-                if (current.BaseType != null)
-                    queue.Enqueue(current.BaseType);
-
-                foreach (var iface in current.GetInterfaces())
-                    queue.Enqueue(iface);
             }
         }
     }

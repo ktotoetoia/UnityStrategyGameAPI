@@ -3,7 +3,7 @@ using TDS.Handlers;
 
 namespace TDS.Events
 {
-    public class EntityRegisterEvents : IEventSubscriber
+    public class EntityRegisterEvents : ISubscriber
     {
         private readonly IEventBus _eventBus;
 
@@ -21,12 +21,12 @@ namespace TDS.Events
             };
         }
 
-        public void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Subscribe<TType>(IHandler<TType> handler)
         {
             _eventBus.Subscribe(handler);
         }
 
-        public void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Unsubscribe<TType>(IHandler<TType> handler)
         {
             _eventBus.Unsubscribe(handler);
         }

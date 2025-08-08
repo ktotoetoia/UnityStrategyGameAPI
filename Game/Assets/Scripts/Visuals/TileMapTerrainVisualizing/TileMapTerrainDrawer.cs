@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace TDS.Entities
 {
-    public class TileMapTerrainDrawer : MonoBehaviour, IHandler<ITerrain>
+    public class TileMapTerrainDrawer : MonoBehaviour, IConditionalHandler<ITerrain>
     {
         [SerializeField] private Tilemap _tilemap;
         [SerializeField] private Tile _tile;

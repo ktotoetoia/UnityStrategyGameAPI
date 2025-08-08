@@ -9,7 +9,7 @@ namespace TDS.Entities
 {
     public class TileMapSetup : MonoBehaviour
     {
-        private readonly List<IHandler<ITerrain>> TerrainDrawers = new();
+        private readonly List<IConditionalHandler<ITerrain>> TerrainDrawers = new();
         private IMap _map;
         private Tilemap _tilemap;
 
@@ -27,7 +27,7 @@ namespace TDS.Entities
 
                 foreach (ITerrain terrain in _map.Terrains)
                 {
-                    foreach (IHandler<ITerrain> terrainDrawer in TerrainDrawers)
+                    foreach (IConditionalHandler<ITerrain> terrainDrawer in TerrainDrawers)
                     {
                         if (terrainDrawer.TryHandle(terrain))
                         {

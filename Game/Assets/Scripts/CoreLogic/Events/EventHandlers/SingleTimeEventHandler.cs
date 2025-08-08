@@ -7,14 +7,14 @@ namespace TDS.Events
     {
         private readonly Action<T> _handler;
         private readonly Func<T, bool> _canHandle;
-        private IEventSubscriber _events;
+        private ISubscriber _events;
         
-        public SingleTimeEventHandler(Action<T> handler,IEventSubscriber events) : this(handler, x => true,events)
+        public SingleTimeEventHandler(Action<T> handler,ISubscriber events) : this(handler, x => true,events)
         {
             
         }
 
-        public SingleTimeEventHandler(Action<T> handler, Func<T, bool> canHandle, IEventSubscriber events)
+        public SingleTimeEventHandler(Action<T> handler, Func<T, bool> canHandle, ISubscriber events)
         {
             _events = events;
             _handler = handler;

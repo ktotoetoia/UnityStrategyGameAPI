@@ -4,7 +4,7 @@ namespace TDS.Events
 {
     public static class HandlerExtensions
     {
-        public static bool TryHandle<T>(this IHandler<T> handler, T operation)
+        public static bool TryHandle<T>(this IConditionalHandler<T> handler, T operation)
         {
             if (handler.CanHandle(operation))
             {

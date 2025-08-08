@@ -18,10 +18,16 @@ namespace TDS.TurnSystem
         protected virtual void OnStart()
         {
             
-        } 
+        }
+
+        protected virtual void BeforeEnd()
+        {
+            
+        }
 
         public void EndTurn()
         {
+            BeforeEnd();
             _completion.SetResult(true);
         }
     }

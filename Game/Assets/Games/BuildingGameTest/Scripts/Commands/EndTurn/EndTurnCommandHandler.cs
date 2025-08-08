@@ -4,7 +4,7 @@ using TDS.Handlers;
 
 namespace BuildingsTestGame
 {
-    public class EndTurnCommandHandler : IHandler<ICommand>
+    public class EndTurnCommandHandler : IConditionalHandler<ICommand>
     {
         public bool CanHandle(ICommand command)
         {

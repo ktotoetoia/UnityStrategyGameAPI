@@ -8,19 +8,19 @@ namespace BuildingsTestGame
     {
         private IEventBus _events = new EventBus(); 
 
-        public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
+        public void Publish<TType>(TType evt)
         {
             ThrowExceptionIfDestroyed();
             _events?.Publish(evt);
         }
 
-        public void Subscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Subscribe<TType>(IHandler<TType> handler)
         {
             ThrowExceptionIfDestroyed();
             _events?.Subscribe(handler);
         }
 
-        public void Unsubscribe<TEvent>(IHandler<TEvent> handler) where TEvent : IEvent
+        public void Unsubscribe<TType>(IHandler<TType> handler)
         {
             ThrowExceptionIfDestroyed();
             _events?.Unsubscribe(handler);

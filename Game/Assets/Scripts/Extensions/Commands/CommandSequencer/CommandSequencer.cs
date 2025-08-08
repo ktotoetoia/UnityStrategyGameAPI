@@ -6,20 +6,20 @@ namespace TDS.Commands
 {
     public class CommandSequencer : ICommandSequencer
     {
-        public IList<IHandler<ICommand>> HandlersList { get; }
-        public IEnumerable<IHandler<ICommand>> Handlers => HandlersList;
+        public IList<IConditionalHandler<ICommand>> HandlersList { get; }
+        public IEnumerable<IConditionalHandler<ICommand>> Handlers => HandlersList;
         
-        public CommandSequencer() : this(new List<IHandler<ICommand>>())
+        public CommandSequencer() : this(new List<IConditionalHandler<ICommand>>())
         {
             
         }
 
-        public CommandSequencer(IEnumerable<IHandler<ICommand>> handlers) : this(new List<IHandler<ICommand>>(handlers))
+        public CommandSequencer(IEnumerable<IConditionalHandler<ICommand>> handlers) : this(new List<IConditionalHandler<ICommand>>(handlers))
         {
             
         }
 
-        public CommandSequencer(IList<IHandler<ICommand>> handlers)
+        public CommandSequencer(IList<IConditionalHandler<ICommand>> handlers)
         {
             HandlersList = handlers;
         }
