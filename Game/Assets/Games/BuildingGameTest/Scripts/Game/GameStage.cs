@@ -1,12 +1,13 @@
-﻿using TDS.TurnSystem;
+﻿using TDS.Commands;
+using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
     public class GameStage : TurnUser, IGameStage
     {
-        public ITurnCommandSequencer CommandSequencer { get; set; }
+        public ICommandSequencer CommandSequencer { get; set; }
         
-        public GameStage(ITurnCommandSequencer commandSequencer)
+        public GameStage(ICommandSequencer commandSequencer)
         {
             CommandSequencer = commandSequencer;
         }
