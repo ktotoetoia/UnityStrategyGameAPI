@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TDS.Components;
 
 namespace TDS.Entities
@@ -10,10 +11,53 @@ namespace TDS.Entities
             return entity.Components.FirstOrDefault(x => x is TComponent) as TComponent;
         }
 
-        public static bool TryGetComponent<TComponent>(this IEntity entity, out TComponent component) where TComponent : class, IComponent
+        public static bool TryGetComponent<TComponent>(this IEntity entity, out TComponent component) 
+            where TComponent : class, IComponent
         {
             component = GetComponent<TComponent>(entity);
             return component != null;
+        }
+
+        public static IEnumerable<(IEntity, T1)> WithComponent<T1>(this IEnumerable<IEntity> entities)
+            where T1 : class, IComponent
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.TryGetComponent(out T1 t1))
+                {
+                    yield return (entity, t1);
+                }
+            }
+        }
+
+        public static IEnumerable<(IEntity, T1, T2)> WithComponent<T1, T2>(this IEnumerable<IEntity> entities)
+            where T1 : class, IComponent
+            where T2 : class, IComponent
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.TryGetComponent(out T1 t1) &&
+                    entity.TryGetComponent(out T2 t2))
+                {
+                    yield return (entity, t1, t2);
+                }
+            }
+        }
+
+        public static IEnumerable<(IEntity, T1, T2, T3)> WithComponent<T1, T2, T3>(this IEnumerable<IEntity> entities)
+            where T1 : class, IComponent
+            where T2 : class, IComponent
+            where T3 : class, IComponent
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.TryGetComponent(out T1 t1) &&
+                    entity.TryGetComponent(out T2 t2) &&
+                    entity.TryGetComponent(out T3 t3))
+                {
+                    yield return (entity, t1, t2, t3);
+                }
+            }
         }
     }
 }

@@ -15,21 +15,11 @@ namespace TDS.Maps
         public Vector2Int TileCount { get; }
         public Vector2 TileSize { get; }
         
-        public RectangleMap(Vector2Int tileCount) :this(tileCount,new BoundsTerrainFactory())
-        {
-            
-        }
-        
         public RectangleMap(Vector2Int tileCount, IFactory<ITerrain, Bounds> terrainFactory) : this(tileCount,new Bounds(Vector3.zero, new Vector3(tileCount.x,tileCount.y)),terrainFactory)
         {
             
         }
 
-        public RectangleMap(Vector2Int tileCount, Bounds mapBounds) 
-            : this(tileCount, mapBounds, new BoundsTerrainFactory())
-        {
-        }
-        
         public RectangleMap(Vector2Int tileCount, Bounds mapBounds, IFactory<ITerrain, Bounds> terrainFactory)
         {
             TileCount = tileCount;

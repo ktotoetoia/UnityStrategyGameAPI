@@ -1,7 +1,9 @@
-﻿namespace TDS.Maps
+﻿using TDS.Entities;
+
+namespace TDS.Maps
 {
-    public interface ITerrain : IHaveName
+    public interface ITerrain : IEntity
     {
-        IArea Area { get; }
+        ITerrainArea TerrainArea { get; }
     }
 }

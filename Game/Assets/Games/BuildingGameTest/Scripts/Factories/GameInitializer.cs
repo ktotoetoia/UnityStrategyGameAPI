@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using TDS.Entities;
 using TDS.Handlers;
+using TDS.Maps;
 using UnityEngine;
 
 namespace BuildingsTestGame
@@ -13,14 +15,9 @@ namespace BuildingsTestGame
             StartingPosition = startingPosition;
         }
 
-        public bool CanHandle(BuildingGame game)
-        {
-            return !game.Map.Terrains.Any(x => x is IGameTerrain { Building: not null });
-        }
-
         public void Handle(BuildingGame game)
         {
-            IGameTerrain terrain = game.Map.Terrains.First(x => x.Area.Contains(StartingPosition) && x is IGameTerrain) as IGameTerrain;
+            IGameTerrainComponent terrain = game.Map.Terrains.First(x => x.TerrainArea.Contains(StartingPosition) && x.Components.Any(x => x is IGameTerrainComponent)).GetComponent<IGameTerrainComponent>();
 
             terrain.Building = new FirstBuildingFactory(game.EntityRegister).Create();
             

@@ -8,9 +8,9 @@ namespace BuildingsTestGame
     {
         public IEntity Unit { get;}
         public IMapPathfinder Pathfinder { get;}
-        public IGameTerrain TargetTerrain { get;}
+        public ITerrainArea TargetTerrain { get;}
      
-        public MoveUnitCommand(IEntity unit, IGameTerrain targetTerrain, IMapPathfinder pathfinder)
+        public MoveUnitCommand(IEntity unit, ITerrainArea targetTerrain, IMapPathfinder pathfinder)
         {
             Unit = unit;
             Pathfinder = pathfinder;

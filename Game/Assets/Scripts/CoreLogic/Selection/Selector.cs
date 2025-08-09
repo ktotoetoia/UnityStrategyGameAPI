@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using TDS.Entities;
+﻿using TDS.Entities;
 using UnityEngine;
 
 namespace TDS.SelectionSystem

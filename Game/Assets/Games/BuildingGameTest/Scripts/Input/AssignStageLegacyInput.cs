@@ -52,9 +52,9 @@ namespace TDS
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out ITerrainComponent terrainComponent))
+                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out IMovementOnTerrain terrainComponent))
                 {
-                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain) ,_f).Graph;
+                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain.Entity as ITerrain) ,_f).Graph;
                 }
 
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,11 +78,11 @@ namespace TDS
             {
 
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                IGameTerrain targetTerrain = _terrainSelector.SelectAt<IGameTerrain>((Vector2)clickPosition).First;
+                ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>((Vector2)clickPosition).First;
                 IEntity unit = _selector.GetSelection<IEntity>().First;
                 
                 _commandSequencer.IssueCommand(
-                    new MoveUnitCommand(unit, targetTerrain,_pathfinder)
+                    new MoveUnitCommand(unit, targetTerrain.TerrainArea,_pathfinder)
                 );
             }
         }
@@ -95,13 +95,13 @@ namespace TDS
 
                 foreach (INode<ITerrain> node in _area.Nodes)   
                 {
-                    Gizmos.DrawSphere(node.Value.Area.Position, 0.2f);
+                    Gizmos.DrawSphere(node.Value.Transform.Position, 0.2f);
                 }
 
                 foreach (IEdge<ITerrain> edge in _area.Edges)
                 {
 
-                    Gizmos.DrawLine(edge.From.Value.Area.Position, edge.To.Value.Area.Position);
+                    Gizmos.DrawLine(edge.From.Value.Transform.Position, edge.To.Value.Transform.Position);
                 }
             }
         }

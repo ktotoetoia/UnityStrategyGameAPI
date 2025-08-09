@@ -1,19 +1,15 @@
-﻿namespace TDS.Maps
-{
-    public class Terrain : ITerrain
-    {
-        public string Name { get; set; }
-        public IArea Area { get; set; }
+﻿using TDS.Components;
+using TDS.Entities;
 
-        public Terrain(IArea area) :this("no name", area)
+namespace TDS.Maps
+{
+    public class Terrain : Entity, ITerrain
+    {
+        public ITerrainArea TerrainArea { get; set; }
+
+        public Terrain(ITerrainArea terrainArea) : base(terrainArea)
         {
-            
-        }
-        
-        public Terrain(string name, IArea area)
-        {
-            Name = name;
-            Area = area;
+            TerrainArea = terrainArea;
         }
     }
 }

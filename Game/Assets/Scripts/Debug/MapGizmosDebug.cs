@@ -27,23 +27,23 @@ namespace TDS.Entities
         
         private void DrawTerrain(ITerrain point)
         {
-            if (_showTerrainArea && point.Area is BoundsArea a)
+            if (_showTerrainArea && point.TerrainArea is BoundsTerrain a)
             {
                 Gizmos.DrawCube(a.Bounds.center, a.Bounds.size - Vector3.one * _gapSize);
             }
             
             if (point is GameTerrain t)
             {
-                if (_showUnits && t.Unit != null)
+                if (_showUnits && t.GameTerrainComponent.Unit != null)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(point.Area.Position - _pointsSize * Vector3.right, _pointsSize);
+                    Gizmos.DrawSphere(point.Transform.Position - _pointsSize * Vector3.right, _pointsSize);
                 }
 
-                if (_showBuildings && t.Building != null)
+                if (_showBuildings && t.GameTerrainComponent.Building != null)
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawCube(t.Area.Position + _pointsSize * Vector3.right, new Vector3(_pointsSize, _pointsSize * 2));
+                    Gizmos.DrawCube(t.Transform.Position + _pointsSize * Vector3.right, new Vector3(_pointsSize, _pointsSize * 2));
                 }
             }
         }

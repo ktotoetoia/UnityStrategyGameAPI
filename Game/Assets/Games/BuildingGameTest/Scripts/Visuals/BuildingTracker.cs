@@ -26,7 +26,7 @@ namespace TDS
             
             _buildings[init.Entity] = buildingMonoBehaviour ?? throw new NullReferenceException();
             buildingMonoBehaviour.Building = init.Entity;
-            buildingMonoBehaviour.transform.position = init.Entity.GetComponent<ITerrainComponent>().Terrain.Area.Position;
+            buildingMonoBehaviour.transform.position = init.Entity.GetComponent<IMovementOnTerrain>().Terrain.Entity.Transform.Position;
         }
 
         public void Remove(IEntity entity)

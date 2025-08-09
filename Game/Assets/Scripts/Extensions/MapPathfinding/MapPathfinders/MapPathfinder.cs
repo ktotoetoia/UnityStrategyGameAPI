@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TDS.Graphs;
-using TDS.Maps;
 using TDS.Pathfinding;
-using UnityEngine;
 
 namespace TDS.Maps
 {
     public class MapPathfinder : IMapPathfinder
     {
-        private IDistanceCounter _distanceCounter;
         private IGraphMap _map;
         private IPathfinder _pathfinder;
         private IGraphTraversal _traversal;
         private IPathResolver _pathResolver;
+        private IDistanceCounter _distanceCounter;
 
         public IDistanceCounter DistanceCounter
         {

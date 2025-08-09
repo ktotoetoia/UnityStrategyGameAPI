@@ -1,5 +1,4 @@
 ﻿using TDS.Graphs;
-using TDS.Maps;
 using TDS.Pathfinding;
 
 namespace TDS.Maps

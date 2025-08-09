@@ -1,4 +1,5 @@
 using TDS;
+using TDS.Entities;
 using TDS.Events;
 using TDS.Maps;
 using UnityEngine;
@@ -16,15 +17,11 @@ namespace BuildingsTestGame
         
         public BuildingGame Create()
         {
-            IEventBus bus = new EventBus();
-            RectangleMap map = CreateMap(bus);
+            EntityRegister entityRegister = new EntityRegister();
+            EntityRegisterEvents events = new EntityRegisterEvents(entityRegister);
+            RectangleMap map = new RectangleMap(TileCount,new GameTerrainFactory(entityRegister));
             
-            return new BuildingGame(map, bus);
-        }
-
-        private RectangleMap CreateMap(IEventBus bus)
-        {
-            return new RectangleMap(TileCount,new BuildingTerrainFactory(bus));
+            return new BuildingGame(map,entityRegister,events);
         }
     }
 }

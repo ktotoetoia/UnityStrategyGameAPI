@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TDS.Graphs;
-using TDS.Maps;
 
 namespace TDS.Maps
 {

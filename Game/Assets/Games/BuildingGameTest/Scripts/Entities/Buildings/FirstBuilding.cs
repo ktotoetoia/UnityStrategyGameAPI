@@ -1,5 +1,4 @@
-﻿using TDS;
-using TDS.Entities;
+﻿using TDS.Entities;
 
 namespace BuildingsTestGame
 {
@@ -11,7 +10,7 @@ namespace BuildingsTestGame
         {
             EntityInitializer = entityInitializer;
             AddComponent(new EventComponent());
-            AddComponent(new TerrainComponent());
+            AddComponent(new MovementOnTerrain());
             AddComponent(new BuildingComponent());
         }
     }

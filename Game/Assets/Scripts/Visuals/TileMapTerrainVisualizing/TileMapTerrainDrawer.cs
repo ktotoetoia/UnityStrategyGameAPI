@@ -17,7 +17,7 @@ namespace TDS.Entities
 
         public void Handle(ITerrain terrain)
         {
-            _tilemap.SetTile(_tilemap.WorldToCell(terrain.Area.Position), _tile);
+            _tilemap.SetTile(_tilemap.WorldToCell(terrain.Transform.Position), _tile);
         }
     }
 }

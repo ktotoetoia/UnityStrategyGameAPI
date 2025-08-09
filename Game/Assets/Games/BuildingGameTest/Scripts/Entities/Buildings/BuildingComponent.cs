@@ -10,7 +10,7 @@ namespace BuildingsTestGame
         {
             IEntity entity = entityFactory.Create();
             
-            Entity.GetComponent<ITerrainComponent>().Terrain.Unit = entity;
+            Entity.GetComponent<IMovementOnTerrain>().Terrain.Unit = entity;
             
             new EventEntityInitializer().Initialize(entity);
         }

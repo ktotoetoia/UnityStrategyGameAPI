@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TDS.Graphs;
-using TDS.Maps;
 using UnityEngine;
 
 namespace TDS.Maps
@@ -21,7 +20,7 @@ namespace TDS.Maps
                     continue;
                 }
                 
-                distance += Vector2.Distance(node.Value.Area.Position, startNode.Value.Area.Position);
+                distance += Vector2.Distance(node.Value.Transform.Position, startNode.Value.Transform.Position);
                 startNode = node;
             }
             
@@ -30,7 +29,7 @@ namespace TDS.Maps
 
         public float GetDistance<T>(IEdge<T> edge) where T : ITerrain
         {
-            return Vector2.Distance(edge.From.Value.Area.Position, edge.To.Value.Area.Position);
+            return Vector2.Distance(edge.From.Value.Transform.Position, edge.To.Value.Transform.Position);
         }
     }
 }

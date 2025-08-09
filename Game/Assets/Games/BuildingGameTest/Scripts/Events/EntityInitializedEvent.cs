@@ -1,14 +1,15 @@
 ﻿using TDS.Entities;
 using TDS.Events;
+using TDS.Maps;
 
 namespace BuildingsTestGame
 {
     public class EntityInitializedEvent : IEvent
     {
         public IEntity Entity { get; }
-        public IGameTerrain Terrain { get; }
+        public IGameTerrainComponent Terrain { get; }
 
-        public EntityInitializedEvent(IEntity entity, IGameTerrain terrain)
+        public EntityInitializedEvent(IEntity entity, IGameTerrainComponent terrain)
         {
             Entity = entity;
             Terrain = terrain;

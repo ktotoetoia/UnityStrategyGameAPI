@@ -12,9 +12,14 @@ namespace TDS.Entities
         public IEnumerable<IComponent> Components => _components;
         public bool IsDestroyed { get; private set; }
 
-        public Entity()
+        public Entity() : this(new TransformComponent())
         {
-            Transform = new TransformComponent();
+            
+        }
+
+        public Entity(ITransformComponent transformComponent)
+        {
+            Transform = transformComponent;
             AddComponent(Transform);
         }
 

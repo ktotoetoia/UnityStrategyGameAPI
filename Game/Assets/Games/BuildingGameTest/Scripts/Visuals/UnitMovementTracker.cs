@@ -4,6 +4,7 @@ using BuildingsTestGame;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
+using TDS.Maps;
 using UnityEngine;
 
 namespace TDS
@@ -41,7 +42,7 @@ namespace TDS
 
             if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrain, ITerrainComponent>>(UpdateUnit));
+                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IMovementOnTerrain>>(UpdateUnit));
             }
             
             _units[created.Entity] =unitMonoBehaviour;
@@ -49,9 +50,9 @@ namespace TDS
             _prefab.transform.position = created.Entity.Transform.Position;
         }
 
-        private void UpdateUnit(PropertyChangeEvent<IGameTerrain, ITerrainComponent> eve)
+        private void UpdateUnit(PropertyChangeEvent<IGameTerrainComponent, IMovementOnTerrain> eve)
         {
-            _units[eve.Owner.Entity].MoveTo(eve.NewValue.Area.Position);
+            _units[eve.Owner.Entity].MoveTo(eve.NewValue.Entity.Transform.Position);
         }
     }
 }

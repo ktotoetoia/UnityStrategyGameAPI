@@ -1,9 +1,9 @@
 ﻿using TDS.Components;
 
-namespace BuildingsTestGame
+namespace TDS.Maps
 {
     public interface ITerrainComponent : IComponent
     {
-        IGameTerrain Terrain { get; set; }
+        ITerrain Terrain { get; }
     }
 }

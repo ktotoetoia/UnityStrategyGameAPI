@@ -6,7 +6,7 @@ namespace BuildingsTestGame
     {
         public void Initialize(IEntity entity)
         {
-            if (entity.TryGetComponent(out IEventComponent eventComponent) && entity.TryGetComponent(out ITerrainComponent terrainComponent))
+            if (entity.TryGetComponent(out IEventComponent eventComponent) && entity.TryGetComponent(out IMovementOnTerrain terrainComponent))
             {
                 eventComponent.Publish(new EntityInitializedEvent(entity,terrainComponent.Terrain));
             }

@@ -9,7 +9,7 @@ namespace BuildingsTestGame
             Name = "Default Unit";
             AddComponent(new EventComponent());
             AddComponent(new MapMovementComponent());
-            AddComponent(new TerrainComponent());
+            AddComponent(new MovementOnTerrain());
         }
     }
 }
