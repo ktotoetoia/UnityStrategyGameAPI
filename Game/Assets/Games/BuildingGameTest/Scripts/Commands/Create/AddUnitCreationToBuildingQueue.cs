@@ -7,9 +7,9 @@ namespace BuildingsTestGame
     public class AddUnitCreationToBuildingQueue : Command
     {
         public IBuildingComponent Building { get; }
-        public IFactory<IEntity>  EntityFactory { get; }
+        public IFactory<IBuilder<IEntity>>  EntityFactory { get; }
 
-        public AddUnitCreationToBuildingQueue(IBuildingComponent building, IFactory<IEntity> entityFactory)
+        public AddUnitCreationToBuildingQueue(IBuildingComponent building, IFactory<IBuilder<IEntity>> entityFactory)
         {
             Building = building;
             EntityFactory = entityFactory;

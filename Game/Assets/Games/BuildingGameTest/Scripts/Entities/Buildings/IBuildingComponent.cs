@@ -6,6 +6,6 @@ namespace BuildingsTestGame
 {
     public interface IBuildingComponent : IComponent
     {
-        void AddToQueue(IFactory<IEntity> unitFactory);
+        void AddToQueue(IFactory<IBuilder<IEntity>> unitFactory);
     }
 }

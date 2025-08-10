@@ -4,13 +4,10 @@ namespace BuildingsTestGame
 {
     public class FirstBuilding : Entity
     {
-        public IEntityInitializer EntityInitializer { get; }
-
-        public FirstBuilding(IEntityInitializer entityInitializer)
+        public FirstBuilding()
         {
-            EntityInitializer = entityInitializer;
             AddComponent(new EventComponent());
-            AddComponent(new MovementOnTerrain());
+            AddComponent(new BuildingOnTerrain());
             AddComponent(new BuildingComponent());
         }
     }

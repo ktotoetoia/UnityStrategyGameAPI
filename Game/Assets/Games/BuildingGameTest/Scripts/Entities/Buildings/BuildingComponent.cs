@@ -6,13 +6,13 @@ namespace BuildingsTestGame
 {
     public class BuildingComponent : Component, IBuildingComponent
     {
-        public void AddToQueue(IFactory<IEntity> entityFactory)
+        public void AddToQueue(IFactory<IBuilder<IEntity>> entityFactory)
         {
-            IEntity entity = entityFactory.Create();
+            IBuilder<IEntity> builder = entityFactory.Create();
             
-            Entity.GetComponent<IMovementOnTerrain>().Terrain.Unit = entity;
+            builder.Value.GetComponent<IHaveTerrain>().Terrain = Entity.GetComponent<IHaveTerrain>().Terrain;
             
-            new EventEntityInitializer().Initialize(entity);
+            builder.FinishInitialization();
         }
     }
 }
