@@ -1,24 +1,22 @@
-﻿using TDS;
+﻿using System;
+using TDS;
 using TDS.Entities;
+using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class DefaultUnitFactory : IFactory<DefaultUnit>
+    public class DefaultUnitFactory : IFactory<IBuilder<DefaultUnit>>
     {
         public IEntityRegister  EntityRegister { get; set; }
-
+        
         public DefaultUnitFactory(IEntityRegister entityRegister)
         {
             EntityRegister = entityRegister;
         }
         
-        public DefaultUnit Create()
+        public IBuilder<DefaultUnit> Create()
         {
-            DefaultUnit unit = new DefaultUnit();
-            
-            EntityRegister.AddEntity(unit);
-
-            return unit;
+            return new EntityBuilder<DefaultUnit>(new DefaultUnit(), EntityRegister);
         }
     }
 }

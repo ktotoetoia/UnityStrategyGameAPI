@@ -13,14 +13,14 @@ namespace BuildingsTestGame
         {
             return command is MoveUnitCommand movement &&
                    movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent) &&
-                   movement.Unit.TryGetComponent(out IMovementOnTerrain terrainComponent) ;
+                   movement.Unit.TryGetComponent(out IHaveTerrain terrainComponent) ;
         }
 
         public void Handle(ICommand command)
         {
-            if (command is MoveUnitCommand movement && movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out IMovementOnTerrain terrainComponent))
+            if (command is MoveUnitCommand movement && movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out IHaveTerrain movementOnTerrain))
             {
-                IPath<ITerrain> path = movement.Pathfinder.GetPath(terrainComponent.Terrain.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.MovementPoints);
+                IPath<ITerrain> path = movement.Pathfinder.GetPath(movementOnTerrain.Terrain.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.MovementPoints);
                 float pointsLeft = movementComponent.MovementPoints;
                 
                 foreach (IPathSegment<ITerrain> segment in path.Segments)
@@ -30,7 +30,7 @@ namespace BuildingsTestGame
                         break;
                     }
 
-                    segment.To.Value.GetComponent<IGameTerrainComponent>().Unit = movement.Unit;
+                    movementOnTerrain.Terrain = segment.To.Value.GetComponent<IGameTerrainComponent>();
                     pointsLeft -= 1;
                 }
             }

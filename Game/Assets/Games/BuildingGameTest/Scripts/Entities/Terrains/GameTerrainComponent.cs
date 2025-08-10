@@ -23,22 +23,12 @@ namespace BuildingsTestGame
                     return;
                 }
                 
-                if (!value.TryGetComponent(out IMovementOnTerrain terrainComponent))
-                {
-                    throw new ArgumentException("unit does not have a map movement component");
-                }
-                
                 if (_unit.Value != null)
                 {
                     throw new ArgumentException("can not move unit to the terrain which already have a unit");
                 }
 
-                IGameTerrainComponent from = terrainComponent.Terrain;
-                
-                if(from != null) from.Unit = null;
-                
                 _unit.Value = value;
-                terrainComponent.Terrain = this;
             }
         }
 
@@ -53,8 +43,6 @@ namespace BuildingsTestGame
                 }
                 
                 _building.Value = value;
-                
-                if (value != null) value.GetComponent<IMovementOnTerrain>().Terrain = this;
             }
         }
 

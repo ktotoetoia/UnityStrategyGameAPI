@@ -52,13 +52,14 @@ namespace TDS
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out IMovementOnTerrain terrainComponent))
-                {
-                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain.Entity as ITerrain) ,_f).Graph;
-                }
-
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _selector.UpdateSelectionAt(clickPosition);
+                
+                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out IHaveTerrain terrainComponent))
+                {
+                    Debug.Log("sigma");
+                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain.Entity as ITerrain) ,_f).Graph;
+                }
             }
         }
 
@@ -76,7 +77,6 @@ namespace TDS
 
             if (Input.GetMouseButtonDown(1))
             {
-
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>((Vector2)clickPosition).First;
                 IEntity unit = _selector.GetSelection<IEntity>().First;
