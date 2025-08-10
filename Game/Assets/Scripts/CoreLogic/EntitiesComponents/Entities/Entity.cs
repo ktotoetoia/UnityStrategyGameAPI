@@ -26,8 +26,8 @@ namespace TDS.Entities
         public void AddComponent(IComponent component)
         {
             ThrowExceptionIfDestroyed();
-            _components.Add(component);
             component.Init(this);
+            _components.Add(component);
         }
 
         public void RemoveComponent(IComponent component)
@@ -36,8 +36,7 @@ namespace TDS.Entities
             _components.Remove(component);
             component.Destroy();
         }
-
-
+        
         public void Destroy()
         {
             ThrowExceptionIfDestroyed();
