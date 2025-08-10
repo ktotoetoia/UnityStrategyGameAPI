@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using TDS;
 using TDS.Entities;
 using TDS.Handlers;
 using TDS.Maps;
@@ -19,9 +20,10 @@ namespace BuildingsTestGame
         {
             IGameTerrainComponent terrain = game.Map.Terrains.First(x => x.TerrainArea.Contains(StartingPosition) && x.Components.Any(x => x is IGameTerrainComponent)).GetComponent<IGameTerrainComponent>();
 
-            terrain.Building = new FirstBuildingFactory(game.EntityRegister).Create();
-            
-            new EventEntityInitializer().Initialize(terrain.Building);
+            IBuilder<FirstBuilding> builder = new FirstBuildingFactory(game.EntityRegister).Create();
+            builder.Value.GetComponent<IHaveTerrain>().Terrain = terrain;
+
+            builder.FinishInitialization();
         }
     }
 }
