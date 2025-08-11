@@ -4,6 +4,7 @@ namespace BuildingsTestGame
 {
     public interface IMapMovementComponent : IComponent
     {
-        float MovementPoints { get; set; }
+        float TotalMovementPoints { get; set; }
+        float AvailableMovementPoints { get; set; }
     }
 }
