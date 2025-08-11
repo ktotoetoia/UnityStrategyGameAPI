@@ -7,5 +7,6 @@ namespace TDS.Pathfinding
         INode<T> From { get;  }
         INode<T> To { get;  }
         IEdge<T> Edge { get;  }
+        float Cost { get;  }
     }
 }

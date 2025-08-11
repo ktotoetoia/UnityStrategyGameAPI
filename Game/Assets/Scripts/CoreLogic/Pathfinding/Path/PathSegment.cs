@@ -8,12 +8,14 @@ namespace TDS.Pathfinding
         public INode<T> From { get;  }
         public INode<T> To { get;  }
         public IEdge<T> Edge { get;  }
+        public float Cost { get; }
 
-        public PathSegment(INode<T> from, INode<T> to)
+        public PathSegment(INode<T> from, INode<T> to,float cost)
         {
             From = from;
             To = to;
             Edge = from.Edges.First(x => x.From == to || x.To == to);
+            Cost = cost;
         }
     }
 }
