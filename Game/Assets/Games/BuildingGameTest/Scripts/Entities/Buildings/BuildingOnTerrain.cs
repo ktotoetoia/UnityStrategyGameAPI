@@ -4,14 +4,14 @@ using TDS.Events;
 
 namespace BuildingsTestGame
 {
-    public class BuildingOnTerrain : Component, IHaveTerrain
+    public class BuildingOnTerrain : Component, IPlacedOnTerrain
     {        
         private ICallPropertyChange<IGameTerrainComponent> _terrain;
 
         private ICallPropertyChange<IGameTerrainComponent> _terrainEvent =>
-            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IHaveTerrain>(this,Entity.GetComponent<IEventComponent>());
+            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IPlacedOnTerrain>(this,Entity.GetComponent<IEventComponent>());
 
-        public IGameTerrainComponent Terrain
+        public IGameTerrainComponent PlacedOn
         {
             get
             {

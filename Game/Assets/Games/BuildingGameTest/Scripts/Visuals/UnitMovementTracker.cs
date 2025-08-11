@@ -42,7 +42,7 @@ namespace TDS
 
             if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IHaveTerrain>>(UpdateUnit));
+                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain>>(UpdateUnit));
             }
             
             _units[created.Entity] =unitMonoBehaviour;
@@ -50,7 +50,7 @@ namespace TDS
             _prefab.transform.position = created.Entity.Transform.Position;
         }
 
-        private void UpdateUnit(PropertyChangeEvent<IGameTerrainComponent, IHaveTerrain> eve)
+        private void UpdateUnit(PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain> eve)
         {
             _units[eve.Owner.Entity].MoveTo(eve.NewValue.Entity.Transform.Position);
         }

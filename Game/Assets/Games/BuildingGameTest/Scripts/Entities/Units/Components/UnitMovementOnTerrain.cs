@@ -5,14 +5,14 @@ using TDS.Maps;
 
 namespace BuildingsTestGame
 {
-    public class UnitMovementOnTerrain : Component, IHaveTerrain
+    public class UnitMovementOnTerrain : Component, IPlacedOnTerrain
     {
         private ICallPropertyChange<IGameTerrainComponent> _terrain;
 
         private ICallPropertyChange<IGameTerrainComponent> _terrainEvent =>
-            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IHaveTerrain>(this,Entity.GetComponent<IEventComponent>());
+            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IPlacedOnTerrain>(this,Entity.GetComponent<IEventComponent>());
 
-        public IGameTerrainComponent Terrain
+        public IGameTerrainComponent PlacedOn
         {
             get
             {
