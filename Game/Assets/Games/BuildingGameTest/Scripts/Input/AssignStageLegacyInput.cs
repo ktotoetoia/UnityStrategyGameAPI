@@ -1,5 +1,4 @@
 ﻿using BuildingsTestGame;
-using TDS.Commands;
 using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
@@ -15,7 +14,6 @@ namespace TDS
         private ISelector _selector;
         private ISelectionProvider _terrainSelector;
         private IGraphMap _map;
-        private ICommandSequencer _commandSequencer;
         private IGraphReadOnly<ITerrain> _area;
         private BuildingGame _game;
 
@@ -31,7 +29,6 @@ namespace TDS
                 _terrainSelector = new TerrainSelectionProvider(_game.Map);
                 _map = _game.Map as IGraphMap;
                 _pathfinder = new MapPathfinder(_map);
-                _commandSequencer = _game.AssignStage.CommandSequencer;
                 _pathfinder.PathResolver = new NoUnitPathResolver();
             }
         }
@@ -55,10 +52,9 @@ namespace TDS
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _selector.UpdateSelectionAt(clickPosition);
                 
-                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out IHaveTerrain terrainComponent))
+                if (_selector.GetSelection<IEntity>().First != null&& _selector.GetSelection<IEntity>().First.TryGetComponent(out IPlacedOnTerrain terrainComponent) && _selector.GetSelection<IEntity>().First.TryGetComponent(out IMapMovementComponent movementComponent))
                 {
-                    Debug.Log("sigma");
-                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.Terrain.Entity as ITerrain) ,_f).Graph;
+                    _area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.PlacedOn.Entity as ITerrain) ,movementComponent.AvailableMovementPoints).Graph;
                 }
             }
         }
@@ -67,12 +63,12 @@ namespace TDS
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _commandSequencer.IssueCommand(new EndTurnCommand(_game.AssignStage));
+                _game.AssignStage.EndTurn();
             }
             
             if (Input.GetKeyDown(KeyCode.C) && _selector.GetSelection<IEntity>().First.TryGetComponent(out IBuildingComponent buildingComponent))
             {
-                _commandSequencer.IssueCommand(new AddUnitCreationToBuildingQueue(buildingComponent , new DefaultUnitFactory(_game.EntityRegister)));
+                buildingComponent.AddToQueue(new DefaultUnitFactory(_game.EntityRegister));
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -81,7 +77,7 @@ namespace TDS
                 ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>((Vector2)clickPosition).First;
                 IEntity unit = _selector.GetSelection<IEntity>().First;
                 
-                _commandSequencer.IssueCommand(
+                new MoveUnitCommandHandler().Handle(
                     new MoveUnitCommand(unit, targetTerrain.TerrainArea,_pathfinder)
                 );
             }

@@ -1,37 +1,27 @@
-﻿using System.Collections.Generic;
-using TDS.Commands;
-using TDS.Entities;
-using TDS.Handlers;
+﻿using TDS.Entities;
 using TDS.Maps;
 using TDS.Pathfinding;
+using UnityEngine;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommandHandler : IConditionalHandler<ICommand>
+    public class MoveUnitCommandHandler
     {
-        public bool CanHandle(ICommand command)
+        public void Handle(MoveUnitCommand movement)
         {
-            return command is MoveUnitCommand movement &&
-                   movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent) &&
-                   movement.Unit.TryGetComponent(out IHaveTerrain terrainComponent) ;
-        }
-
-        public void Handle(ICommand command)
-        {
-            if (command is MoveUnitCommand movement && movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out IHaveTerrain movementOnTerrain))
+            if (movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out IPlacedOnTerrain movementOnTerrain))
             {
-                IPath<ITerrain> path = movement.Pathfinder.GetPath(movementOnTerrain.Terrain.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.MovementPoints);
-                float pointsLeft = movementComponent.MovementPoints;
+                IPath<ITerrain> path = movement.Pathfinder.GetPath(movementOnTerrain.PlacedOn.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.TotalMovementPoints);
                 
                 foreach (IPathSegment<ITerrain> segment in path.Segments)
                 {
-                    if (pointsLeft <= 0)
+                    if (movementComponent.AvailableMovementPoints < segment.Cost)
                     {
                         break;
                     }
 
-                    movementOnTerrain.Terrain = segment.To.Value.GetComponent<IGameTerrainComponent>();
-                    pointsLeft -= 1;
+                    movementOnTerrain.PlacedOn = segment.To.Value.GetComponent<IGameTerrainComponent>();
+                    movementComponent.AvailableMovementPoints -= segment.Cost;
                 }
             }
         }

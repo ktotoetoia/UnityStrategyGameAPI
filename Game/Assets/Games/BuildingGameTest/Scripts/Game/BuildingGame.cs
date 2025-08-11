@@ -13,23 +13,21 @@ namespace BuildingsTestGame
         public ISubscriber EntityRegisterEvents { get; }
         public ITurnSwitcher TurnSwitcher { get; }
         
-        public IGameStage AssignStage { get; }
-        public IGameStage BuildStage { get; }
-        public IGameStage EventStage  { get; }
-        public IGameStage CurrentStage => TurnSwitcher.CurrentUser as IGameStage;
+        public ITurnUserManual AssignStage { get; }
+        public ITurnUserManual BuildStage { get; }
+        public ITurnUserManual EventStage  { get; }
+        public ITurnUserManual CurrentStage => TurnSwitcher.CurrentUser as ITurnUserManual;
         
-        public BuildingGame(IMap map,IEntityRegister entityRegister, ISubscriber entityRegisterEvents) : this(map,entityRegister,entityRegisterEvents,new StagesFactory())
-        {
-            
-        }
-
-        public BuildingGame(IMap map,IEntityRegister entityRegister, ISubscriber entityRegisterEvents, IFactory<(GameStage,GameStage,GameStage)> GameStagesFactory)
+        public BuildingGame(IMap map,IEntityRegister entityRegister, ISubscriber entityRegisterEvents) 
         {
             Map = map;
             EntityRegister = entityRegister;
             EntityRegisterEvents = entityRegisterEvents;
-            (AssignStage, BuildStage, EventStage) = GameStagesFactory.Create();
-
+            
+            AssignStage = new TurnUser();
+            BuildStage = new TurnUser();
+            EventStage = new TurnUser();
+            
             TurnSwitcher = new TurnSwitcher(new ITurnUser[] { AssignStage, BuildStage, EventStage });
         }
         

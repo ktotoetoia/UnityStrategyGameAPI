@@ -1,10 +1,9 @@
-﻿using TDS.Commands;
-using TDS.Entities;
+﻿using TDS.Entities;
 using TDS.Maps;
 
 namespace BuildingsTestGame
 {
-    public class MoveUnitCommand : Command
+    public class MoveUnitCommand
     {
         public IEntity Unit { get;}
         public IMapPathfinder Pathfinder { get;}
