@@ -11,7 +11,7 @@ namespace TDS
         [SerializeField] private Vector2Int _firstBuildingPosition;
         [SerializeField] private TileMapSetup _tileMapSetup;
         [SerializeField] private BuildingGameUI _buildingGameUI;
-        [SerializeField] private AssignStageLegacyInput _assignStageInput;
+        [SerializeField] private AssignStageAcc _assignStage;
         private BuildingGame _game;
         
         private void Awake()
@@ -22,7 +22,7 @@ namespace TDS
             
             _tileMapSetup.Map = _game.Map;
             _buildingGameUI.Game = _game;
-            _assignStageInput.BuildingGame = _game;
+            _assignStage.BuildingGame = _game;
             
             new GameInitializer(_firstBuildingPosition).Handle(_game);
         }
@@ -30,16 +30,6 @@ namespace TDS
         private void Update()
         {
             _game.Update();
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_game == null)
-            {
-                return;
-            }
-
-            Gizmos.color = Color.blue;
         }
     }
 }
