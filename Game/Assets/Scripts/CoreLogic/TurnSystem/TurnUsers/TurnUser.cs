@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace TDS.TurnSystem
 {
     public class TurnUser : ITurnUserManual
     {
+        public event Action OnTurnStart;
+        public event Action OnTurnEnd;
+        
         private TaskCompletionSource<bool> _completion;
         
         public ValueTask ExecuteTurnAsync()
@@ -17,17 +21,22 @@ namespace TDS.TurnSystem
 
         protected virtual void OnStart()
         {
-            
+            OnTurnStart?.Invoke();
         }
 
-        protected virtual void BeforeEnd()
+        protected virtual void OnEnd()
         {
-            
+            OnTurnEnd?.Invoke();
         }
 
         public void EndTurn()
         {
-            BeforeEnd();
+            if (_completion == null)
+            {
+                return;
+            }
+            
+            OnEnd();
             _completion.SetResult(true);
         }
     }

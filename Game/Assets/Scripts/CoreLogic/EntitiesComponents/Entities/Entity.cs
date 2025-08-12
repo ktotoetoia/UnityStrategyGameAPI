@@ -8,7 +8,7 @@ namespace TDS.Entities
         protected List<IComponent> _components = new();
 
         public string Name { get; set; }
-        public ITransformComponent Transform { get; set; }
+        public ITransformComponent Transform { get;  }
         public IEnumerable<IComponent> Components => _components;
         public bool IsDestroyed { get; private set; }
 
@@ -37,7 +37,7 @@ namespace TDS.Entities
             component.Destroy();
         }
         
-        public void Destroy()
+        public virtual void Destroy()
         {
             ThrowExceptionIfDestroyed();
             
