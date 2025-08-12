@@ -1,5 +1,4 @@
-﻿using TDS.Entities;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDS.SelectionSystem
 {
@@ -13,7 +12,7 @@ namespace TDS.SelectionSystem
         public Selector(ISelectionProvider selectionProvider)
         {
             _selectionProvider = selectionProvider;
-            _selection = new Selection<IEntity>();
+            _selection = new Selection<object>();
         }
 
         public void UpdateSelectionAt(Vector3 position)
