@@ -1,5 +1,4 @@
 ﻿using TDS.Components;
-using TDS.Maps;
 
 namespace BuildingsTestGame
 {

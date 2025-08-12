@@ -1,5 +1,4 @@
-﻿using TDS.Components;
-using TDS.Entities;
+﻿using TDS.Entities;
 
 namespace TDS.Maps
 {

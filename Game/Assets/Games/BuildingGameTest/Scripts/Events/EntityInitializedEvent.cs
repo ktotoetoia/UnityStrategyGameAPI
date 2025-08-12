@@ -1,6 +1,5 @@
 ﻿using TDS.Entities;
 using TDS.Events;
-using TDS.Maps;
 
 namespace BuildingsTestGame
 {

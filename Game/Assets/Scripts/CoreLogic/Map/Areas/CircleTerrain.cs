@@ -1,6 +1,4 @@
-﻿using TDS.Components;
-using UnityEngine;
-using Component = TDS.Components.Component;
+﻿using UnityEngine;
 
 namespace TDS.Maps
 {

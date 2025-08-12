@@ -2,7 +2,6 @@
 using TDS;
 using TDS.Entities;
 using TDS.Handlers;
-using TDS.Maps;
 using UnityEngine;
 
 namespace BuildingsTestGame

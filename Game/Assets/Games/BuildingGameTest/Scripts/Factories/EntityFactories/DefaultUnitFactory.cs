@@ -1,7 +1,5 @@
-﻿using System;
-using TDS;
+﻿using TDS;
 using TDS.Entities;
-using UnityEngine;
 
 namespace BuildingsTestGame
 {

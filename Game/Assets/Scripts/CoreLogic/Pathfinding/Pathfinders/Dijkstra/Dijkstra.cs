@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TDS.Graphs;
-using UnityEngine;
 
 namespace TDS.Pathfinding
 {
@@ -108,13 +107,6 @@ namespace TDS.Pathfinding
             }
             
             return segments;
-        }
-
-        class DijkstraData<T>
-        {
-            public INode<T> Previous { get; set; }
-            public float Price { get; set; }
-            public float CurrentPrice { get; set; }
         }
     }
 }

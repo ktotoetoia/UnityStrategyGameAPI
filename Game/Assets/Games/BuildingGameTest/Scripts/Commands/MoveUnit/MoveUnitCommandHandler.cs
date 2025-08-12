@@ -1,7 +1,6 @@
 ﻿using TDS.Entities;
 using TDS.Maps;
 using TDS.Pathfinding;
-using UnityEngine;
 
 namespace BuildingsTestGame
 {
