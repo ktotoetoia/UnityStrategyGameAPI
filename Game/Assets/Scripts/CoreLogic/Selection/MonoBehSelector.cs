@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TDS.SelectionSystem
 {
     public class MonoBehSelector : MonoBehaviour, ISelector
     {
+        public event Action<ISelection<object>> OnSelectionUpdated;
+        
         private ISelection<object> _selection;
         private ISelectionProvider _selectionProvider;
+
 
         public ISelectionProvider SelectionProvider
         {
@@ -21,11 +25,13 @@ namespace TDS.SelectionSystem
         public void UpdateSelectionAt(Vector3 position)
         {
             _selection = SelectionProvider.SelectAt<object>(position);
+            OnSelectionUpdated?.Invoke(_selection);    
         }
 
         public void UpdateSelectionWithin(Bounds bounds)
         {
             _selection = SelectionProvider.SelectWithin<object>(bounds);
+            OnSelectionUpdated?.Invoke(_selection);
         }
         
         public ISelection<T> GetSelection<T>() where T : class

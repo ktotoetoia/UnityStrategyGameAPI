@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TDS.SelectionSystem
 {
     public class Selector : ISelector
     {  
+        public event Action<ISelection<object>> OnSelectionUpdated;
         private readonly ISelectionProvider _selectionProvider;
         private ISelection<object> _selection;
-        
+
         public ISelectionProvider SelectionProvider => _selectionProvider;
         
         public Selector(ISelectionProvider selectionProvider)
@@ -18,11 +20,13 @@ namespace TDS.SelectionSystem
         public void UpdateSelectionAt(Vector3 position)
         {
             _selection = _selectionProvider.SelectAt<object>(position);
+            OnSelectionUpdated?.Invoke(_selection);
         }
 
         public void UpdateSelectionWithin(Bounds bounds)
         {
             _selection = _selectionProvider.SelectWithin<object>(bounds);
+            OnSelectionUpdated?.Invoke(_selection);
         }
         
         public ISelection<T> GetSelection<T>() where T : class
