@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BuildingsTestGame;
 using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
 
-namespace TDS
+namespace BuildingsTestGame
 {
     public class NoUnitPathResolver : IPathResolver
     {

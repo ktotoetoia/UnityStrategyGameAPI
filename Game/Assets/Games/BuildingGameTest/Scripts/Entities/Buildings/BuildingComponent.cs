@@ -8,7 +8,7 @@ namespace BuildingsTestGame
     {
         private IPlacedOnTerrain _onTerrain;
         private IPlacedOnTerrain OnTerrain => _onTerrain ??= Entity.GetComponent<IPlacedOnTerrain>();
-        
+
         public void AddToQueue(IFactory<IBuilder<IEntity>> entityFactory)
         {
             if (OnTerrain.PlacedOn.Unit != null)

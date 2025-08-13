@@ -10,7 +10,6 @@ namespace TDS
         [SerializeField] private Vector2Int _tileCount;
         [SerializeField] private Vector2Int _firstBuildingPosition;
         [SerializeField] private TileMapSetup _tileMapSetup;
-        [SerializeField] private BuildingGameUI _buildingGameUI;
         [SerializeField] private AssignStageAcc _assignStage;
         private BuildingGame _game;
         
@@ -21,7 +20,6 @@ namespace TDS
             GetComponent<EntityLifespanTracker>().EntityRegisterEvents = _game.EntityRegisterEvents;
             
             _tileMapSetup.Map = _game.Map;
-            _buildingGameUI.Game = _game;
             _assignStage.BuildingGame = _game;
             
             new GameInitializer(_firstBuildingPosition).Handle(_game);

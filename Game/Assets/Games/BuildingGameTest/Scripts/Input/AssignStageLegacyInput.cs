@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TDS
+namespace BuildingsTestGame
 {
     public class AssignStageLegacyInput : MonoBehaviour
     {

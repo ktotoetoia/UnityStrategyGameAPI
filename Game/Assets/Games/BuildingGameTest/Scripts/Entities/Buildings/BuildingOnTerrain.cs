@@ -6,30 +6,30 @@ namespace BuildingsTestGame
 {
     public class BuildingOnTerrain : Component, IPlacedOnTerrain
     {        
-        private ICallPropertyChange<IGameTerrainComponent> _terrain;
+        private ICallPropertyChange<IGameTerrainComponent> _t;
 
-        private ICallPropertyChange<IGameTerrainComponent> _terrainEvent =>
-            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IPlacedOnTerrain>(this,Entity.GetComponent<IEventComponent>());
+        private ICallPropertyChange<IGameTerrainComponent> _terrain =>
+            _t ??= new CallPropertyChange<IGameTerrainComponent, IPlacedOnTerrain>(this,Entity.GetComponent<IEventComponent>());
 
         public IGameTerrainComponent PlacedOn
         {
             get
             {
                 ThrowExceptionIfDestroyed();
-                return _terrainEvent.Value;  
+                return _terrain.Value;  
             } 
             set
             {
                 ThrowExceptionIfDestroyed();
                 
-                if (_terrainEvent.Value != null)
+                if (_terrain.Value != null)
                 {
-                    _terrainEvent.Value.Building = null;
+                    _terrain.Value.Building = null;
                 }
                 
                 value.Building = Entity;
                 Entity.Transform.SetPosition(value.Entity.Transform.Position);
-                _terrainEvent.Value = value;
+                _terrain.Value = value;
             }
         }
     }

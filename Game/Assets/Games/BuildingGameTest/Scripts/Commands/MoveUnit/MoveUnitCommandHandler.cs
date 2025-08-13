@@ -8,19 +8,19 @@ namespace BuildingsTestGame
     {
         public void Handle(MoveUnitCommand movement)
         {
-            if (movement.Unit.TryGetComponent(out IMapMovementComponent movementComponent)&& movement.Unit.TryGetComponent(out IPlacedOnTerrain movementOnTerrain))
+            if (movement.Unit.TryGetComponent(out IActionDoer movementComponent)&& movement.Unit.TryGetComponent(out IPlacedOnTerrain movementOnTerrain))
             {
-                IPath<ITerrain> path = movement.Pathfinder.GetPath(movementOnTerrain.PlacedOn.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.TotalMovementPoints);
+                IPath<ITerrain> path = movement.Pathfinder.GetPath(movementOnTerrain.PlacedOn.Entity as ITerrain, movement.TargetTerrain.Entity as ITerrain, movementComponent.MaxActionPoints);
                 
                 foreach (IPathSegment<ITerrain> segment in path.Segments)
                 {
-                    if (movementComponent.AvailableMovementPoints < segment.Cost)
+                    if (movementComponent.AvailableActionPoints < segment.Cost)
                     {
                         break;
                     }
 
                     movementOnTerrain.PlacedOn = segment.To.Value.GetComponent<IGameTerrainComponent>();
-                    movementComponent.AvailableMovementPoints -= segment.Cost;
+                    movementComponent.AvailableActionPoints -= segment.Cost;
                 }
             }
         }

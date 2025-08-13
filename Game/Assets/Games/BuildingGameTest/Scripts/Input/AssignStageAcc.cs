@@ -1,12 +1,10 @@
-﻿using BuildingsTestGame;
-using TDS.Entities;
+﻿using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.SelectionSystem;
 using UnityEngine;
-using System;
 
-namespace TDS
+namespace BuildingsTestGame
 {
     public class AssignStageAcc : MonoBehaviour
     {
@@ -66,9 +64,9 @@ namespace TDS
             
             IEntity entity = _selector.GetSelection<IEntity>().First;
             
-            if (entity != null&& entity.TryGetComponent(out IPlacedOnTerrain terrainComponent) && entity.TryGetComponent(out IMapMovementComponent movementComponent))
+            if (entity != null&& entity.TryGetComponent(out IPlacedOnTerrain terrainComponent) && entity.TryGetComponent(out IActionDoer movementComponent))
             {
-                var area = _pathfinder.GetAvailableMovement(_game.Map.GetNode(terrainComponent.PlacedOn.Entity as ITerrain) ,movementComponent.AvailableMovementPoints).Graph;
+                var area = _pathfinder.GetAvailableMovement(_game.Map.GetNode(terrainComponent.PlacedOn.Entity as ITerrain) ,movementComponent.AvailableActionPoints).Graph;
                 
                 Gizmos.color = Color.blue;
 

@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 567cc962ff8197a4eb2b7231b61d85b6, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 9b8d851cdf2a7c8449e020875e7a0cf2, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: df0bcddf839a2be4999c6f94e838be87, type: 3}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22a2816af1b148489610a4d2208da16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selector: {fileID: 1377791935}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ GameObject:
   - component: {fileID: 1377791934}
   - component: {fileID: 1377791935}
   - component: {fileID: 1377791936}
+  - component: {fileID: 1377791937}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -359,8 +361,7 @@ MonoBehaviour:
   _tileCount: {x: 12, y: 12}
   _firstBuildingPosition: {x: 1, y: 1}
   _tileMapSetup: {fileID: 1666527975}
-  _buildingGameUI: {fileID: 125937415}
-  _assignStageInput: {fileID: 1377791931}
+  _assignStage: {fileID: 1377791937}
 --- !u!4 &1377791927
 Transform:
   m_ObjectHideFlags: 0
@@ -465,6 +466,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14a9471881844aeebe6d1af66e20cbc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1377791937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377791925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1aa6776ac54a91aa58cae4cf876cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1666527970
