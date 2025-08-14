@@ -1,34 +1,36 @@
-.global {
+.rootPanel {
     flex-grow: 1;
     flex-direction: row;
+    transition-property: all, opacity;
+    transition-duration: 0s, 1s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    opacity: 1;
 }
 
-.selectionInfoContainer {
+.selectionPanel {
     background-color: rgb(53, 57, 65);
     width: 34%;
-    padding-top: 12px;
-    padding-right: 12px;
-    padding-bottom: 12px;
-    padding-left: 12px;
+    padding: 12px;
 }
 
-.textlabel {
+.selectionTitleLabel {
     white-space: normal;
     text-overflow: ellipsis;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     font-size: 20px;
     -unity-text-align: upper-center;
 }
 
-.emptyContainer {
+.mainContentArea {
     width: 67%;
+}
+
+.buildActionsPanel {
+}
+
+.unitNameLabel {
 }

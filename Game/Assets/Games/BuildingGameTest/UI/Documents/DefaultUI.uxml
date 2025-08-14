@@ -1,9 +1,12 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Games/BuildingGameTest/UI/USS/DefaultUI.uss?fileID=7433441132597879392&amp;guid=35b151a478db80f43b018b0fcd1c1a36&amp;type=3#DefaultUI" />
-    <ui:VisualElement name="Global" class="global">
-        <ui:VisualElement name="Empty" class="emptyContainer" />
-        <ui:VisualElement name="InfoContainer" class="selectionInfoContainer">
-            <ui:Label text="Selection Name" name="SelectionName" class="textlabel" />
+    <ui:VisualElement name="RootPanel" class="rootPanel">
+        <ui:VisualElement name="MainContentArea" class="mainContentArea" />
+        <ui:VisualElement name="SelectionPanel" class="selectionPanel">
+            <ui:Label text="Selection Name" name="SelectionTitleLabel" class="selectionTitleLabel" />
+            <ui:VisualElement name="SelectionListContainer" style="flex-grow: 1;">
+                <ui:ListView name="SelectionListView" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

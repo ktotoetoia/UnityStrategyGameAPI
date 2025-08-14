@@ -21,11 +21,6 @@ namespace BuildingsTestGame
         
         private void HandleInput()
         {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                _acc.CreateUnit();
-            }
-
             if (Input.GetMouseButtonDown(1))
             {
                 _acc.MoveUnit();

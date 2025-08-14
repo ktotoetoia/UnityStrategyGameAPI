@@ -1,4 +1,5 @@
-﻿using TDS.Entities;
+﻿using System.Linq;
+using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.SelectionSystem;
@@ -35,24 +36,14 @@ namespace BuildingsTestGame
         {
             _selector = GetComponent<ISelector>();
         }
-        
-        public void CreateUnit()
-        {            
-            if (_selector.GetSelection<IEntity>().First?.TryGetComponent(out IBuildingComponent buildingComponent) ?? false)
-            {
-                buildingComponent.AddToQueue(new DefaultUnitFactory(_game.EntityRegister));
-            }
-        }
 
         public void MoveUnit()
         {
             Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>(clickPosition).First;
             IEntity unit = _selector.GetSelection<IEntity>().First;
-            
-            new MoveUnitCommandHandler().Handle(
-                new MoveUnitCommand(unit, targetTerrain.TerrainArea,_pathfinder)
-            );
+
+            new UnitMover().Handle(unit, targetTerrain.TerrainArea, _pathfinder);
         }
 
         private void OnDrawGizmos()

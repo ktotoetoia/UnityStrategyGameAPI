@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using TDS;
+using TDS.Entities;
 using TDS.SelectionSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,16 +13,36 @@ namespace BuildingsTestGame
         [SerializeField] private MonoBehSelector _selector;
         private UIDocument _document;
         private Label _selectionName;
-
+        private ListView _listView;
+        
         private void Awake()
         {
             _document = GetComponent<UIDocument>();
-            _selectionName = _document.rootVisualElement.Q<Label>("SelectionName");
+            _selectionName = _document.rootVisualElement.Q<Label>("SelectionTitleLabel");
+            _listView = _document.rootVisualElement.Q<ListView>("SelectionListView");
+
+            OnSelectionUpdated();
+        }
+        
+        private void OnSelectionUpdated()
+        {
             _selector.OnSelectionUpdated += x =>
             {
-                if (x.First is IHaveName firstName)
+                if (x.First is IEntity ent && ent.TryGetComponent(out IUnitCreatingComponent building))
                 {
-                    _selectionName.text = firstName.Name;
+                    _selectionName.text = ent.Name;
+                    _listView.itemsSource = building.GetItemSource();
+                    
+                    _listView.makeItem = () => new UnitCreationInfoElement();
+                    _listView.bindItem = (item, index) =>
+                    {
+                        UnitCreationInfoElement unitCreationInfoElement = item as UnitCreationInfoElement;
+
+                        unitCreationInfoElement.UnitCreatingComponent = building;
+                        unitCreationInfoElement.UnitInfo = building.UnitInfos[index];
+                        
+                        unitCreationInfoElement.InitializeUI();
+                    };
                 }
             };
         }

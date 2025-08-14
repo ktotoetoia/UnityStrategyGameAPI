@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDS
 {
-    public class GeneralInput : MonoBehaviour
+    public class SelectorInput : MonoBehaviour
     {
         private ISelector _selector;
 
