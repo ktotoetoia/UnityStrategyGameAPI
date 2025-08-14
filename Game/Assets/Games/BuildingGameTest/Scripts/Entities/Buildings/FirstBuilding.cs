@@ -6,9 +6,10 @@ namespace BuildingsTestGame
     {
         public FirstBuilding()
         {
+            Name = "First Building";
             AddComponent(new EventComponent());
             AddComponent(new BuildingOnTerrain());
-            AddComponent(new BuildingComponent());
+            AddComponent(new UnitCreatingComponent());
         }
     }
 }
