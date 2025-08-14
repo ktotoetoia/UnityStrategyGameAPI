@@ -30,6 +30,7 @@ namespace TDS.Entities
             }
 
             _entities.Add(entity);
+            entity.EntityRegister = this;
             OnEntityAdded?.Invoke(entity);
         }
 
@@ -43,7 +44,13 @@ namespace TDS.Entities
             }
 
             _entities.Remove(entity);
+            entity.EntityRegister = null;
             OnEntityRemoved?.Invoke(entity);
+        }
+
+        public bool Contains(IEntity entity)
+        {
+            return _entities.Contains(entity);
         }
 
         public IEnumerator<IEntity> GetEnumerator()

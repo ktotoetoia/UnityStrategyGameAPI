@@ -3,7 +3,7 @@ using TDS.Components;
 
 namespace TDS.Entities
 {
-    public interface IEntity : IHaveName, IDestroyable
+    public interface IEntity : IHaveName, IDestroyable, IHaveEntityRegister
     {
         public ITransformComponent Transform { get; }
         public IEnumerable<IComponent> Components { get; }
