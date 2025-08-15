@@ -20,7 +20,7 @@ namespace TDS.SelectionSystem
             IEntity ent = null;
             float distance = Range;
             
-            foreach (IEntity entity in EntityRegister.Entities.Where(x=> x is T))
+            foreach (IEntity entity in EntityRegister.Where(x=> x is T))
             {
                 float lDistance = Vector3.Distance(entity.Transform.Position, position);
 
@@ -35,8 +35,7 @@ namespace TDS.SelectionSystem
 
         public ISelection<T> SelectWithin<T>(Bounds bounds) where T : class
         {            
-            List<T> selected = EntityRegister.Entities
-                .Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
+            List<T> selected = EntityRegister.Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
 
             return new Selection<T>(selected);
         }

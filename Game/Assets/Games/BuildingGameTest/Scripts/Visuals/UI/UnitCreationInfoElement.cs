@@ -3,28 +3,43 @@ using UnityEngine.UIElements;
 
 namespace BuildingsTestGame
 {
-    public class UnitCreationInfoElement : VisualElement
+    [UxmlElement]
+    public partial class UnitCreationInfoElement : VisualElement
     {
-        public IUnitInfo UnitInfo { get; set; }
-        public IUnitCreatingComponent UnitCreatingComponent { get; set; }
+        private readonly Button _buildButton;
+        private readonly Label _unitNameLabel;
+        private readonly VisualElement _container;
         
+        public IEntityInfo EntityInfo { get; set; }
+        public IEntityCreationComponent EntityCreationComponent { get; set; }
+
+        public UnitCreationInfoElement()
+        {
+            _buildButton = new Button();
+            _unitNameLabel = new Label();
+            _container = new VisualElement();
+
+            Add(_container); 
+            _container.Add(_buildButton);
+            _container.Add(_unitNameLabel);
+            
+            AddToClassList("unitCreationInfoElement");
+            _container.AddToClassList("unitCreationContainer");
+            _unitNameLabel.AddToClassList("unitName");
+            _buildButton.AddToClassList("buildButton");
+            
+            _unitNameLabel.text = "Unit Name";
+            _buildButton.text = "Build";
+        }
+
         public void InitializeUI()
         {
-            Button buildButton = new Button();
-            Label unitNameLabel = new Label("UnitName");
-
-            buildButton.clicked += () =>
+            _buildButton.clicked += () =>
             {
-                UnitCreatingComponent.AddToQueue(UnitInfo);
+                EntityCreationComponent.AddToQueue(EntityInfo);
             };
             
-            Add(buildButton);
-            Add(unitNameLabel);
-            
-            AddToClassList("buildActions");
-            unitNameLabel.AddToClassList("unitName");
-            
-            unitNameLabel.text = UnitInfo.Name; 
+            _unitNameLabel.text = EntityInfo.Name; 
         }
     }
 }

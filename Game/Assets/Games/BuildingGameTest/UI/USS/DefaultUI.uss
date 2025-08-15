@@ -29,8 +29,40 @@
     width: 67%;
 }
 
-.buildActionsPanel {
+.unitCreationContainer {
+    flex-direction: column-reverse;
+    background-color: rgb(63, 71, 79);
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    border-bottom-right-radius: 11px;
+    border-bottom-left-radius: 11px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 }
 
-.unitNameLabel {
+.unitName {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+}
+
+.buildButton {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}
+
+.unitCreationInfoElement {
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    justify-content: center;
 }

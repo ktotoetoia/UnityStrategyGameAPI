@@ -5,7 +5,7 @@
         <ui:VisualElement name="SelectionPanel" class="selectionPanel">
             <ui:Label text="Selection Name" name="SelectionTitleLabel" class="selectionTitleLabel" />
             <ui:VisualElement name="SelectionListContainer" style="flex-grow: 1;">
-                <ui:ListView name="SelectionListView" />
+                <ui:ListView name="SelectionListView" virtualization-method="DynamicHeight" show-border="true" show-foldout-header="false" horizontal-scrolling="false" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

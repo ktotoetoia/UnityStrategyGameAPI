@@ -9,8 +9,8 @@ namespace TDS
     {
         [SerializeField] private float _speed;
         private List<Vector3> _positions = new List<Vector3>();
-        private Vector3 _lastPosition;
         public IEntity Unit { get; set; }
+        public Vector3 LastPosition { get; set; }
         private float _t;
         
         public bool TryGetObject<T>(out T obj)
@@ -39,10 +39,10 @@ namespace TDS
                 return;
             }
 
-            transform.position = Vector3.Lerp(_lastPosition,_positions[0],_t += _speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(LastPosition,_positions[0],_t += _speed * Time.deltaTime);
             if (transform.position == _positions[0])
             {
-                _lastPosition =  _positions[0];
+                LastPosition =  _positions[0];
                 _positions.RemoveAt(0);
                 _t = 0;
             }

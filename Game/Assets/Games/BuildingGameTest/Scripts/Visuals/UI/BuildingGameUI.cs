@@ -28,7 +28,7 @@ namespace BuildingsTestGame
         {
             _selector.OnSelectionUpdated += x =>
             {
-                if (x.First is IEntity ent && ent.TryGetComponent(out IUnitCreatingComponent building))
+                if (x.First is IEntity ent && ent.TryGetComponent(out IEntityCreationComponent building))
                 {
                     _selectionName.text = ent.Name;
                     _listView.itemsSource = building.GetItemSource();
@@ -37,9 +37,9 @@ namespace BuildingsTestGame
                     _listView.bindItem = (item, index) =>
                     {
                         UnitCreationInfoElement unitCreationInfoElement = item as UnitCreationInfoElement;
-
-                        unitCreationInfoElement.UnitCreatingComponent = building;
-                        unitCreationInfoElement.UnitInfo = building.UnitInfos[index];
+                        
+                        unitCreationInfoElement.EntityCreationComponent = building;
+                        unitCreationInfoElement.EntityInfo = _listView.itemsSource[index] as IEntityInfo;
                         
                         unitCreationInfoElement.InitializeUI();
                     };

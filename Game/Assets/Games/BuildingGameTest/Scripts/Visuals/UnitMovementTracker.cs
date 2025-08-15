@@ -15,7 +15,7 @@ namespace TDS
         
         public void Add(IEntity entity)
         {
-            if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit)
+            if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit or Builder)
             {
                 eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitializeUnit,eventComponent));
             }
@@ -46,7 +46,8 @@ namespace TDS
             
             _units[created.Entity] =unitMonoBehaviour;
             unitMonoBehaviour.Unit = created.Entity;
-            _prefab.transform.position = created.Entity.Transform.Position;
+            unitMonoBehaviour.transform.position = created.Entity.Transform.Position;
+            unitMonoBehaviour.LastPosition =  created.Entity.Transform.Position;
         }
 
         private void UpdateUnit(PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain> eve)

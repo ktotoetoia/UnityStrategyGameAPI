@@ -14,7 +14,7 @@ namespace TDS
         
         public void Add(IEntity entity)
         {
-            if (entity.TryGetComponent(out IUnitCreatingComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))
+            if (entity is FirstBuilding && entity.TryGetComponent(out IEventComponent eventComponent))
             {
                 eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitBuilding,eventComponent));
             }
@@ -31,7 +31,7 @@ namespace TDS
 
         public void Remove(IEntity entity)
         {
-            if (entity.TryGetComponent(out IUnitCreatingComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))
+            if (entity.TryGetComponent(out IEntityCreationComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))
             {
                 Destroy(_buildings[entity]);
                 _buildings.Remove(entity);
