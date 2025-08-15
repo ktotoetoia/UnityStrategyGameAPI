@@ -9,7 +9,7 @@ namespace BuildingsTestGame
             Name = "First Building";
             AddComponent(new EventComponent());
             AddComponent(new BuildingOnTerrain());
-            AddComponent(new UnitCreatingComponent());
+            AddComponent(new UnitCreationComponent());
         }
     }
 }

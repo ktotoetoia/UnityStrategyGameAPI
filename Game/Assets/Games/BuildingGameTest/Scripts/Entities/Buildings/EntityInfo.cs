@@ -3,12 +3,12 @@ using TDS.Entities;
 
 namespace BuildingsTestGame
 {
-    public class UnitInfo : IUnitInfo
+    public class EntityInfo : IEntityInfo
     {
         public IFactory<IBuilder<IEntity>> Factory { get; }
         public string Name { get; set; }
         
-        public UnitInfo(IFactory<IBuilder<IEntity>> factory, string name)
+        public EntityInfo(IFactory<IBuilder<IEntity>> factory, string name)
         {
             Factory = factory;
             Name = name;

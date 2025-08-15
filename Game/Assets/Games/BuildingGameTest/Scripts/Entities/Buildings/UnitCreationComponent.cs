@@ -7,24 +7,25 @@ using Component = TDS.Components.Component;
 
 namespace BuildingsTestGame
 {
-    public class UnitCreatingComponent : Component, IUnitCreatingComponent
+    public class UnitCreationComponent : Component, IEntityCreationComponent
     {
         private IPlacedOnTerrain _onTerrain;
         private IPlacedOnTerrain OnTerrain => _onTerrain ??= Entity.GetComponent<IPlacedOnTerrain>();
 
-        private readonly List<UnitInfo> _units = new ();
-        public IReadOnlyList<IUnitInfo> UnitInfos => _units;
+        private readonly List<EntityInfo> _unitInfos = new ();
+        public IReadOnlyList<IEntityInfo> EntityInfos => _unitInfos;
 
         public override void Init(IEntity entity)
         {
             base.Init(entity);
             
-            _units.Add(new UnitInfo(new DefaultUnitFactory(Entity),"Default unit"));
+            _unitInfos.Add(new EntityInfo(new DefaultUnitFactory(Entity),"Default Unit"));
+            _unitInfos.Add(new EntityInfo(new BuilderFactory(Entity),"Builder"));
         }
 
-        public void AddToQueue(IUnitInfo unitInfo)
+        public void AddToQueue(IEntityInfo entityInfo)
         {
-            if (unitInfo is not UnitInfo info || !_units.Contains(info))
+            if (entityInfo is not EntityInfo info || !_unitInfos.Contains(info))
             {
                 throw new ArgumentException();
             }
@@ -52,7 +53,7 @@ namespace BuildingsTestGame
 
         public IList GetItemSource()
         {
-            return _units;
+            return _unitInfos;
         }
     }
 }

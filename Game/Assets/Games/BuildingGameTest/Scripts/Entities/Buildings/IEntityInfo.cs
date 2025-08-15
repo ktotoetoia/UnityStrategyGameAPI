@@ -2,7 +2,7 @@
 
 namespace BuildingsTestGame
 {
-    public interface IUnitInfo : IHaveName
+    public interface IEntityInfo : IHaveName
     {
         
     }

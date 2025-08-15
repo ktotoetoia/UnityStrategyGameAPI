@@ -4,11 +4,11 @@ using TDS.Components;
 
 namespace BuildingsTestGame
 {
-    public interface IUnitCreatingComponent : IComponent
+    public interface IEntityCreationComponent : IComponent
     {
-        IReadOnlyList<IUnitInfo> UnitInfos { get; }
+        IReadOnlyList<IEntityInfo> EntityInfos { get; }
         
-        void AddToQueue(IUnitInfo unitInfo);
+        void AddToQueue(IEntityInfo entityInfo);
 
         IList GetItemSource();
     }
