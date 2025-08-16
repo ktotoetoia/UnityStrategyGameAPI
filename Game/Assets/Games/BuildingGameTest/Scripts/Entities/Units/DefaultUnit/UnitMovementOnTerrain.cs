@@ -1,36 +1,40 @@
-﻿using TDS.Components;
-using TDS.Entities;
+﻿using TDS.Entities;
 using TDS.Events;
+using UnityEngine;
+using Component = TDS.Components.Component;
 
 namespace BuildingsTestGame
 {
     public class UnitMovementOnTerrain : Component, IPlacedOnTerrain
     {
-        private ICallPropertyChange<IGameTerrainComponent> _terrain;
-
-        private ICallPropertyChange<IGameTerrainComponent> _terrainEvent =>
-            _terrain ??= new CallPropertyChange<IGameTerrainComponent, IPlacedOnTerrain>(this,Entity.GetComponent<IEventComponent>());
-
+        [BackingProperty(nameof(PlacedOn))]
+        private readonly ICallPropertyChange<IGameTerrainComponent> _terrain;
+        
         public IGameTerrainComponent PlacedOn
         {
             get
             {
                 ThrowExceptionIfDestroyed();
-                return _terrainEvent.Value;  
+                return _terrain.Value;  
             } 
             set
             {
                 ThrowExceptionIfDestroyed();
                 
-                if (_terrainEvent.Value != null)
+                if (_terrain.Value != null)
                 {
-                    _terrainEvent.Value.Unit = null;
+                    _terrain.Value.Unit = null;
                 }
                 
                 value.Unit = Entity;
                 Entity.Transform.SetPosition(value.Entity.Transform.Position);
-                _terrainEvent.Value = value;
+                _terrain.Value = value;
             }
+        }
+        
+        public UnitMovementOnTerrain()
+        {
+            _terrain = new CallPropertyChange<IGameTerrainComponent>(this);
         }
     }
 }
