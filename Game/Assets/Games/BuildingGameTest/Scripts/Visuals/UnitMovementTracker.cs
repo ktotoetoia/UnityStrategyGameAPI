@@ -41,7 +41,7 @@ namespace TDS
 
             if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain>>(UpdateUnit));
+                eventComponent.Subscribe(nameof(IPlacedOnTerrain.PlacedOn),new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain>>(UpdateUnit));
             }
             
             _units[created.Entity] =unitMonoBehaviour;
