@@ -1,19 +1,31 @@
-﻿namespace TDS.Events
+﻿using TDS.Handlers;
+
+namespace TDS.Events
 {
-    public class NoCallPropertyChange<T, TOwner> : ICallPropertyChange<T, TOwner>
+    public class NoCallPropertyChange<T> : ICallPropertyChange<T>
     {
-        public TOwner Owner { get; }
+        public object Owner { get; }
         public T Value { get; set; }
 
-        public NoCallPropertyChange(TOwner owner, T value)
+        public NoCallPropertyChange(object owner, T value)
         {
             Owner = owner;
             Value = value;
         }
 
-        public NoCallPropertyChange(TOwner owner)
+        public NoCallPropertyChange(object owner)
         {
             Owner = owner;
+        }
+        
+        public void Subscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            
+        }
+
+        public void Unsubscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            
         }
     }
 }

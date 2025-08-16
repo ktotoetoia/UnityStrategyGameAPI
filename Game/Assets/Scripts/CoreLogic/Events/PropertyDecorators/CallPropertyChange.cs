@@ -1,43 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using TDS.Handlers;
+using UnityEngine;
 
 namespace TDS.Events
 {
-    public class CallPropertyChange<T, TOwner> : ICallPropertyChange<T, TOwner>
+    public class CallPropertyChange<T> : ICallPropertyChange<T>
     {
+        private List<IHandler<IPropertyChangeEvent>> _handlers = new();
+        private object Owner;
         private T _value;
-        
+
         public T Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 T oldValue = _value;
                 _value = value;
                 
-                if (!EqualityComparer<T>.Default.Equals(oldValue, _value))
+                foreach (var handler in _handlers)
                 {
-                    EventPublisher.Publish(new PropertyChangeEvent<T,TOwner>(oldValue, _value,Owner));
+                    handler.Handle(new PropertyChangeEvent<T, object>(oldValue, _value, Owner));
                 }
             }
         }
-        
-        public IPublisher  EventPublisher { get; }
-        public TOwner Owner { get; }
 
-        public CallPropertyChange(TOwner owner, IPublisher eventPublisher) : this(default, owner, eventPublisher)
+        public CallPropertyChange(object owner, T value)
         {
-            
+            Owner = owner;
+            Value = value;
         }
 
-        public CallPropertyChange(T value, TOwner owner, IPublisher eventPublisher)
+        public CallPropertyChange(object owner)
         {
-            _value = value;
             Owner = owner;
-            EventPublisher = eventPublisher ?? throw new ArgumentNullException(nameof(eventPublisher));
+        }
+
+        public void Subscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            _handlers.Add(new HandlerWrapper<T, TOwner>(handler));
+        }
+
+        public void Unsubscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            _handlers.RemoveAll(h => h is HandlerWrapper<T, TOwner> wrapper && wrapper.Inner == handler);
         }
     }
 }

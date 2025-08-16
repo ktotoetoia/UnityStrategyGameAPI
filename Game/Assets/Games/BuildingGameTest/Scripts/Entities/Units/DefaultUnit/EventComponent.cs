@@ -1,4 +1,5 @@
 ﻿using TDS.Components;
+using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
 
@@ -6,7 +7,16 @@ namespace BuildingsTestGame
 {
     public class EventComponent : Component, IEventComponent
     {
-        private IEventBus _events = new EventBus(); 
+        private IEventBus _events; 
+        private IPropertyEventBus _propertyEvents;
+
+        public override void Init(IEntity entity)
+        {
+            base.Init(entity);
+
+            _events = new EventBus();
+            _propertyEvents = new PropertyEventBus(Entity.Components);
+        }
 
         public void Publish<TType>(TType evt)
         {
@@ -30,6 +40,17 @@ namespace BuildingsTestGame
         {
             base.Destroy();
             _events =  null;
+            _propertyEvents =  null;
+        }
+
+        public void Subscribe<TPropertyType, TOwnerType>(string propertyName, IHandler<PropertyChangeEvent<TPropertyType, TOwnerType>> handler)
+        {
+            _propertyEvents.Subscribe(propertyName, handler);
+        }
+
+        public void Unsubscribe<TPropertyType, TOwnerType>(string propertyName, IHandler<PropertyChangeEvent<TPropertyType, TOwnerType>> handler)
+        {
+            _propertyEvents.Unsubscribe(propertyName, handler);
         }
     }
 }

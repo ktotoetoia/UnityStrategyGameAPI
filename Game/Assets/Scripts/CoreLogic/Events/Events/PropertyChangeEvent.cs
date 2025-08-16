@@ -1,10 +1,17 @@
-﻿namespace TDS.Events
+﻿using System;
+using System.Collections.Generic;
+
+namespace TDS.Events
 {
-    public class PropertyChangeEvent<T,TOwner> : IEvent
+    public class PropertyChangeEvent<T, TOwner> : IPropertyChangeEvent
     {
         public T OldValue { get; }
         public T NewValue { get; }
         public TOwner Owner { get; }
+
+        object IPropertyChangeEvent.OldValue => OldValue;
+        object IPropertyChangeEvent.NewValue => NewValue;
+        object IPropertyChangeEvent.Owner => Owner;
 
         public PropertyChangeEvent(T oldValue, T newValue, TOwner owner)
         {
