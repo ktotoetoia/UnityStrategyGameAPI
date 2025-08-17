@@ -19,7 +19,7 @@ namespace BuildingsTestGame
         {
             IGameTerrainComponent terrain = game.Map.Terrains.First(x => x.TerrainArea.Contains(StartingPosition) && x.Components.Any(x => x is IGameTerrainComponent)).GetComponent<IGameTerrainComponent>();
 
-            IBuilder<FirstBuilding> builder = new FirstBuildingFactory(game.EntityRegister).Create();
+            IBuilder<FirstBuilding> builder = new FirstBuildingFactory(game.EntityRegistry).Create();
             builder.Value.GetComponent<IPlacedOnTerrain>().PlacedOn = terrain;
 
             builder.FinishInitialization();

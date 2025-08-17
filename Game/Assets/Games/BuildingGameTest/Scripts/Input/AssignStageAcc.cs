@@ -28,7 +28,7 @@ namespace BuildingsTestGame
                     PathResolver = new NoUnitPathResolver()
                 };
                 
-                new UpdateEntitiesOnTurnStart(_game.AssignStage,_game.EntityRegister).Subscribe();
+                new UpdateEntitiesOnTurnStart(_game.AssignStage,_game.EntityRegistry).Subscribe();
             }
         }
         

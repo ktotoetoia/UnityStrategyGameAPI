@@ -3,7 +3,7 @@ using TDS.Events;
 
 namespace BuildingsTestGame
 {
-    public interface IEventComponent : IComponent, IEventBus, IPropertyEventBus
+    public interface IEventComponent : IComponent, IEventBus, IPropertyChangeRegistry
     {
         
     }

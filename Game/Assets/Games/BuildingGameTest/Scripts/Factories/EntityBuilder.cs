@@ -7,17 +7,17 @@ namespace BuildingsTestGame
 {
     public class EntityBuilder<TEntity> : IBuilder<TEntity> where TEntity : Entity
     {
-        private readonly IEntityRegister _entityRegister;
+        private readonly IEntityRegistry _entityRegistry;
         private readonly IEventComponent _eventComponent;
         private readonly IPlacedOnTerrain _terrainComponent;
         private bool _isFinished;
         
         public TEntity Value { get; }
 
-        public EntityBuilder(TEntity entity, IEntityRegister entityRegister)
+        public EntityBuilder(TEntity entity, IEntityRegistry entityRegistry)
         {
             Value = entity ?? throw new ArgumentNullException(nameof(entity));
-            _entityRegister = entityRegister ?? throw new ArgumentNullException(nameof(entityRegister));
+            _entityRegistry = entityRegistry ?? throw new ArgumentNullException(nameof(entityRegistry));
 
             if (!Value.TryGetComponent(out _eventComponent))
             {
@@ -32,7 +32,7 @@ namespace BuildingsTestGame
         
         public void FinishInitialization()
         {
-            _entityRegister.AddEntity(Value);
+            _entityRegistry.AddEntity(Value);
             _eventComponent.Publish(new EntityInitializedEvent(Value, _terrainComponent.PlacedOn));
             _isFinished = true;
         }

@@ -7,23 +7,24 @@ namespace TDS.Entities
     public class Entity : IEntity
     {
         private List<IComponent> _components = new();
-        private IEntityRegister _entityRegister;
+        private IEntityRegistry _entityRegistry;
+        private bool _firstRegistration = true;
         
         public string Name { get; set; }
         public ITransformComponent Transform { get;  }
         public IEnumerable<IComponent> Components => _components;
         public bool IsDestroyed { get; private set; }
         
-        public IEntityRegister EntityRegister
+        public IEntityRegistry EntityRegistry
         {
             get
             {
-                return _entityRegister;
+                return _entityRegistry;
             }
             set
             {
                 ThrowExceptionIfDestroyed();
-                if (_entityRegister != null && _entityRegister.Contains(this))
+                if (_entityRegistry != null && _entityRegistry.Contains(this))
                 {
                     throw new InvalidOperationException("This entity cannot be contained in more than one entity register");
                 }
@@ -33,7 +34,13 @@ namespace TDS.Entities
                     throw new InvalidOperationException("Must add entity to a register collection before setting it");
                 }
                 
-                _entityRegister = value;
+                _entityRegistry = value;
+
+                if (_firstRegistration && value != null)
+                {
+                    _components.ForEach(x => x.OnRegistered());
+                    _firstRegistration = false;
+                }
             }
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TDS.Entities
 {
-    public class EntityRegister : IEntityRegister
+    public class EntityRegistry : IEntityRegistry
     {
         private readonly List<IEntity> _entities = new();
 
@@ -30,7 +30,7 @@ namespace TDS.Entities
             }
 
             _entities.Add(entity);
-            entity.EntityRegister = this;
+            entity.EntityRegistry = this;
             OnEntityAdded?.Invoke(entity);
         }
 
@@ -44,7 +44,7 @@ namespace TDS.Entities
             }
 
             _entities.Remove(entity);
-            entity.EntityRegister = null;
+            entity.EntityRegistry = null;
             OnEntityRemoved?.Invoke(entity);
         }
 

@@ -7,18 +7,18 @@ namespace BuildingsTestGame
     public class UpdateEntitiesOnTurnStart
     {
         private readonly TurnUser _turnUser;
-        private readonly IEntityRegister _entityRegister;
+        private readonly IEntityRegistry _entityRegistry;
         
-        public UpdateEntitiesOnTurnStart(TurnUser turnUser, IEntityRegister entityRegister)
+        public UpdateEntitiesOnTurnStart(TurnUser turnUser, IEntityRegistry entityRegistry)
         {
-            _entityRegister = entityRegister;
+            _entityRegistry = entityRegistry;
             _turnUser = turnUser;
             turnUser.OnTurnStart += Iterate;
         }
 
         private void Iterate()
         {
-            foreach (IEntity entity in _entityRegister)
+            foreach (IEntity entity in _entityRegistry)
             {
                 (entity as ITurnObject)?.OnTurnStart();
 

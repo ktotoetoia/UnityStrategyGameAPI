@@ -5,16 +5,16 @@ namespace BuildingsTestGame
 {
     public class BuilderFactory : IFactory<IBuilder<Builder>>
     {
-        public IHaveEntityRegister  Source { get; set; }
+        public IHaveEntityRegistry  Source { get; set; }
         
-        public BuilderFactory(IHaveEntityRegister source)
+        public BuilderFactory(IHaveEntityRegistry source)
         {
             Source = source;
         }
         
         public IBuilder<Builder> Create()
         {
-            return new EntityBuilder<Builder>(new Builder(), Source.EntityRegister);
+            return new EntityBuilder<Builder>(new Builder(), Source.EntityRegistry);
         }
     }
 }

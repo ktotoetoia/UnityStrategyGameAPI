@@ -5,23 +5,23 @@ namespace BuildingsTestGame
 {
     public class FirstBuildingFactory : IFactory<IBuilder<FirstBuilding>>
     {
-        private readonly IHaveEntityRegister _source;
+        private readonly IHaveEntityRegistry _source;
         
-        public IEntityRegister  EntityRegister { get; set; }
+        public IEntityRegistry  EntityRegistry { get; set; }
         
-        public FirstBuildingFactory(IHaveEntityRegister source)
+        public FirstBuildingFactory(IHaveEntityRegistry source)
         {
             _source = source;
         }
         
-        public FirstBuildingFactory(IEntityRegister entityRegister)
+        public FirstBuildingFactory(IEntityRegistry entityRegistry)
         {
-            EntityRegister = entityRegister;
+            EntityRegistry = entityRegistry;
         }
         
         public IBuilder<FirstBuilding> Create()
         {
-            return new EntityBuilder<FirstBuilding>(new FirstBuilding(), EntityRegister?? _source.EntityRegister);
+            return new EntityBuilder<FirstBuilding>(new FirstBuilding(), EntityRegistry?? _source.EntityRegistry);
         }
     }
 }

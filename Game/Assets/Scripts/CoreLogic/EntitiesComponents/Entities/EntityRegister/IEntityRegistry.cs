@@ -2,7 +2,7 @@
 
 namespace TDS.Entities
 {
-    public interface IEntityRegister : IEnumerable<IEntity>
+    public interface IEntityRegistry : IEnumerable<IEntity>
     {
         IEnumerable<IEntity> Entities { get; }
 

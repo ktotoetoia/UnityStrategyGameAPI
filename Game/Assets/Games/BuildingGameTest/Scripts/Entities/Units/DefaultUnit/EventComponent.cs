@@ -1,4 +1,5 @@
-﻿using TDS.Components;
+﻿using System.Collections.Generic;
+using TDS.Components;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
@@ -8,14 +9,16 @@ namespace BuildingsTestGame
     public class EventComponent : Component, IEventComponent
     {
         private IEventBus _events; 
-        private IPropertyEventBus _propertyEvents;
+        private IPropertyChangeRegistry _propertyEvents;
+        
+        public IEnumerable<object> Source => _propertyEvents.Source;
 
         public override void Init(IEntity entity)
         {
             base.Init(entity);
 
             _events = new EventBus();
-            _propertyEvents = new PropertyEventBus(Entity.Components);
+            _propertyEvents = new PropertyChangeRegistry(Entity.Components);
         }
 
         public void Publish<TType>(TType evt)

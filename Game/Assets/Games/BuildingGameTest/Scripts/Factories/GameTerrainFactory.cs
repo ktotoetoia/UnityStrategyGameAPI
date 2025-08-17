@@ -7,18 +7,18 @@ namespace BuildingsTestGame
 {
     public class GameTerrainFactory : IFactory<GameTerrain,Bounds>
     {
-        private IEntityRegister _entityRegister;
+        private IEntityRegistry _entityRegistry;
 
-        public GameTerrainFactory(IEntityRegister entityRegister)
+        public GameTerrainFactory(IEntityRegistry entityRegistry)
         {
-            _entityRegister = entityRegister;
+            _entityRegistry = entityRegistry;
         }
         
         public GameTerrain Create(Bounds param1)
         {
             GameTerrain terrain =  new GameTerrain(new BoundsTerrain(param1)) {Name = "Building Terrain"};
             
-            _entityRegister.AddEntity(terrain);
+            _entityRegistry.AddEntity(terrain);
             
             return terrain;
         }
