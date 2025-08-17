@@ -6,8 +6,7 @@ namespace BuildingsTestGame
 {
     public class BuildingOnTerrain : Component, IPlacedOnTerrain
     {        
-        [BackingProperty(nameof(PlacedOn))]
-        private ICallPropertyChange<IGameTerrainComponent>_terrain;
+        [BackingProperty(nameof(PlacedOn))] private ICallPropertyChange<IGameTerrainComponent>_terrain;
 
         public IGameTerrainComponent PlacedOn
         {

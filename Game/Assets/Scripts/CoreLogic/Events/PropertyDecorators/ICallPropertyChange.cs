@@ -1,4 +1,5 @@
-﻿using TDS.Handlers;
+﻿using System;
+using TDS.Handlers;
 
 namespace TDS.Events
 {
@@ -7,5 +8,6 @@ namespace TDS.Events
         T Value { get; set; }
         public void Subscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler);
         public void Unsubscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler);
+        public bool IsSubscribed<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler);
     }
 }

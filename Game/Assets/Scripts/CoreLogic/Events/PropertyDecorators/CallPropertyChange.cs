@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TDS.Handlers;
 using UnityEngine;
 
@@ -45,6 +46,11 @@ namespace TDS.Events
         public void Unsubscribe<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
         {
             _handlers.RemoveAll(h => h is HandlerWrapper<T, TOwner> wrapper && wrapper.Inner == handler);
+        }
+
+        public bool IsSubscribed<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            return _handlers.Any(x => x is HandlerWrapper<T,TOwner> wrapper && wrapper.Inner == handler);
         }
     }
 }

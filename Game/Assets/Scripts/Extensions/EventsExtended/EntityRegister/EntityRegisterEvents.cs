@@ -7,15 +7,15 @@ namespace TDS.Events
     {
         private readonly IEventBus _eventBus;
 
-        public EntityRegisterEvents(EntityRegister entityRegister)
+        public EntityRegisterEvents(EntityRegistry entityRegistry)
         {
             _eventBus =  new EventBus();
             
-            entityRegister.OnEntityAdded += x =>
+            entityRegistry.OnEntityAdded += x =>
             {
                 _eventBus.Publish(new EntityAddedEvent(x));
             };
-            entityRegister.OnEntityRemoved += x =>
+            entityRegistry.OnEntityRemoved += x =>
             {
                 _eventBus.Publish(new EntityRemovedEvent(x));
             };

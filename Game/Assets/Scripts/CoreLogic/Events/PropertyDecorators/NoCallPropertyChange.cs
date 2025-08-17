@@ -27,5 +27,10 @@ namespace TDS.Events
         {
             
         }
+
+        public bool IsSubscribed<TOwner>(IHandler<PropertyChangeEvent<T, TOwner>> handler)
+        {
+            return true;
+        }
     }
 }

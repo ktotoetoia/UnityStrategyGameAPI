@@ -8,11 +8,11 @@ namespace TDS.SelectionSystem
     public class EntitySelectionProvider : ISelectionProvider
     {
         public float Range { get; set; } = 0.2f;
-        public IEntityRegister EntityRegister { get; set; }
+        public IEntityRegistry EntityRegistry { get; set; }
 
-        public EntitySelectionProvider(IEntityRegister entityRegister)
+        public EntitySelectionProvider(IEntityRegistry entityRegistry)
         {
-            EntityRegister = entityRegister;
+            EntityRegistry = entityRegistry;
         }
         
         public ISelection<T> SelectAt<T>(Vector3 position) where T : class
@@ -20,7 +20,7 @@ namespace TDS.SelectionSystem
             IEntity ent = null;
             float distance = Range;
             
-            foreach (IEntity entity in EntityRegister.Where(x=> x is T))
+            foreach (IEntity entity in EntityRegistry.Where(x=> x is T))
             {
                 float lDistance = Vector3.Distance(entity.Transform.Position, position);
 
@@ -35,7 +35,7 @@ namespace TDS.SelectionSystem
 
         public ISelection<T> SelectWithin<T>(Bounds bounds) where T : class
         {            
-            List<T> selected = EntityRegister.Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
+            List<T> selected = EntityRegistry.Where(x => x is T && bounds.Contains(x.Transform.Position)).OfType<T>().ToList();
 
             return new Selection<T>(selected);
         }
