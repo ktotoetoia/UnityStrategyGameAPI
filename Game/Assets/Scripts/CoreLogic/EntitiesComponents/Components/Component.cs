@@ -40,6 +40,11 @@ namespace TDS.Components
             Entity = entity;
         }
 
+        public virtual void OnRegistered()
+        {
+            
+        }
+
         protected void ThrowExceptionIfDestroyed()
         {
             if (IsDestroyed)

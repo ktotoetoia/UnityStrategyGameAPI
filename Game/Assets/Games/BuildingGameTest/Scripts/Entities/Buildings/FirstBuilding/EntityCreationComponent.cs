@@ -11,7 +11,6 @@ namespace BuildingsTestGame
     {
         protected readonly List<EntityInfo> _unitInfos = new();
         protected IPlacedOnTerrain _onTerrain;
-        protected IPlacedOnTerrain OnTerrain => _onTerrain ??= Entity.GetComponent<IPlacedOnTerrain>();
         
         public IReadOnlyList<IEntityInfo> EntityInfos => _unitInfos;
 
@@ -26,7 +25,7 @@ namespace BuildingsTestGame
 
             try
             {
-                builder.Value.GetComponent<IPlacedOnTerrain>().PlacedOn = OnTerrain.PlacedOn;
+                builder.Value.GetComponent<IPlacedOnTerrain>().PlacedOn = _onTerrain.PlacedOn;
             }
             catch
             {
@@ -36,6 +35,11 @@ namespace BuildingsTestGame
             }
 
             builder.FinishInitialization();
+        }
+
+        public override void OnRegistered()
+        {
+            _onTerrain = Entity.GetComponent<IPlacedOnTerrain>();
         }
 
         public IList GetItemSource()
