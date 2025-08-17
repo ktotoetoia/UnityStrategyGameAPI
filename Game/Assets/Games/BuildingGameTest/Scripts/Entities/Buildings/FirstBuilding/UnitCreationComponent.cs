@@ -14,7 +14,7 @@ namespace BuildingsTestGame
 
         public override void AddToQueue(IEntityInfo entityInfo)
         {
-            if (OnTerrain.PlacedOn.Unit == null)
+            if (_onTerrain.PlacedOn.Unit == null)
             {
                 base.AddToQueue(entityInfo);
             }

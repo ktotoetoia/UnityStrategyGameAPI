@@ -2,15 +2,15 @@
 
 namespace BuildingsTestGame
 {
-    public class Builder : Entity
+    public class Zombie : Entity
     {
-        public Builder()
+        public Zombie()
         {
-            Name = "Builder";
+            Name = "Zombie";
             AddComponent(new EventComponent());
             AddComponent(new ActionDoer());
             AddComponent(new UnitMovementOnTerrain());
-            AddComponent(new BuilderComponent());
+            AddComponent(new ZombieComponent());
         }
     }
 }
