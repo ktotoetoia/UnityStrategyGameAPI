@@ -4,11 +4,11 @@ namespace BuildingsTestGame
 {
     public class BuilderComponent : EntityCreationComponent
     {
-        public override void Init(IEntity entity)
+        public override void OnRegistered()
         {
-            base.Init(entity);
+            base.OnRegistered();
             
-            _unitInfos.Add(new EntityInfo(new FirstBuildingFactory(Entity),"First Building"));
+            _unitInfos.Add(new EntityInfo(new FirstBuildingFactory(Entity.EntityRegistry),"First Building"));
         }
 
         public override void AddToQueue(IEntityInfo entityInfo)

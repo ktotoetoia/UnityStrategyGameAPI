@@ -5,16 +5,16 @@ namespace BuildingsTestGame
 {
     public class DefaultUnitFactory : IFactory<IBuilder<DefaultUnit>>
     {
-        public IHaveEntityRegistry  Source { get; set; }
+        public IEntityRegistry  EntityRegistry { get; set; }
         
-        public DefaultUnitFactory(IHaveEntityRegistry source)
+        public DefaultUnitFactory(IEntityRegistry entityRegistry)
         {
-            Source = source;
+            EntityRegistry = entityRegistry;
         }
         
         public IBuilder<DefaultUnit> Create()
         {
-            return new EntityBuilder<DefaultUnit>(new DefaultUnit(), Source.EntityRegistry);
+            return new EntityBuilder<DefaultUnit>(new DefaultUnit(), EntityRegistry);
         }
     }
 }
