@@ -3,6 +3,7 @@ using TDS.Entities;
 using TDS.Graphs;
 using TDS.Maps;
 using TDS.SelectionSystem;
+using TDS.TurnSystem;
 using UnityEngine;
 
 namespace BuildingsTestGame
@@ -37,13 +38,9 @@ namespace BuildingsTestGame
             _selector = GetComponent<ISelector>();
         }
 
-        public void MoveUnit()
+        public void EndTurn()
         {
-            Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            ITerrain targetTerrain = _terrainSelector.SelectAt<ITerrain>(clickPosition).First;
-            IEntity unit = _selector.GetSelection<IEntity>().First;
-
-            new UnitMover().Handle(unit, targetTerrain.TerrainArea, _pathfinder);
+            _game.AssignStage.EndTurn();
         }
 
         private void OnDrawGizmos()

@@ -4,26 +4,35 @@ namespace BuildingsTestGame
 {
     public class AssignStageLegacyInput : MonoBehaviour
     {
-        private AssignStageAcc _acc;
-        
-        private void Awake()
+        private MoveService _moveService;
+        private EndTurnService _endTurnService;
+
+        private MoveService MoveService
         {
-            _acc = GetComponent<AssignStageAcc>();
+            get
+            {
+                return _moveService ??= GetComponent<IGameServiceLocator>().GetService<MoveService>();
+            }
+        }
+        
+        private EndTurnService EndTurnService
+        {
+            get
+            {
+                return _endTurnService ??= GetComponent<IGameServiceLocator>().GetService<EndTurnService>();
+            }
         }
 
         private void Update()
         {
-            if (_acc.BuildingGame != null && _acc.BuildingGame.CurrentStage == _acc.BuildingGame.AssignStage)
-            {
-                HandleInput();
-            }
-        }
-        
-        private void HandleInput()
-        {
             if (Input.GetMouseButtonDown(1))
             {
-                _acc.MoveUnit();
+                MoveService.Move();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                EndTurnService.EndTurn();
             }
         }
     }
