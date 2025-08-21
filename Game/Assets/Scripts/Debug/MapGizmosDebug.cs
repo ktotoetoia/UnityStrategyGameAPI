@@ -27,7 +27,7 @@ namespace TDS.Entities
         
         private void DrawTerrain(ITerrain point)
         {
-            if (_showTerrainArea && point.TerrainArea is BoundsTerrain a)
+            if (_showTerrainArea && point.TerrainArea is BoundsArea a)
             {
                 Gizmos.DrawCube(a.Bounds.center, a.Bounds.size - Vector3.one * _gapSize);
             }

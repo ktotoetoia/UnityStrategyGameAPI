@@ -5,15 +5,11 @@ using UnityEngine.Tilemaps;
 
 namespace TDS.Entities
 {
-    public class TileMapTerrainDrawer : MonoBehaviour, IConditionalHandler<ITerrain>
+    public class TileMapTerrainDrawer : MonoBehaviour, IHandler<ITerrain>
     {
         [SerializeField] private Tilemap _tilemap;
         [SerializeField] private Tile _tile;
         [SerializeField] private Grid _grid;
-        public bool CanHandle(ITerrain operation)
-        {
-            return true;
-        }
 
         public void Handle(ITerrain terrain)
         {
