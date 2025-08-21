@@ -17,12 +17,11 @@ namespace BuildingsTestGame
         
         public BuildingGame Create()
         {
-            EntityRegistry entityRegistry = new EntityRegistry();
-            EntityRegisterEvents events = new EntityRegisterEvents(entityRegistry);
+            EventsEntityRegistry entityRegistry = new EventsEntityRegistry();
             
             RectangleMap map = new RectangleMap(TileCount,new GameTerrainFactory(entityRegistry));
             
-            return new BuildingGame(map,entityRegistry,events);
+            return new BuildingGame(map,entityRegistry);
         }
     }
 }

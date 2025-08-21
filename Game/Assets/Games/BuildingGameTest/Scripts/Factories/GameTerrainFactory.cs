@@ -16,7 +16,7 @@ namespace BuildingsTestGame
         
         public GameTerrain Create(Bounds param1)
         {
-            GameTerrain terrain =  new GameTerrain(new BoundsTerrain(param1)) {Name = "Building Terrain"};
+            GameTerrain terrain =  new GameTerrain(new BoundsArea(param1)) {Name = "Building Terrain"};
             
             _entityRegistry.AddEntity(terrain);
             

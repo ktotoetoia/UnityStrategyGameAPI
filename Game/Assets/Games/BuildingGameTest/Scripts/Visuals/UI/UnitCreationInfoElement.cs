@@ -1,4 +1,5 @@
-﻿using Unity.Android.Gradle;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace BuildingsTestGame
@@ -9,9 +10,9 @@ namespace BuildingsTestGame
         private readonly Button _buildButton;
         private readonly Label _unitNameLabel;
         private readonly VisualElement _container;
+        private Action _clicked;
         
         public IEntityInfo EntityInfo { get; set; }
-        public IEntityCreationComponent EntityCreationComponent { get; set; }
 
         public UnitCreationInfoElement()
         {
@@ -32,14 +33,14 @@ namespace BuildingsTestGame
             _buildButton.text = "Build";
         }
 
-        public void InitializeUI()
+        public void InitializeUI(Action clicked)
         {
-            _buildButton.clicked += () =>
-            {
-                EntityCreationComponent.AddToQueue(EntityInfo);
-            };
+            _buildButton.clicked -= _clicked;
+            _buildButton.clicked += clicked;
             
             _unitNameLabel.text = EntityInfo.Name; 
+            _clicked = clicked;
+            
         }
     }
 }

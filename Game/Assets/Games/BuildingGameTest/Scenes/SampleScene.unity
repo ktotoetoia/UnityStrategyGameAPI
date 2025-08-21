@@ -330,8 +330,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1377791927}
-  - component: {fileID: 1377791930}
   - component: {fileID: 1377791926}
+  - component: {fileID: 1377791930}
   - component: {fileID: 1377791931}
   - component: {fileID: 1377791932}
   - component: {fileID: 1377791933}
@@ -361,7 +361,8 @@ MonoBehaviour:
   _tileCount: {x: 12, y: 12}
   _firstBuildingPosition: {x: 1, y: 1}
   _tileMapSetup: {fileID: 1666527975}
-  _assignStage: {fileID: 1377791937}
+  _movementDebug: {fileID: 1377791937}
+  _buildingGameUI: {fileID: 125937415}
 --- !u!4 &1377791927
 Transform:
   m_ObjectHideFlags: 0
