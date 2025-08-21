@@ -1,6 +1,4 @@
-﻿using TDS.Entities;
-
-namespace BuildingsTestGame
+﻿namespace BuildingsTestGame
 {
     public class BuilderComponent : EntityCreationComponent
     {

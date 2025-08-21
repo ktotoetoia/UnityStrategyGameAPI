@@ -3,7 +3,7 @@ using TDS.Entities;
 
 namespace BuildingsTestGame
 {
-    public class BuilderFactory : IFactory<IBuilder<Builder>>
+    public class BuilderFactory : IFactory<Builder>
     {
         public IEntityRegistry  EntityRegistry { get; set; }
         
@@ -12,9 +12,13 @@ namespace BuildingsTestGame
             EntityRegistry = entityRegistry;
         }
         
-        public IBuilder<Builder> Create()
+        public Builder Create()
         {
-            return new EntityBuilder<Builder>(new Builder(), EntityRegistry);
+            Builder builder = new Builder();
+            
+            EntityRegistry.AddEntity(builder);
+            
+            return builder;
         }
     }
 }

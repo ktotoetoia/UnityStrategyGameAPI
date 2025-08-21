@@ -5,10 +5,10 @@ namespace BuildingsTestGame
 {
     public class EntityInfo : IEntityInfo
     {
-        public IFactory<IBuilder<IEntity>> Factory { get; }
+        public IFactory<IEntity> Factory { get; }
         public string Name { get; set; }
         
-        public EntityInfo(IFactory<IBuilder<IEntity>> factory, string name)
+        public EntityInfo(IFactory<IEntity> factory, string name)
         {
             Factory = factory;
             Name = name;

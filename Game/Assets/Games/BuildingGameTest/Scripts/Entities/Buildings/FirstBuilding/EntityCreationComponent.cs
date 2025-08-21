@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TDS;
-using TDS.Components;
 using TDS.Entities;
+using UnityEngine;
+using Component = TDS.Components.Component;
 
 namespace BuildingsTestGame
 {
@@ -21,20 +22,9 @@ namespace BuildingsTestGame
                 throw new ArgumentException();
             }
             
-            IBuilder<IEntity> builder = info.Factory.Create();
-
-            try
-            {
-                builder.Value.GetComponent<IPlacedOnTerrain>().PlacedOn = _onTerrain.PlacedOn;
-            }
-            catch
-            {
-                builder.CancelInitialization();
-
-                return;
-            }
-
-            builder.FinishInitialization();
+            IEntity entity = info.Factory.Create();
+            
+            entity.GetComponent<IPlacedOnTerrain>().MoveTo(_onTerrain.PlacedOn);
         }
 
         public override void OnRegistered()

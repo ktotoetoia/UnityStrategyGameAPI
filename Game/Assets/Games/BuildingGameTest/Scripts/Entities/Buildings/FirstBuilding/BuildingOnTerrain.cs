@@ -1,11 +1,12 @@
-﻿using TDS.Components;
-using TDS.Events;
+﻿using TDS.Events;
+using UnityEngine;
+using Component = TDS.Components.Component;
 
 namespace BuildingsTestGame
 {
     public class BuildingOnTerrain : Component, IPlacedOnTerrain
     {        
-        [BackingProperty(nameof(PlacedOn))] private ICallPropertyChange<IGameTerrainComponent>_terrain;
+        [BackingProperty(nameof(PlacedOn))] private readonly ICallPropertyChange<IGameTerrainComponent>_terrain;
 
         public IGameTerrainComponent PlacedOn
         {
@@ -14,24 +15,25 @@ namespace BuildingsTestGame
                 ThrowExceptionIfDestroyed();
                 return _terrain.Value;  
             } 
-            set
-            {
-                ThrowExceptionIfDestroyed();
-                
-                if (_terrain.Value != null)
-                {
-                    _terrain.Value.Building = null;
-                }
-                
-                value.Building = Entity;
-                Entity.Transform.SetPosition(value.Entity.Transform.Position);
-                _terrain.Value = value;
-            }
         }
 
         public BuildingOnTerrain()
         {
             _terrain = new CallPropertyChange<IGameTerrainComponent>(this);
+        }
+
+        public void MoveTo(IGameTerrainComponent component)
+        {
+            ThrowExceptionIfDestroyed();
+                
+            if (_terrain.Value != null)
+            {
+                _terrain.Value.Building = null;
+            }
+                
+            component.Building = Entity;
+            Entity.Transform.SetPosition(component.Entity.Transform.Position);
+            _terrain.Value = component;
         }
     }
 }
