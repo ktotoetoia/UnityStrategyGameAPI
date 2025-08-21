@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BuildingsTestGame;
 using TDS.Entities;
 using TDS.Events;
+using TDS.Handlers;
 using UnityEngine;
 
 namespace TDS
@@ -16,19 +17,20 @@ namespace TDS
         {
             if (entity is FirstBuilding && entity.TryGetComponent(out IEventComponent eventComponent))
             {
-                eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitBuilding,eventComponent));
+                eventComponent.Subscribe(nameof(IPlacedOnTerrain.PlacedOn),new ActionHandler<PropertyChangeEvent<IGameTerrainComponent,IPlacedOnTerrain>>(x =>
+                {
+                    if (!_buildings.TryGetValue(x.Owner.Entity, out var buildingMonoBehaviour))
+                    {
+                        buildingMonoBehaviour = Instantiate(_prefab).GetComponent<BuildingMonoBehaviour>();
+                    }
+                    
+                    _buildings[x.Owner.Entity] = buildingMonoBehaviour ?? throw new NullReferenceException();
+                    buildingMonoBehaviour.Building = x.Owner.Entity;
+                    buildingMonoBehaviour.transform.position = x.Owner.Entity.GetComponent<IPlacedOnTerrain>().PlacedOn.Entity.Transform.Position;
+                }));
             }
         }
-
-        private void InitBuilding(EntityInitializedEvent init)
-        {
-            BuildingMonoBehaviour buildingMonoBehaviour = Instantiate(_prefab).GetComponent<BuildingMonoBehaviour>();
-            
-            _buildings[init.Entity] = buildingMonoBehaviour ?? throw new NullReferenceException();
-            buildingMonoBehaviour.Building = init.Entity;
-            buildingMonoBehaviour.transform.position = init.Entity.GetComponent<IPlacedOnTerrain>().PlacedOn.Entity.Transform.Position;
-        }
-
+        
         public void Remove(IEntity entity)
         {
             if (entity.TryGetComponent(out IEntityCreationComponent buildingComponent )&& entity.TryGetComponent(out IEventComponent eventComponent))

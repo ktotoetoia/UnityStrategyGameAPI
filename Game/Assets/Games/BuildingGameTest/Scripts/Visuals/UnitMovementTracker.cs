@@ -17,7 +17,21 @@ namespace TDS
         {
             if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit or Builder)
             {
-                eventComponent.Subscribe(new SingleTimeEventHandler<EntityInitializedEvent>(InitializeUnit,eventComponent));
+                eventComponent.Subscribe(nameof(IPlacedOnTerrain.PlacedOn),new ActionHandler<PropertyChangeEvent<IGameTerrainComponent,IPlacedOnTerrain>>(x =>
+                {
+                    if (_units.TryGetValue(x.Owner.Entity, out var unitMonoBehaviour))
+                    {
+                        _units[entity].MoveTo(x.NewValue.Entity.Transform.Position);
+                        return;
+                    }
+                    
+                    unitMonoBehaviour = Instantiate(_prefab).GetComponent<UnitMonoBehaviour>();
+            
+                    _units[x.Owner.Entity] =unitMonoBehaviour;
+                    unitMonoBehaviour.Unit = x.Owner.Entity;
+                    unitMonoBehaviour.transform.position = x.Owner.Entity.Transform.Position;
+                    unitMonoBehaviour.LastPosition =  x.Owner.Entity.Transform.Position;
+                }));
             }
         }
 
@@ -28,31 +42,6 @@ namespace TDS
                 Destroy(_units[entity]);
                 _units.Remove(entity);
             }
-        }
-
-        private void InitializeUnit(EntityInitializedEvent created)
-        {
-            UnitMonoBehaviour unitMonoBehaviour = Instantiate(_prefab).GetComponent<UnitMonoBehaviour>();
-
-            if (unitMonoBehaviour is null)
-            {
-                throw new NullReferenceException();
-            }
-
-            if (created.Entity.TryGetComponent(out IEventComponent eventComponent))
-            {
-                eventComponent.Subscribe(nameof(IPlacedOnTerrain.PlacedOn),new ActionHandler<PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain>>(UpdateUnit));
-            }
-            
-            _units[created.Entity] =unitMonoBehaviour;
-            unitMonoBehaviour.Unit = created.Entity;
-            unitMonoBehaviour.transform.position = created.Entity.Transform.Position;
-            unitMonoBehaviour.LastPosition =  created.Entity.Transform.Position;
-        }
-
-        private void UpdateUnit(PropertyChangeEvent<IGameTerrainComponent, IPlacedOnTerrain> eve)
-        {
-            _units[eve.Owner.Entity].MoveTo(eve.NewValue.Entity.Transform.Position);
         }
     }
 }
