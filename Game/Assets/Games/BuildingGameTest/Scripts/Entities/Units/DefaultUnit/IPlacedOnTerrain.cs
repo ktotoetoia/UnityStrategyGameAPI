@@ -4,6 +4,8 @@ namespace BuildingsTestGame
 {
     public interface IPlacedOnTerrain : IComponent
     {
-        IGameTerrainComponent PlacedOn { get; set; }
+        IGameTerrainComponent PlacedOn { get; }
+        
+        public void MoveTo(IGameTerrainComponent component);
     }
 }
