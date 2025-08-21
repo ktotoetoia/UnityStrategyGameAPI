@@ -8,24 +8,22 @@ namespace BuildingsTestGame
     public class BuildingGame
     {
         public IGraphMap Map { get; }
-        public IEntityRegistry EntityRegistry { get; }
-        public ISubscriber EntityRegisterEvents { get; }
+        public IEventsEntityRegistry EntityRegistry { get; }
         public ITurnSwitcher TurnSwitcher { get; }
         
-        public TurnUser AssignStage { get; }
-        public TurnUser EventStage  { get; }
-        public TurnUser CurrentStage => TurnSwitcher.CurrentUser as TurnUser;
+        public GameStage PlayerStage { get; }
+        public GameStage EventStage  { get; }
+        public GameStage CurrentStage => TurnSwitcher.CurrentUser as GameStage;
         
-        public BuildingGame(IGraphMap map,IEntityRegistry entityRegistry, ISubscriber entityRegisterEvents) 
+        public BuildingGame(IGraphMap map,IEventsEntityRegistry entityRegistry) 
         {
             Map = map;
             EntityRegistry = entityRegistry;
-            EntityRegisterEvents = entityRegisterEvents;
             
-            AssignStage = new TurnUser();
-            EventStage = new TurnUser();
+            PlayerStage = new GameStage();
+            EventStage = new GameStage();
             
-            TurnSwitcher = new TurnSwitcher(new ITurnUser[] { AssignStage, EventStage });
+            TurnSwitcher = new TurnSwitcher(new ITurnUser[] { PlayerStage, EventStage });
         }
         
         public void Update()
