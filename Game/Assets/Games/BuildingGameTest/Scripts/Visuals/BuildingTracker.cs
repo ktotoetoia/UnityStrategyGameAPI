@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BuildingsTestGame;
+using TDS.Components;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;

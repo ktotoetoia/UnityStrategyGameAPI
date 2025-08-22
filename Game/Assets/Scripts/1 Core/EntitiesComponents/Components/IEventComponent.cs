@@ -1,7 +1,6 @@
-﻿using TDS.Components;
-using TDS.Events;
+﻿using TDS.Events;
 
-namespace BuildingsTestGame
+namespace TDS.Components
 {
     public interface IEventComponent : IComponent, IEventBus, IPropertyChangeRegistry
     {

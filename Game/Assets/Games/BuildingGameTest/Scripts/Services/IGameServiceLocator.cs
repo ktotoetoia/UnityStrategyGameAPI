@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace BuildingsTestGame
+﻿namespace BuildingsTestGame
 {
     public interface IGameServiceLocator
     {

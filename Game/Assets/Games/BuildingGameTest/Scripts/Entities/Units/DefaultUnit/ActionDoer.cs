@@ -3,7 +3,7 @@ using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
-    public class ActionDoer : Component, IActionDoer, ITurnObject
+    public class ActionDoer : Component, IActionDoer, INotifyOnTurnStart
     {
         public float MaxActionPoints { get; set; } = 3;
         public float AvailableActionPoints { get; set; } = 3;
@@ -11,11 +11,6 @@ namespace BuildingsTestGame
         public void OnTurnStart()
         {
             AvailableActionPoints = MaxActionPoints;
-        }
-
-        public void OnTurnEnd()
-        {
-            
         }
     }
 }

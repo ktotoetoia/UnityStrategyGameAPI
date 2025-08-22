@@ -1,6 +1,5 @@
 ﻿using BuildingsTestGame;
 using TDS.Entities;
-using TDS.SelectionSystem;
 using UnityEngine;
 
 namespace TDS
@@ -27,13 +26,18 @@ namespace TDS
             
             _tileMapSetup.Map = _game.Map;
             _movementDebug.Map = _game.Map;
-            _buildingGameUI.PlayerStage  = _game.PlayerStage;
+            _buildingGameUI.FactionStage  = _game.PlayerStage;
             
         }
 
         private void Update()
         {
             _game.Update();
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                _game.EnemyStage.GetService<EndTurnService>().EndTurn();
+            }
         }
     }
 }

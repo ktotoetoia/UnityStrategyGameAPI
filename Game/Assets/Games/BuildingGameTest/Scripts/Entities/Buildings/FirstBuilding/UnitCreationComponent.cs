@@ -6,8 +6,8 @@
         {
             base.OnRegistered();
             
-            _unitInfos.Add(new EntityInfo(new DefaultUnitFactory(Entity.EntityRegistry), "Default Unit"));
-            _unitInfos.Add(new EntityInfo(new BuilderFactory(Entity.EntityRegistry), "Builder"));
+            _unitInfos.Add(new EntityInfo(new DefaultUnitFactory(Entity.EntityRegistry,_factionComponent.Faction), "Default Unit"));
+            _unitInfos.Add(new EntityInfo(new BuilderFactory(Entity.EntityRegistry,_factionComponent.Faction), "Builder"));
         }
 
         public override void AddToQueue(IEntityInfo entityInfo)

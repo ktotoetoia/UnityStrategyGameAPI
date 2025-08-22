@@ -1,4 +1,5 @@
 ﻿using BuildingsTestGame;
+using TDS.Factions;
 using TDS.Maps;
 using UnityEngine;
 
@@ -36,13 +37,13 @@ namespace TDS.Entities
             {
                 if (_showUnits && t.GameTerrainComponent.Unit != null)
                 {
-                    Gizmos.color = Color.red;
+                    Gizmos.color = t.GameTerrainComponent.Unit.GetComponent<IFactionComponent>().Faction.Color;
                     Gizmos.DrawSphere(point.Transform.Position - _pointsSize * Vector3.right, _pointsSize);
                 }
 
                 if (_showBuildings && t.GameTerrainComponent.Building != null)
-                {
-                    Gizmos.color = Color.green;
+                {                    
+                    Gizmos.color = t.GameTerrainComponent.Building.GetComponent<IFactionComponent>().Faction.Color;
                     Gizmos.DrawCube(t.Transform.Position + _pointsSize * Vector3.right, new Vector3(_pointsSize, _pointsSize * 2));
                 }
             }

@@ -8,7 +8,7 @@ namespace TDS.Entities
     {
         public static TComponent GetComponent<TComponent>(this IEntity entity) where TComponent : class, IComponent
         {
-            return entity.Components.FirstOrDefault(x => x is TComponent) as TComponent;
+            return entity.Components.FirstOrDefault(x => x is TComponent a) as TComponent;
         }
 
         public static bool TryGetComponent<TComponent>(this IEntity entity, out TComponent component) 

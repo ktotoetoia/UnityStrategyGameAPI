@@ -1,8 +1,9 @@
 ﻿using System;
 using TDS.Entities;
+using TDS.Factions;
 using TDS.Maps;
 using TDS.Pathfinding;
-using TDS.SelectionSystem;
+using UnityEditor;
 using UnityEngine;
 
 namespace BuildingsTestGame
@@ -11,17 +12,29 @@ namespace BuildingsTestGame
     {
         private readonly Func<bool> _canUse;
         private readonly MapPathfinder _pathfinder;
-        
+        private readonly IFaction _faction;
         public bool CanUse => _canUse();
         
-        public MoveService(Func<bool> canUse,MapPathfinder pathfinder)
+        public MoveService(Func<bool> canUse,MapPathfinder pathfinder,IFaction faction)
         {
+            _faction = faction;
             _canUse = canUse;
             _pathfinder = pathfinder;
         }
 
         public void Move(IEntity unit,ITerrainArea targetTerrain)
         {
+            if (!CanUse)
+            {
+                throw new Exception("Can't use MoveService");
+            }
+
+            if (!unit.TryGetComponent(out IFactionComponent factionComponent) || factionComponent .Faction != _faction)
+            {
+                Debug.LogWarning("can not move units with different faction");
+                return;
+            }
+            
             if (!unit.TryGetComponent(out IActionDoer actionComponent) ||
                 !unit.TryGetComponent(out IPlacedOnTerrain onTerrain))
             {

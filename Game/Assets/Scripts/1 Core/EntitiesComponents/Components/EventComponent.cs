@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using TDS.Components;
 using TDS.Entities;
 using TDS.Events;
 using TDS.Handlers;
 
-namespace BuildingsTestGame
+namespace TDS.Components
 {
     public class EventComponent : Component, IEventComponent
     {

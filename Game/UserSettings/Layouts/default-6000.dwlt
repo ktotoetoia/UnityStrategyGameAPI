@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 7e930000
+      m_SelectedIDs: 10eeffff
       m_LastClickedID: 0
       m_ExpandedIDs: 08fbffff
       m_RenameOverlay:
@@ -987,9 +987,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0.2543503, y: 0.7303587, z: 0.05779591}
+    m_Target: {x: 7.5509267, y: -3.5853982, z: -0.011150368}
     speed: 2
-    m_Value: {x: 0.2543503, y: 0.7303587, z: 0.05779591}
+    m_Value: {x: 7.5509267, y: -3.5853982, z: -0.011150368}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1039,9 +1039,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 4.2203755
+    m_Target: 11.115002
     speed: 2
-    m_Value: 4.2203755
+    m_Value: 11.115002
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1223,7 +1223,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1233,16 +1233,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 92
   m_LastFolders:
-  - Assets/Scripts
+  - Assets
   m_LastFoldersGridSize: 92
   m_LastProjectPath: C:\Users\ILLIA\Unity Projects\TopDownAll\Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 255}
-    m_SelectedIDs: 7e930000
-    m_LastClickedID: 37758
-    m_ExpandedIDs: 000000007c9300007e93000080930000829300008493000086930000889300008a9300008c9300008e9300009093000092930000949300009693000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 6e930000
+    m_LastClickedID: 37742
+    m_ExpandedIDs: 000000006e93000070930000729300007493000076930000789300007a9300007c9300007e930000809300008293000084930000869300008893000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007c9300007e93000080930000829300008493000086930000889300008a9300008c9300008e93000090930000929300009493000096930000
+    m_ExpandedIDs: 000000006e93000070930000729300007493000076930000789300007a9300007c9300007e9300008093000082930000849300008693000088930000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1297,9 +1297,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 7e930000
-    m_LastClickedInstanceID: 37758
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 10eeffff
+    m_LastClickedInstanceID: -4592
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

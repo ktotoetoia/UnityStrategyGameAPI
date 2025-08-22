@@ -1,4 +1,6 @@
-﻿using TDS.Entities;
+﻿using TDS.Components;
+using TDS.Entities;
+using TDS.Factions;
 
 namespace BuildingsTestGame
 {
@@ -11,6 +13,7 @@ namespace BuildingsTestGame
             AddComponent(new ActionDoer());
             AddComponent(new UnitMovementOnTerrain());
             AddComponent(new BuilderComponent());
+            AddComponent(new FactionComponent());
         }
     }
 }

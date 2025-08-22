@@ -6,7 +6,7 @@
         {
             base.OnRegistered();
             
-            _unitInfos.Add(new EntityInfo(new FirstBuildingFactory(Entity.EntityRegistry),"First Building"));
+            _unitInfos.Add(new EntityInfo(new FirstBuildingFactory(Entity.EntityRegistry, _factionComponent.Faction),"First Building"));
         }
 
         public override void AddToQueue(IEntityInfo entityInfo)

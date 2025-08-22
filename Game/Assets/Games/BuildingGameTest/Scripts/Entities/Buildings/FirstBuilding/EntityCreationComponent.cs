@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TDS;
 using TDS.Entities;
-using UnityEngine;
+using TDS.Factions;
 using Component = TDS.Components.Component;
 
 namespace BuildingsTestGame
@@ -12,6 +11,7 @@ namespace BuildingsTestGame
     {
         protected readonly List<EntityInfo> _unitInfos = new();
         protected IPlacedOnTerrain _onTerrain;
+        protected IFactionComponent _factionComponent;
         
         public IReadOnlyList<IEntityInfo> EntityInfos => _unitInfos;
 
@@ -30,6 +30,7 @@ namespace BuildingsTestGame
         public override void OnRegistered()
         {
             _onTerrain = Entity.GetComponent<IPlacedOnTerrain>();
+            _factionComponent = Entity.GetComponent<IFactionComponent>();
         }
 
         public IList GetItemSource()
