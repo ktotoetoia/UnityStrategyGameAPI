@@ -1,8 +1,7 @@
 ﻿namespace TDS.TurnSystem
 {
-    public interface ITurnObject
+    public interface INotifyOnTurnStart
     {
         void OnTurnStart();
-        void OnTurnEnd();
     }
 }

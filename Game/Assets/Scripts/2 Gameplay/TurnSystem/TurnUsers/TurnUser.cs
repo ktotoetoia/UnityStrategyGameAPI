@@ -5,9 +5,6 @@ namespace TDS.TurnSystem
 {
     public class TurnUser : ITurnUserManual
     {
-        public event Action OnTurnStart;
-        public event Action OnTurnEnd;
-        
         private TaskCompletionSource<bool> _completion;
         
         public ValueTask ExecuteTurnAsync()
@@ -21,12 +18,12 @@ namespace TDS.TurnSystem
 
         protected virtual void OnStart()
         {
-            OnTurnStart?.Invoke();
+            
         }
 
         protected virtual void OnEnd()
         {
-            OnTurnEnd?.Invoke();
+            
         }
 
         public void EndTurn()
