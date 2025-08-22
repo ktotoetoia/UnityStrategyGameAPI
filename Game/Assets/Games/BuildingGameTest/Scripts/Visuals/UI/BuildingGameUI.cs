@@ -13,19 +13,19 @@ namespace BuildingsTestGame
         private Label _selectionName;
         private ListView _listView;
         private UnitCreationService _unitCreationService;
-        private GameStage _playerStage;
+        private FactionTurnUser _factionStage;
 
-        public GameStage PlayerStage
+        public FactionTurnUser FactionStage
         {
-            get => _playerStage;
+            get => _factionStage;
             set
             {
-                _playerStage = value;
+                _factionStage = value;
                 
                 _document = GetComponent<UIDocument>();
                 _selectionName = _document.rootVisualElement.Q<Label>("SelectionTitleLabel");
                 _listView = _document.rootVisualElement.Q<ListView>("SelectionListView");
-                _unitCreationService = _playerStage.GetService<UnitCreationService>();
+                _unitCreationService = _factionStage.GetService<UnitCreationService>();
                 
                 SetOnSelectionUpdated();
             }

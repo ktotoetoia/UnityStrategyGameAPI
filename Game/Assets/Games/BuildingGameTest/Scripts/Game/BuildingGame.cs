@@ -1,5 +1,5 @@
 ﻿using TDS.Entities;
-using TDS.Events;
+using TDS.Factions;
 using TDS.Maps;
 using TDS.TurnSystem;
 
@@ -10,20 +10,22 @@ namespace BuildingsTestGame
         public IGraphMap Map { get; }
         public IEventsEntityRegistry EntityRegistry { get; }
         public ITurnSwitcher TurnSwitcher { get; }
+        public IFactionsManager  FactionsManager { get; }
         
-        public GameStage PlayerStage { get; }
-        public GameStage EventStage  { get; }
-        public GameStage CurrentStage => TurnSwitcher.CurrentUser as GameStage;
+        public FactionTurnUser PlayerStage { get; }
+        public FactionTurnUser EnemyStage  { get; }
+        public FactionTurnUser CurrentStage => TurnSwitcher.CurrentUser as FactionTurnUser;
         
         public BuildingGame(IGraphMap map,IEventsEntityRegistry entityRegistry) 
         {
             Map = map;
             EntityRegistry = entityRegistry;
+            FactionsManager = new FactionsManager();
             
-            PlayerStage = new GameStage();
-            EventStage = new GameStage();
+            PlayerStage = new FactionTurnUser();
+            EnemyStage = new FactionTurnUser();
             
-            TurnSwitcher = new TurnSwitcher(new ITurnUser[] { PlayerStage, EventStage });
+            TurnSwitcher = new TurnSwitcher(new ITurnUser[] { PlayerStage, EnemyStage });
         }
         
         public void Update()
