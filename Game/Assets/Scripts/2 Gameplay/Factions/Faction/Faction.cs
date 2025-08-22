@@ -1,5 +1,4 @@
-﻿using TDS.Events;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDS.Factions
 {
