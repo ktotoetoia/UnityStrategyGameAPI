@@ -6,20 +6,21 @@ namespace TDS.Entities
 {
     public static class EntityExtensions
     {
-        public static TComponent GetComponent<TComponent>(this IEntity entity) where TComponent : class, IComponent
+        public static TComponent GetComponent<TComponent>(this IEntity entity) 
+            where TComponent : class
         {
             return entity.Components.FirstOrDefault(x => x is TComponent a) as TComponent;
         }
 
         public static bool TryGetComponent<TComponent>(this IEntity entity, out TComponent component) 
-            where TComponent : class, IComponent
+            where TComponent : class
         {
             component = GetComponent<TComponent>(entity);
             return component != null;
         }
 
         public static IEnumerable<(IEntity, T1)> WithComponent<T1>(this IEnumerable<IEntity> entities)
-            where T1 : class, IComponent
+            where T1 : class
         {
             foreach (var entity in entities)
             {
@@ -30,9 +31,9 @@ namespace TDS.Entities
             }
         }
 
-        public static IEnumerable<(IEntity, T1, T2)> WithComponent<T1, T2>(this IEnumerable<IEntity> entities)
-            where T1 : class, IComponent
-            where T2 : class, IComponent
+        public static IEnumerable<(IEntity, T1, T2)> WithComponents<T1, T2>(this IEnumerable<IEntity> entities)
+            where T1 : class
+            where T2 : class
         {
             foreach (var entity in entities)
             {
@@ -44,10 +45,10 @@ namespace TDS.Entities
             }
         }
 
-        public static IEnumerable<(IEntity, T1, T2, T3)> WithComponent<T1, T2, T3>(this IEnumerable<IEntity> entities)
-            where T1 : class, IComponent
-            where T2 : class, IComponent
-            where T3 : class, IComponent
+        public static IEnumerable<(IEntity, T1, T2, T3)> WithComponents<T1, T2, T3>(this IEnumerable<IEntity> entities)
+            where T1 : class
+            where T2 : class
+            where T3 : class
         {
             foreach (var entity in entities)
             {

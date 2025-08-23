@@ -41,17 +41,17 @@ namespace BuildingsTestGame
                 return;
             }
             
-            IPath<ITerrain> path = _pathfinder.GetPath(onTerrain.PlacedOn.Entity as ITerrain, targetTerrain.Entity as ITerrain, actionComponent.MaxActionPoints);
+            IPath<ITerrain> path = _pathfinder.GetPath(onTerrain.PlacedOn.Entity as ITerrain, targetTerrain.Entity as ITerrain, actionComponent.ActionPoints.Value);
             
             foreach (IPathSegment<ITerrain> segment in path.Segments)
             {
-                if (actionComponent.AvailableActionPoints < segment.Cost)
+                if (actionComponent.ActionPoints.Value < segment.Cost)
                 {
                     break;
                 }
 
                 onTerrain.MoveTo(segment.To.Value.GetComponent<IGameTerrainComponent>());
-                actionComponent.AvailableActionPoints -= segment.Cost;
+                actionComponent.ActionPoints.Value -= segment.Cost;
             }
         }
     }

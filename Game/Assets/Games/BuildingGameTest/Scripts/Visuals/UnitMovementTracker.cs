@@ -17,8 +17,6 @@ namespace TDS
         {
             if (entity .TryGetComponent(out IEventComponent eventComponent) && entity is DefaultUnit or Builder)
             {
-                Debug.Log("entity");
-                
                 eventComponent.Subscribe(nameof(IPlacedOnTerrain.PlacedOn),new ActionHandler<PropertyChangeEvent<IGameTerrainComponent,IPlacedOnTerrain>>(x =>
                 {
                     if (_units.TryGetValue(x.Owner.Entity, out var unitMonoBehaviour))

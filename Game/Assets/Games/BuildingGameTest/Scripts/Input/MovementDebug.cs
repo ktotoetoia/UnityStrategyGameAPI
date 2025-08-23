@@ -41,7 +41,7 @@ namespace BuildingsTestGame
             
             if (entity != null&& entity.TryGetComponent(out IPlacedOnTerrain terrainComponent) && entity.TryGetComponent(out IActionDoer movementComponent))
             {
-                var area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.PlacedOn.Entity as ITerrain) ,movementComponent.AvailableActionPoints).Graph;
+                var area = _pathfinder.GetAvailableMovement(_map.GetNode(terrainComponent.PlacedOn.Entity as ITerrain) ,movementComponent.ActionPoints.Value).Graph;
                 
                 Gizmos.color = Color.blue;
 

@@ -1,10 +1,10 @@
 ﻿using TDS.Components;
+using TDS.Economy;
 
 namespace BuildingsTestGame
 {
     public interface IActionDoer : IComponent
     {
-        float MaxActionPoints { get; set; }
-        float AvailableActionPoints { get; set; }
+        ICappedValue<float> ActionPoints { get; }
     }
 }

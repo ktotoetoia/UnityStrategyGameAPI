@@ -1,16 +1,16 @@
 ﻿using TDS.Components;
+using TDS.Economy;
 using TDS.TurnSystem;
 
 namespace BuildingsTestGame
 {
     public class ActionDoer : Component, IActionDoer, INotifyOnTurnStart
     {
-        public float MaxActionPoints { get; set; } = 3;
-        public float AvailableActionPoints { get; set; } = 3;
-        
+        public ICappedValue<float> ActionPoints { get; } = new CappedValue<float>(0,3,3);
+
         public void OnTurnStart()
         {
-            AvailableActionPoints = MaxActionPoints;
+            ActionPoints.Value = ActionPoints.MaxValue;
         }
     }
 }
