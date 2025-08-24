@@ -7,6 +7,10 @@ namespace TDS.Economy
         private T _minValue;
         private T _maxValue;
         private T _value;
+        
+        public event Action<T> OnMinValueChanged;
+        public event Action<T> OnMaxValueChanged;
+        public event Action<T> OnValueChanged;
 
         public T MinValue
         {
@@ -18,6 +22,8 @@ namespace TDS.Economy
                 _minValue = value;
                 if (_value.CompareTo(_minValue) < 0)
                     _value = _minValue;
+                
+                OnMinValueChanged?.Invoke(_minValue);
             }
         }
 
@@ -31,6 +37,8 @@ namespace TDS.Economy
                 _maxValue = value;
                 if (_value.CompareTo(_maxValue) > 0)
                     _value = _maxValue;
+                
+                OnMaxValueChanged?.Invoke(_maxValue);
             }
         }
 
@@ -39,12 +47,9 @@ namespace TDS.Economy
             get => _value;
             set
             {
-                if (value.CompareTo(_minValue) < 0)
-                    _value = _minValue;
-                else if (value.CompareTo(_maxValue) > 0)
-                    _value = _maxValue;
-                else
-                    _value = value;
+                _value = Clamp(value);
+                
+                OnValueChanged?.Invoke(_value);
             }
         }
 
@@ -56,6 +61,13 @@ namespace TDS.Economy
             _minValue = minValue;
             _maxValue = maxValue;
             Value = value;
+        }
+
+        public T Clamp(T value)
+        {
+            if (value.CompareTo(_minValue) < 0) return _minValue;
+            if (value.CompareTo(_maxValue) > 0) return _maxValue;
+            return value;
         }
     }
 }
