@@ -4,16 +4,12 @@ using TDS.Factions;
 
 namespace BuildingsTestGame
 {
-    public class Zombie : Entity
+    public class Zombie : DefaultUnit
     {
-        public Zombie()
+        public Zombie(float health = 100, float damage = 10) : base(health, damage)
         {
             Name = "Zombie";
-            AddComponent(new EventComponent());
-            AddComponent(new ActionDoer());
-            AddComponent(new UnitMovementOnTerrain());
             AddComponent(new ZombieComponent());
-            AddComponent(new FactionComponent());
         }
     }
 }

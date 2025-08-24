@@ -4,16 +4,12 @@ using TDS.Factions;
 
 namespace BuildingsTestGame
 {
-    public class Builder : Entity
+    public class Builder : DefaultUnit
     {
-        public Builder()
+        public Builder(float health = 100, float damage = 5) : base(health, damage)
         {
             Name = "Builder";
-            AddComponent(new EventComponent());
-            AddComponent(new ActionDoer());
-            AddComponent(new UnitMovementOnTerrain());
             AddComponent(new BuilderComponent());
-            AddComponent(new FactionComponent());
         }
     }
 }
