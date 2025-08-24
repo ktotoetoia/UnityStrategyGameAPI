@@ -2,7 +2,7 @@
 
 namespace TDS.Economy
 {
-    public interface ICappedValueReadOnly<out T> where T :struct, IComparable<T>
+    public interface ICappedValueReadOnly<out T>
     {
         T MinValue { get; }
         T MaxValue { get; }

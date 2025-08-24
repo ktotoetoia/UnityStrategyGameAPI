@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TDS.Economy
 {
-    public interface ICappedValue<T> : ICappedValueReadOnly<T> where T : struct, IComparable<T>
+    public interface ICappedValue<T> : ICappedValueReadOnly<T>
     {
         new T MinValue { get; set; }
         new T MaxValue { get; set; }
